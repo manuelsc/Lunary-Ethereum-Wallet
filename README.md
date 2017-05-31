@@ -2,7 +2,7 @@
 
 Lunary is a beautiful designed, easy to use, secure and Open Source Ethereum Wallet for Android.
 
-[![Get it on Google Play](http://rehanced.com/apps/google-play-badge.png)](https://play.google.com/store/apps/details?id=com.rehanced.lunary)
+[![Get it on Google Play](http://rehanced.com/apps/badge.png)](https://play.google.com/store/apps/details?id=com.rehanced.lunary)
 
 <img src="http://rehanced.com/apps/lunary/githubbanner.png" >
 
@@ -42,3 +42,6 @@ public class APIKey {
 
 ## Donations / Support Lunary
 Ethereum: 0xa9981a33f6b1A18da5Db58148B2357f22B44e1e0
+
+## Licence
+GPL3
