@@ -1,0 +1,448 @@
+package rehanced.com.simpleetherwallet.fragments;
+
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
+import android.view.ContextMenu;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+
+import java.io.IOException;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
+
+import rehanced.com.simpleetherwallet.R;
+import rehanced.com.simpleetherwallet.activities.AddressDetailActivity;
+import rehanced.com.simpleetherwallet.activities.AnalyticsApplication;
+import rehanced.com.simpleetherwallet.activities.MainActivity;
+import rehanced.com.simpleetherwallet.activities.QRScanActivity;
+import rehanced.com.simpleetherwallet.activities.WalletGenActivity;
+import rehanced.com.simpleetherwallet.data.CurrencyEntry;
+import rehanced.com.simpleetherwallet.data.WalletDisplay;
+import rehanced.com.simpleetherwallet.interfaces.StorableWallet;
+import rehanced.com.simpleetherwallet.network.EtherscanAPI;
+import rehanced.com.simpleetherwallet.utils.AddressNameConverter;
+import rehanced.com.simpleetherwallet.utils.Dialogs;
+import rehanced.com.simpleetherwallet.utils.ExchangeCalculator;
+import rehanced.com.simpleetherwallet.utils.ResponseParser;
+import rehanced.com.simpleetherwallet.utils.Settings;
+import rehanced.com.simpleetherwallet.utils.WalletAdapter;
+import rehanced.com.simpleetherwallet.utils.WalletStorage;
+
+public class FragmentWallets extends Fragment implements View.OnClickListener, View.OnCreateContextMenuListener{
+
+    private RecyclerView recyclerView;
+    private WalletAdapter walletAdapter;
+    private List<WalletDisplay> wallets = new ArrayList<>();
+    private MainActivity ac;
+    double balance = 0;
+    private TextView balanceView;
+    private SwipeRefreshLayout swipeLayout;
+    private FrameLayout nothingToShow;
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_wallets, container, false);
+
+        ac = (MainActivity) this.getActivity();
+
+        nothingToShow = (FrameLayout) rootView.findViewById(R.id.nothing_found);
+        ImageView leftPress = (ImageView) rootView.findViewById(R.id.wleft);
+        ImageView rightPress = (ImageView) rootView.findViewById(R.id.wright);
+        balanceView = (TextView) rootView.findViewById(R.id.balance);
+        swipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
+        swipeLayout.setColorSchemeColors(ac.getResources().getColor(R.color.colorPrimary));
+        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                balance = 0;
+                try {
+                    update();
+                } catch (IOException e) {
+                    if(ac != null)
+                        ac.snackError("Can't fetch account balances. No connection?");
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        ExchangeCalculator.getInstance().setIndex(ac.getPreferences().getInt("main_index", 0));
+
+        leftPress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CurrencyEntry cur = ExchangeCalculator.getInstance().previous();
+                balanceView.setText(ExchangeCalculator.getInstance().displayBalanceNicely(ExchangeCalculator.getInstance().convertRate(balance, cur.getRate()))+" " +cur.getName());
+                ac.broadCastDataSetChanged();
+                walletAdapter.notifyDataSetChanged();
+                SharedPreferences.Editor editor = ac.getPreferences().edit();
+                editor.putInt("main_index", ExchangeCalculator.getInstance().getIndex());
+                editor.apply();
+            }
+        });
+
+        rightPress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CurrencyEntry cur = ExchangeCalculator.getInstance().next();
+                balanceView.setText(ExchangeCalculator.getInstance().displayBalanceNicely(ExchangeCalculator.getInstance().convertRate(balance, cur.getRate()))+" " +cur.getName());
+                ac.broadCastDataSetChanged();
+                walletAdapter.notifyDataSetChanged();
+                SharedPreferences.Editor editor = ac.getPreferences().edit();
+                editor.putInt("main_index", ExchangeCalculator.getInstance().getIndex());
+                editor.apply();
+            }
+        });
+
+
+
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+        walletAdapter = new WalletAdapter(wallets, ac, this, this);
+        LinearLayoutManager mgr  = new LinearLayoutManager(ac.getApplicationContext());
+        RecyclerView.LayoutManager mLayoutManager = mgr;
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(walletAdapter);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),mgr.getOrientation());
+        recyclerView.addItemDecoration(dividerItemDecoration);
+
+
+        walletAdapter.notifyDataSetChanged();
+
+        final FloatingActionMenu fabmenu = (FloatingActionMenu) rootView.findViewById(R.id.fabmenu);
+        FloatingActionButton scan_fab = (FloatingActionButton) rootView.findViewById(R.id.scan_fab);
+        FloatingActionButton add_fab = (FloatingActionButton) rootView.findViewById(R.id.add_fab);
+        FloatingActionButton gen_fab = (FloatingActionButton) rootView.findViewById(R.id.gen_fab);
+
+        gen_fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                generateDialog();
+            }
+        });
+
+        scan_fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent scanQR = new Intent(ac, QRScanActivity.class);
+                scanQR.putExtra("TYPE", QRScanActivity.SCAN_ONLY);
+                ac.startActivityForResult(scanQR, QRScanActivity.REQUEST_CODE);
+            }
+        });
+        add_fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Dialogs.addWatchOnly(ac);
+            }
+        });
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
+                if (dy > 0)
+                    fabmenu.hideMenu(true);
+                else if (dy < 0)
+                    fabmenu.showMenu(true);
+            }
+        });
+
+        try {
+            update();
+        } catch (IOException e) {
+            if(ac != null)
+                ac.snackError("Can't fetch account balances. No connection?");
+        }
+
+        Tracker t = ((AnalyticsApplication) ac.getApplication()).getDefaultTracker();
+        t.setScreenName("Wallet Fragment");
+        t.send(new HitBuilders.ScreenViewBuilder().build());
+
+        return rootView;
+    }
+
+    public void update() throws IOException {
+        if(ac == null) return;
+        wallets.clear();
+        balance = 0;
+        final ArrayList<StorableWallet> storedwallets = new ArrayList<StorableWallet>(WalletStorage.getInstance(ac).get());
+
+        if(storedwallets.size() == 0){
+            nothingToShow.setVisibility(View.VISIBLE);
+            onItemsLoadComplete();
+        } else {
+            nothingToShow.setVisibility(View.GONE);
+            EtherscanAPI.getInstance().getBalances(storedwallets, new Callback() {
+                @Override
+                public void onFailure(Request request, IOException e) {
+                    if (ac != null)
+                        ac.snackError("Can't fetch account balances. Invalid response.");
+                    final List<WalletDisplay> w = new ArrayList<WalletDisplay> ();
+                    for(StorableWallet cur : storedwallets)
+                        w.add(new WalletDisplay(AddressNameConverter.getInstance(ac).get(cur.getPubKey()), cur.getPubKey(), new BigInteger("-1"), WalletDisplay.CONTACT));
+
+                    ac.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            wallets.addAll(w);
+                            walletAdapter.notifyDataSetChanged();
+                            onItemsLoadComplete();
+                        }
+                    });
+                }
+
+                @Override
+                public void onResponse(Response response) throws IOException {
+                    final List<WalletDisplay> w;
+                    try {
+                        w = ResponseParser.parseWallets(response.body().string(), storedwallets, ac);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return;
+                    }
+
+                    ac.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            wallets.addAll(w);
+                            walletAdapter.notifyDataSetChanged();
+                            for (int i = 0; i < wallets.size(); i++) {
+                                balance += wallets.get(i).getBalance();
+                            }
+                            balanceView.setText(ExchangeCalculator.getInstance().displayBalanceNicely(ExchangeCalculator.getInstance().convertRate(balance, ExchangeCalculator.getInstance().getCurrent().getRate())) + " " + ExchangeCalculator.getInstance().getCurrent().getName());
+                            onItemsLoadComplete();
+                        }
+                    });
+                }
+            });
+        }
+    }
+
+
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        menu.setHeaderTitle("Wallet Settings");
+        menu.add(0, 200, 0, "Change Wallet Name");
+        menu.add(0, 201, 0, "Address to Clipboard");
+        menu.add(0, 202, 0, "Export Wallet");
+        menu.add(0, 203, 0, "Delete Wallet");
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        int position = -1;
+        try {
+            position = walletAdapter.getPosition();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return super.onContextItemSelected(item);
+        }
+
+        switch (item.getItemId()) {
+            case 200: // Change Address Name
+                setName(wallets.get(position).getPublicKey());
+                break;
+            case 201:
+                Intent i=new Intent(android.content.Intent.ACTION_SEND);
+                i.setType("text/plain");
+                i.putExtra(Intent.EXTRA_TEXT, wallets.get(position).getPublicKey());
+                startActivity(Intent.createChooser(i,"Share via"));
+                break;
+            case 202:
+                final int finalPosition = position;
+                if(wallets.get(finalPosition).getType() == WalletDisplay.NORMAL) {
+                    Dialogs.exportWallet(ac, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            WalletStorage.getInstance(ac).setWalletForExport(wallets.get(finalPosition).getPublicKey());
+                            export();
+                            dialog.dismiss();
+                        }
+                    });
+                } else {
+                    Dialogs.cantExportNonWallet(ac);
+                }
+                break;
+            case 203:
+                confirmDelete(wallets.get(position).getPublicKey(), wallets.get(position).getType());
+                break;
+        }
+        return super.onContextItemSelected(item);
+    }
+
+    public void export(){
+        boolean suc = WalletStorage.getInstance(ac).exportWallet(ac);
+        if(suc) ac.snackError("Wallet successfully exported");
+        else ac.snackError("Please grant write permission to export wallets");
+    }
+
+    public void generateDialog(){
+        if(! Settings.walletBeingGenerated) {
+            Intent genI = new Intent(ac, WalletGenActivity.class);
+            ac.startActivityForResult(genI, WalletGenActivity.REQUEST_CODE);
+        } else {
+            AlertDialog.Builder builder;
+            if (Build.VERSION.SDK_INT >= 24) // Otherwise buttons on 7.0+ are nearly invisible
+                builder = new AlertDialog.Builder(ac, R.style.AlertDialogTheme);
+            else
+                builder = new AlertDialog.Builder(ac);
+            builder.setTitle("Not So Fast");
+            builder.setMessage("We are currently generating a wallet for you, you can see the progress in your notification bar. Don't worry, we will notify you as soon as your wallet generation is finished :-) If you really wish to generate another one please wait for the current wallet to be completed first.");
+            builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.show();
+        }
+    }
+
+    public void confirmDelete(final String address, final byte type){
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= 24) // Otherwise buttons on 7.0+ are nearly invisible
+            builder = new AlertDialog.Builder(ac, R.style.AlertDialogTheme);
+        else
+            builder = new AlertDialog.Builder(ac);
+        builder.setTitle("ATTENTION: Wallet Removal");
+
+        if(type == WalletDisplay.WATCH_ONLY)
+            builder.setMessage("Are you sure you want to delete your watch only wallet?");
+        else if(type == WalletDisplay.NORMAL)
+            builder.setMessage("! THIS IS A WALLET WITH A PRIVATE KEY !\nIF YOU HAVE NO BACKUP AND CONTINUE ALL YOUR ETHER ON THAT WALLET WILL BE LOST FOR EVER! ARE YOU SURE YOU WANT TO PROCEED?\nWALLLET ADDRESS: "+address);
+        else if(type == Byte.MAX_VALUE){
+            builder.setMessage("ARE YOU SURE? WALLET AND ALL COINS / TOKEN ON IT ARE GOING TO GET PERMANENTLY REMOVED. THIS IS THE LAST WARNING FOR WALLET: "+address);
+        }
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(type == WalletDisplay.WATCH_ONLY || type == Byte.MAX_VALUE) {
+                    WalletStorage.getInstance(ac).removeWallet(address, ac);
+                    dialog.dismiss();
+                    try {
+                        update();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    confirmDelete(address, Byte.MAX_VALUE);
+                }
+            }
+        });
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.show();
+
+    }
+
+    public void setName(final String address){
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= 24) // Otherwise buttons on 7.0+ are nearly invisible
+            builder = new AlertDialog.Builder(ac, R.style.AlertDialogTheme);
+        else
+            builder = new AlertDialog.Builder(ac);
+        builder.setTitle("Name Your Wallet");
+
+        final EditText input = new EditText(ac);
+        input.setText(AddressNameConverter.getInstance(ac).get(address));
+        input.setSingleLine();
+        FrameLayout container = new FrameLayout(ac);
+        FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+        params.topMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+        params.bottomMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+        params.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+        input.setLayoutParams(params);
+        input.setSelection(input.getText().length());
+
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        container.addView(input);
+        builder.setView(container);
+        input.setOnFocusChangeListener(new View.OnFocusChangeListener()  {
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus) {
+                    InputMethodManager inputMgr = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMgr.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY);
+                }
+            }
+        });
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                AddressNameConverter.getInstance(ac).put(address, input.getText().toString(), ac);
+                InputMethodManager inputMgr = (InputMethodManager)input.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMgr.hideSoftInputFromWindow(input.getWindowToken(), 0);
+                notifyDataSetChanged();
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                InputMethodManager inputMgr = (InputMethodManager)input.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMgr.hideSoftInputFromWindow(input.getWindowToken(), 0);
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+
+    }
+
+    void onItemsLoadComplete() {
+        if(swipeLayout == null) return;
+        swipeLayout.setRefreshing(false);
+    }
+
+    public void notifyDataSetChanged() {
+        if(walletAdapter != null)
+            walletAdapter.notifyDataSetChanged();
+        updateBalanceText();
+    }
+
+    public void updateBalanceText(){
+        if(balanceView != null)
+            balanceView.setText(ExchangeCalculator.getInstance().displayBalanceNicely(ExchangeCalculator.getInstance().convertRate(balance, ExchangeCalculator.getInstance().getCurrent().getRate())) + " " + ExchangeCalculator.getInstance().getCurrent().getName());
+    }
+
+    @Override
+    public void onClick(View view) {
+        int itemPosition = recyclerView.getChildLayoutPosition(view);
+        Intent detail = new Intent(ac, AddressDetailActivity.class);
+        detail.putExtra("ADDRESS", wallets.get(itemPosition).getPublicKey());
+        detail.putExtra("TYPE", AddressDetailActivity.OWN_WALLET);
+        startActivity(detail);
+    }
+}

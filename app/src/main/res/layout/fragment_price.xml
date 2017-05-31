@@ -1,0 +1,120 @@
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/swipeRefreshLayout2"
+    android:background="#FFFFFF">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="18dp">
+
+        <TextView
+            android:text="@string/fr_price_current_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:layout_marginBottom="3dp"
+            android:layout_gravity="center"
+            android:layout_weight="1" />
+
+        <TextView
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/price"
+            android:textSize="24sp"
+            android:layout_gravity="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#88a1a1a1"/>
+
+<LinearLayout
+    android:orientation="vertical"
+    android:background="@color/colorPrimary"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#496486">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_marginTop="19dp"
+            android:gravity="bottom"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="22dp"
+                android:id="@+id/wleft"
+                android:gravity="left"
+                android:src="@drawable/ic_action_leftw"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/chartTitle"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+
+                android:gravity="center"
+                android:minWidth="150dp"
+                android:layout_weight="1"
+                android:textSize="17sp"
+                android:text="Last 7 Days"
+                android:textColor="#FFFFFF"/>
+
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="22dp"
+                android:id="@+id/wright"
+                android:gravity="right"
+                android:src="@drawable/ic_action_rightw"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#4c698b"/>
+    <LinearLayout
+        android:background="@color/colorPrimaryLittleDarker"
+        android:orientation="vertical"
+        android:id="@+id/colorPadding"
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        android:gravity="bottom"
+        android:paddingBottom="55dp"
+        android:layout_height="match_parent">
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/chart1"
+        android:layout_width="match_parent"
+
+        android:background="@color/colorPrimary"
+        android:layout_height="match_parent" />
+    </LinearLayout>
+
+</LinearLayout>
+
+</LinearLayout>
+</android.support.v4.widget.SwipeRefreshLayout >

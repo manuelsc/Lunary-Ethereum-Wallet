@@ -1,0 +1,43 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="zeroAmountSwitch"
+        android:summary="@string/pref_description_social_recommendations"
+        android:title="@string/pref_title_social_recommendations" />
+
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="startAtWallet"
+        android:summary="@string/pref_sum_start"
+        android:title="@string/pref_title_start" />
+
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="notifications_new_message"
+        android:title="@string/pref_title_new_message_notifications"
+        android:summary="@string/pref_title_new_message_notifications_sum" />
+
+
+    <ListPreference
+        android:defaultValue="3"
+        android:entries="@array/pref_sync_frequency_titles"
+        android:entryValues="@array/pref_sync_frequency_values"
+        android:key="sync_frequency"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_title_sync_frequency"
+        android:summary="@string/pref_sum_sync_frequency"/>
+
+
+    <ListPreference
+        android:entries="@array/pref_currencys"
+        android:entryValues="@array/pref_currencys"
+        android:key="maincurrency"
+        android:summary="%s"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_currencys_title" />
+</PreferenceScreen>

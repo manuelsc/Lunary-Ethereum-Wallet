@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="rehanced.com.simpleetherwallet">
+
+    <supports-screens
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true"
+        android:resizeable="true"
+        android:anyDensity="true"
+        />
+
+    <uses-sdk android:minSdkVersion="16"
+        android:targetSdkVersion="25" />
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-feature android:name="android.hardware.telephony" android:required="false" />
+    <uses-feature android:name="android.hardware.location" android:required="false" />
+    <uses-feature android:name="android.hardware.location.gps" android:required="false" />
+    <uses-feature android:name="android.hardware.location.network" android:required="false" />
+    <uses-feature android:name="android.hardware.microphone" android:required="false" />
+
+    <supports-screens android:anyDensity="true" />
+
+    <application
+            android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:name=".activities.AnalyticsApplication"
+        android:largeHeap="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".activities.MainActivity"
+            android:label="@string/title_activity_main"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.AddressDetailActivity"
+            android:label="@string/title_activity_main"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/AppTheme.NoActionBar2" />
+        <activity
+            android:name=".activities.QRScanActivity"
+            android:label="@string/title_activity_main"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/AppTheme.NoActionBar2" />
+        <activity
+            android:name=".activities.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activities.WalletGenActivity"
+            android:label="@string/title_activity_settings"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/AppTheme.NoActionBar2" />
+        <activity
+            android:name=".activities.RequestEtherActivity"
+            android:label="@string/title_activity_settings"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/AppTheme.NoActionBar2" />
+        <activity
+            android:name=".activities.SendActivity"
+            android:label="@string/title_activity_settings"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:theme="@style/AppTheme.NoActionBar2" />
+        <activity
+            android:name=".activities.AppIntroActivity"
+            android:theme="@style/AppTheme.NoActionBar2"
+            android:label="@string/title_activity_main" />
+
+        <receiver
+            android:name=".receiver.BootReceiver"
+            android:enabled="true"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".services.NotificationService"
+            android:exported="false" />
+
+        <service
+            android:name=".services.WalletGenService"
+            android:exported="false" />
+        <service
+            android:name=".services.TransactionService"
+            android:exported="false" />
+    </application>
+
+</manifest>

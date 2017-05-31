@@ -1,0 +1,105 @@
+package rehanced.com.simpleetherwallet.activities;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
+import rehanced.com.simpleetherwallet.R;
+import rehanced.com.simpleetherwallet.utils.Settings;
+
+public class WalletGenActivity extends AppCompatActivity {
+
+    public static final int REQUEST_CODE = 401;
+
+    private EditText password;
+    private EditText passwordConfirm;
+    private CoordinatorLayout coord;
+    private TextView walletGenText, toolbar_title;
+    private Tracker mTracker;
+    private String privateKeyProvided;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_wallet_gen);
+
+        password = (EditText) findViewById(R.id.password);
+        passwordConfirm = (EditText) findViewById(R.id.passwordConfirm);
+        walletGenText = (TextView) findViewById(R.id.walletGenText);
+        toolbar_title = (TextView) findViewById(R.id.toolbar_title);
+
+
+        coord = (CoordinatorLayout) findViewById(R.id.main_content);
+
+        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gen();
+            }
+        });
+
+        if(getIntent().hasExtra("PRIVATE_KEY")){
+            privateKeyProvided  = getIntent().getStringExtra("PRIVATE_KEY");
+            walletGenText.setText(getResources().getText(R.string.import_text));
+            toolbar_title.setText("Import Wallet");
+            mEmailSignInButton.setText("Import");
+        }
+
+        AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        mTracker = application.getDefaultTracker();
+        mTracker.setScreenName("Walletgen Activity" );
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+    }
+
+    private void gen() {
+        if(! passwordConfirm.getText().toString().equals(password.getText().toString())){
+            snackError(getResources().getString(R.string.error_incorrect_password));
+            return;
+        }
+        if(! isPasswordValid(passwordConfirm.getText().toString())){
+            snackError(getResources().getString(R.string.error_invalid_password));
+            return;
+        }
+        Settings.walletBeingGenerated = true; // Lock so a user can only generate one wallet at a time
+
+        // For statistics only
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Action")
+                .setAction("Wallet generated")
+                .build());
+
+        Intent data = new Intent();
+        data.putExtra("PASSWORD", passwordConfirm.getText().toString());
+        if(privateKeyProvided != null)
+            data.putExtra("PRIVATE_KEY", privateKeyProvided);
+        setResult(RESULT_OK, data);
+        finish();
+    }
+
+
+    public void snackError(String s){
+        if(coord == null) return;
+        Snackbar mySnackbar = Snackbar.make(coord, s, Snackbar.LENGTH_SHORT);
+        mySnackbar.show();
+    }
+
+    private boolean isPasswordValid(String password) {
+        return password.length() >= 9;
+    }
+
+
+
+
+}
+

@@ -1,0 +1,9 @@
+<resources>
+
+<string name="rta_dialog_title">قيم هذا التطبيق</string>
+<string name="rta_dialog_message">إذا احببت هذا التطبيق أبدي ملاحظاتك ، افكارك من خلال تقييمه على سوق بلاي</string>
+<string name="rta_dialog_ok">تقييم</string>
+<string name="rta_dialog_cancel">لاحقا</string>
+<string name="rta_dialog_no">لا شكرا</string>
+
+</resources>

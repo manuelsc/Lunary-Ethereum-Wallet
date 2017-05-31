@@ -1,0 +1,1 @@
+include ':app', ':materialdrawer', ':MPChartLib', ':Fab', ':mobilevisionbarcodescanner', ':ratethisapp', ':autofittextview', ':appintro'

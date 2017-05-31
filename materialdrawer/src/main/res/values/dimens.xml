@@ -1,0 +1,69 @@
+<resources>
+    <!-- ********************** -->
+    <!-- Material Drawer Dimens -->
+    <!-- ********************** -->
+    <!-- General drawer width https://medium.com/sebs-top-tips/material-navigation-drawer-sizing-558aea1ad266 -->
+    <dimen name="material_drawer_width">320dp</dimen>
+    <!-- Definition for the Drawer Slider margin right -->
+    <dimen name="material_drawer_margin">0dp</dimen>
+    <!-- General padding value -->
+    <dimen name="material_drawer_padding">8dp</dimen>
+    <!-- General vertical padding values / 24dp for tablets -->
+    <dimen name="material_drawer_vertical_padding">16dp</dimen>
+
+    <!-- Sticky footer elevation -->
+    <dimen name="material_drawer_sticky_footer_elevation">4dp</dimen>
+
+    <!-- General margins for the drawer account header -->
+    <dimen name="material_drawer_account_header_height">148dp</dimen>
+    <dimen name="material_drawer_account_header_height_compact">72dp</dimen>
+    <dimen name="material_drawer_account_header_horizontal_top">16dp</dimen>
+    <dimen name="material_drawer_account_header_horizontal_bottom">4dp</dimen>
+    <dimen name="material_drawer_account_header_selected">64dp</dimen>
+    <dimen name="material_drawer_account_header_secondary">40dp</dimen>
+    <dimen name="material_drawer_account_header_compact">56dp</dimen>
+    <dimen name="material_drawer_account_header_text">14sp</dimen>
+    <dimen name="material_drawer_account_header_dropdown">22dp</dimen>
+    <dimen name="material_drawer_account_header_dropdown_padding">5dp</dimen>
+    <dimen name="material_drawer_account_header_dropdown_margin_bottom">14dp</dimen>
+
+    <!-- General profileIcon margins for the drawer item -->
+    <dimen name="material_drawer_item_padding">8dp</dimen>
+    <!-- Definition for the primary item -->
+    <dimen name="material_drawer_item_primary">48dp</dimen>
+    <dimen name="material_drawer_item_primary_icon">56dp</dimen>
+    <dimen name="material_drawer_item_primary_icon_padding">12dp</dimen>
+    <dimen name="material_drawer_item_primary_icon_padding_right">32dp</dimen>
+    <dimen name="material_drawer_item_primary_text">14sp</dimen>
+    <dimen name="material_drawer_item_primary_description">14sp</dimen>
+    <dimen name="material_drawer_item_secondary_description">12sp</dimen>
+    <!-- Definition for the secondary item -->
+    <dimen name="material_drawer_item_secondary">42dp</dimen>
+    <dimen name="material_drawer_item_secondary_icon">56dp</dimen>
+    <dimen name="material_drawer_item_secondary_icon_padding">12dp</dimen>
+    <dimen name="material_drawer_item_secondary_icon_padding_right">36dp</dimen>
+    <dimen name="material_drawer_item_secondary_text">14sp</dimen>
+    <dimen name="material_drawer_item_secondary_extra_text">12sp</dimen>
+    <!-- Definition for the profile item -->
+    <dimen name="material_drawer_item_profile">72dp</dimen>
+    <dimen name="material_drawer_item_profile_icon">40dp</dimen>
+    <dimen name="material_drawer_item_profile_icon_width">48dp</dimen>
+    <dimen name="material_drawer_item_profile_icon_padding">16dp</dimen>
+    <dimen name="material_drawer_item_profile_icon_padding_right">8dp</dimen>
+    <dimen name="material_drawer_item_profile_text">14sp</dimen>
+    <dimen name="material_drawer_item_profile_description">14sp</dimen>
+    <!-- Definition for the profile setting item -->
+    <dimen name="material_drawer_item_profile_setting_icon_padding">24dp</dimen>
+    <!-- Definition for the MiniDrawer item -->
+    <dimen name="material_mini_drawer_item">72dp</dimen>
+    <dimen name="material_mini_drawer_item_padding">4dp</dimen>
+    <dimen name="material_mini_drawer_item_padding_sides">8dp</dimen>
+    <dimen name="material_mini_drawer_item_icon">56dp</dimen>
+    <dimen name="material_mini_drawer_item_icon_padding">16dp</dimen>
+    <dimen name="material_mini_drawer_item_badge_text">12sp</dimen>
+    <dimen name="material_mini_drawer_item_profile_icon">40dp</dimen>
+    <dimen name="material_mini_drawer_item_profile_icon_padding">16dp</dimen>
+
+    <!-- Definition for the section item -->
+    <dimen name="material_drawer_item_section_text">14sp</dimen>
+</resources>

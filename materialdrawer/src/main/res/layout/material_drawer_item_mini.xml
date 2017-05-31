@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/material_mini_drawer_item"
+    android:layout_height="@dimen/material_mini_drawer_item"
+    android:paddingBottom="@dimen/material_mini_drawer_item_padding"
+    android:paddingEnd="@dimen/material_mini_drawer_item_padding_sides"
+    android:paddingLeft="@dimen/material_mini_drawer_item_padding_sides"
+    android:paddingRight="@dimen/material_mini_drawer_item_padding_sides"
+    android:paddingStart="@dimen/material_mini_drawer_item_padding_sides"
+    android:paddingTop="@dimen/material_mini_drawer_item_padding">
+
+    <ImageView
+        android:id="@+id/material_drawer_icon"
+        android:layout_width="@dimen/material_mini_drawer_item_icon"
+        android:layout_height="@dimen/material_mini_drawer_item_icon"
+        android:layout_gravity="center"
+        android:padding="@dimen/material_mini_drawer_item_icon_padding"
+        android:scaleType="fitXY" />
+
+    <TextView
+        android:id="@+id/material_drawer_badge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:lines="1"
+        android:maxLines="1"
+        android:padding="1dp"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
+        android:textSize="@dimen/material_mini_drawer_item_badge_text"
+        tools:text="99" />
+</FrameLayout>
