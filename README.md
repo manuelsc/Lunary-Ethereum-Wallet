@@ -28,17 +28,17 @@ public class APIKey {
 ```
 
 ## Thanks to:
-[Web3j](https://github.com/web3j/web3j)
-[FloatingActionButton](https://github.com/Clans/FloatingActionButton)
-[MaterialDrawer](https://github.com/mikepenz/MaterialDrawer)
-[MPAndroidChart](https://github.com/PhilJay/MPAndroidChart)
-[zxing](https://github.com/zxing/zxing)
-[RateThisApp](https://github.com/kobakei/Android-RateThisApp)
-[AppIntro](https://github.com/apl-devs/AppIntro)
+* [Web3j](https://github.com/web3j/web3j)
+* [FloatingActionButton](https://github.com/Clans/FloatingActionButton)
+* [MaterialDrawer](https://github.com/mikepenz/MaterialDrawer)
+* [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart)
+* [zxing](https://github.com/zxing/zxing)
+* [RateThisApp](https://github.com/kobakei/Android-RateThisApp)
+* [AppIntro](https://github.com/apl-devs/AppIntro)
 
 ## Web APIs:
-[Etherscan.io](https://etherscan.io/)
-[Poloniex.com](https://poloniex.com/)
+* [Etherscan.io](https://etherscan.io/)
+* [Poloniex.com](https://poloniex.com/)
 
 ## Donations / Support Lunary
 Ethereum: 0xa9981a33f6b1A18da5Db58148B2357f22B44e1e0

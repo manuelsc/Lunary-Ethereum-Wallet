@@ -7,6 +7,7 @@
 /build
 /captures
 .externalNativeBuild
+
 # Built application files
 *.apk
 *.ap_
@@ -67,3 +68,4 @@ freeline_project_description.json
 app/src/main/java/rehanced/com/simpleetherwallet/APIKey.java
 app/src/main/res/xml/global_tracker.xml
 app/src/main/java/rehanced/com/simpleetherwallet/utils/FakeAPIKeyConverter.java
+
