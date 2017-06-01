@@ -134,7 +134,7 @@ public class QRScanActivity extends AppCompatActivity implements ZXingScannerVie
         }
 
         Intent data = new Intent();
-        data.putExtra("ADDRESS", address);
+        data.putExtra("ADDRESS", address.toLowerCase());
         if(address.length() > 42 && !address.startsWith("0x") && amount.length() <= 0){
             type = PRIVATE_KEY;
         }
