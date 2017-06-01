@@ -11,9 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-
 import rehanced.com.simpleetherwallet.R;
 import rehanced.com.simpleetherwallet.utils.Settings;
 
@@ -25,7 +22,6 @@ public class WalletGenActivity extends AppCompatActivity {
     private EditText passwordConfirm;
     private CoordinatorLayout coord;
     private TextView walletGenText, toolbar_title;
-    private Tracker mTracker;
     private String privateKeyProvided;
 
     @Override
@@ -56,10 +52,9 @@ public class WalletGenActivity extends AppCompatActivity {
             mEmailSignInButton.setText("Import");
         }
 
-        AnalyticsApplication application = (AnalyticsApplication) getApplication();
-        mTracker = application.getDefaultTracker();
-        mTracker.setScreenName("Walletgen Activity" );
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        if(((AnalyticsApplication) this.getApplication()).isGooglePlayBuild()) {
+            ((AnalyticsApplication) this.getApplication()).track("Walletgen Activity");
+        }
     }
 
     private void gen() {
@@ -74,10 +69,9 @@ public class WalletGenActivity extends AppCompatActivity {
         Settings.walletBeingGenerated = true; // Lock so a user can only generate one wallet at a time
 
         // For statistics only
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("Action")
-                .setAction("Wallet generated")
-                .build());
+        if(((AnalyticsApplication) this.getApplication()).isGooglePlayBuild()) {
+            ((AnalyticsApplication) this.getApplication()).event("Wallet generated");
+        }
 
         Intent data = new Intent();
         data.putExtra("PASSWORD", passwordConfirm.getText().toString());

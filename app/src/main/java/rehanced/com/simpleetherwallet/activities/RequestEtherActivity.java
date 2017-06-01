@@ -16,8 +16,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 
@@ -96,9 +94,9 @@ public class RequestEtherActivity extends AppCompatActivity implements View.OnCl
 
         update();
         updateQR();
-        Tracker t = ((AnalyticsApplication) this.getApplication()).getDefaultTracker();
-        t.setScreenName("Request Activity");
-        t.send(new HitBuilders.ScreenViewBuilder().build());
+        if(((AnalyticsApplication) this.getApplication()).isGooglePlayBuild()) {
+            ((AnalyticsApplication) this.getApplication()).track("Request Activity");
+        }
     }
 
 

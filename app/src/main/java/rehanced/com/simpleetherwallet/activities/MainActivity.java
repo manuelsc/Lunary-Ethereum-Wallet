@@ -27,6 +27,10 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.squareup.okhttp.Response;
 
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.security.Security;
+
 import rehanced.com.simpleetherwallet.R;
 import rehanced.com.simpleetherwallet.data.WatchWallet;
 import rehanced.com.simpleetherwallet.fragments.FragmentPrice;
@@ -42,10 +46,6 @@ import rehanced.com.simpleetherwallet.utils.ExternalStorageHandler;
 import rehanced.com.simpleetherwallet.utils.OwnWalletUtils;
 import rehanced.com.simpleetherwallet.utils.Settings;
 import rehanced.com.simpleetherwallet.utils.WalletStorage;
-
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.security.Security;
 
 public class MainActivity extends AppCompatActivity implements NetworkUpdateListener{
 
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements NetworkUpdateList
                 .withHeaderBackground(R.drawable.ethereum_bg)
                 .build();
 
-        Drawer result = new DrawerBuilder()
+        DrawerBuilder wip = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
                 .withAccountHeader(headerResult)
@@ -112,9 +112,13 @@ public class MainActivity extends AppCompatActivity implements NetworkUpdateList
                     public void onDrawerSlide(View drawerView, float slideOffset) {
                         //changeStatusBarTranslucent();
                     }
-                })
-                .build();
+                });
 
+        if(! ((AnalyticsApplication) this.getApplication()).isGooglePlayBuild()) {
+            wip.addDrawerItems(new PrimaryDrawerItem().withName(getResources().getString(R.string.drawer_donate)).withIcon(R.drawable.ic_action_donate));
+        }
+
+        Drawer result = wip.build();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         result.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
@@ -147,8 +151,8 @@ public class MainActivity extends AppCompatActivity implements NetworkUpdateList
             e.printStackTrace();
         }
 
-        NotificationLauncher.getInstance().start(this);
         Settings.initiate(this);
+        NotificationLauncher.getInstance().start(this);
 
         if(getIntent().hasExtra("STARTAT")){ //  Click on Notification, show Transactions
             if(tabLayout != null)
@@ -161,16 +165,15 @@ public class MainActivity extends AppCompatActivity implements NetworkUpdateList
 
         mViewPager.setOffscreenPageLimit(3);
 
-        // Rate Dialog
-        try {
-            RateThisApp.onCreate(this);
-            RateThisApp.Config config = new RateThisApp.Config(3, 5);
-            RateThisApp.init(config);
-            RateThisApp.showRateDialogIfNeeded(this, R.style.AlertDialogTheme);
-        } catch(Exception e){
-
+        // Rate Dialog (only show on google play builds)
+        if(((AnalyticsApplication) this.getApplication()).isGooglePlayBuild()) {
+            try {
+                RateThisApp.onCreate(this);
+                RateThisApp.Config config = new RateThisApp.Config(3, 5);
+                RateThisApp.init(config);
+                RateThisApp.showRateDialogIfNeeded(this, R.style.AlertDialogTheme);
+            } catch (Exception e) {}
         }
-
         //Security.removeProvider("BC");
         Security.insertProviderAt(new org.spongycastle.jce.provider.BouncyCastleProvider(), 1);
     }
@@ -375,6 +378,15 @@ public class MainActivity extends AppCompatActivity implements NetworkUpdateList
                         .setIcon(android.R.drawable.ic_dialog_info)
                         .show();
                 break;
+            }
+            case 4: {
+                if(WalletStorage.getInstance(this).getFullOnly().size() == 0){
+                    Dialogs.noFullWallet(this);
+                } else {
+                    Intent donate = new Intent(this, SendActivity.class);
+                    donate.putExtra("TO_ADDRESS", "0xa9981a33f6b1A18da5Db58148B2357f22B44e1e0");
+                    startActivity(donate);
+                }
             }
             default: {
                 return;

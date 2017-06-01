@@ -30,8 +30,12 @@ public class AddressNameConverter {
     private AddressNameConverter(Context context){
         try {
             load(context);
+            if(!contains("0xa9981a33f6b1a18da5db58148b2357f22b44e1e0")){
+                put("0xa9981a33f6b1a18da5db58148b2357f22b44e1e0", "Lunary Development ✓", context);
+            }
         } catch (Exception e) {
             mapdb = new HashMap<String, String>();
+            put("0xa9981a33f6b1a18da5db58148b2357f22b44e1e0", "Lunary Development ✓", context);
         }
     }
 

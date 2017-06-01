@@ -14,7 +14,7 @@
     <string name="fab_setwalletname">Kontonamen ändern</string>
     <string name="drawer_import">Konten importieren</string>
     <string name="drawer_about">Über uns</string>
-
+    <string name="drawer_donate">Spenden</string>
 
     <string name="fr_price_current_price">Aktueller Preis</string>
     <string name="fr_wallet_overall_balance">Gesamt Kontostand</string>

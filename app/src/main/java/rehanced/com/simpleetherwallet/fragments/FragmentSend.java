@@ -24,8 +24,6 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -56,7 +54,6 @@ public class FragmentSend extends Fragment {
     private SeekBar gas;
     private ImageView toicon, fromicon;
     private Spinner spinner;
-    private Tracker mTracker;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -220,9 +217,9 @@ public class FragmentSend extends Fragment {
 
         spinner.setSelection(0);
 
-        mTracker = ((AnalyticsApplication) ac.getApplication()).getDefaultTracker();
-        mTracker.setScreenName("Send Fragment");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        if(((AnalyticsApplication) ac.getApplication()).isGooglePlayBuild()) {
+            ((AnalyticsApplication) ac.getApplication()).track("Send Fragment");
+        }
 
         return rootView;
     }
@@ -289,10 +286,9 @@ public class FragmentSend extends Fragment {
         ac.startService(txService);
 
         // For statistics
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("Action")
-                .setAction("Send Ether")
-                .build());
+        if(((AnalyticsApplication) ac.getApplication()).isGooglePlayBuild()) {
+            ((AnalyticsApplication) ac.getApplication()).event("Send Ether");
+        }
 
         Intent data = new Intent();
         data.putExtra("FROM_ADDRESS", fromAddress);

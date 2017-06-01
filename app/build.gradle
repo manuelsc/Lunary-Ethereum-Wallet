@@ -7,8 +7,8 @@ android {
         applicationId "com.rehanced.lunary"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 6
-        versionName "1.14"
+        versionCode 7
+        versionName "1.15"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
@@ -19,6 +19,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+
     compileOptions {
         targetCompatibility 1.7
         sourceCompatibility 1.7
@@ -40,6 +42,14 @@ android {
     lintOptions {
         disable 'MissingTranslation'
     }
+
+    productFlavors {
+        googleplay {
+        }
+
+        fdroid {
+        }
+    }
 }
 
 
@@ -52,8 +62,8 @@ dependencies {
     compile project(path: ':materialdrawer')
     compile project(':MPChartLib')
     compile project(':Fab')
-    compile project(path: ':mobilevisionbarcodescanner')
-    compile files('libs/core-3.2.0.jar')
+    compile 'me.dm7.barcodescanner:zxing:1.8.4'
+    //compile files('libs/core-3.2.0.jar')
     //compile files('libs/spongycastle.jar')
     //compile files('libs/prov-1.56.0.0.jar')
     compile 'com.android.support:appcompat-v7:25.3.1'
@@ -66,7 +76,7 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:25.3.1'
     compile project(':autofittextview')
     compile 'org.web3j:core-android:2.2.1'
-    compile 'com.google.android.gms:play-services-analytics:10.2.6'
+    googleplayCompile 'com.google.android.gms:play-services-analytics:10.2.6'
     compile project(':appintro')
     compile project(path: ':appintro')
 }

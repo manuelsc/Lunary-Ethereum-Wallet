@@ -27,8 +27,6 @@ import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -123,9 +121,9 @@ public abstract class FragmentTransactionsAbstract extends Fragment implements V
         update();
         walletAdapter.notifyDataSetChanged();
 
-        Tracker t = ((AnalyticsApplication) ac.getApplication()).getDefaultTracker();
-        t.setScreenName("Transaction Fragment");
-        t.send(new HitBuilders.ScreenViewBuilder().build());
+        if(((AnalyticsApplication) ac.getApplication()).isGooglePlayBuild()) {
+            ((AnalyticsApplication) ac.getApplication()).track("Transaction Fragment");
+        }
         return rootView;
     }
 

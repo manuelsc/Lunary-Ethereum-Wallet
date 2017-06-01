@@ -9,7 +9,6 @@
       <module fileurl="file://$PROJECT_DIR$/appintro/appintro.iml" filepath="$PROJECT_DIR$/appintro/appintro.iml" />
       <module fileurl="file://$PROJECT_DIR$/autofittextview/autofittextview.iml" filepath="$PROJECT_DIR$/autofittextview/autofittextview.iml" />
       <module fileurl="file://$PROJECT_DIR$/materialdrawer/materialdrawer.iml" filepath="$PROJECT_DIR$/materialdrawer/materialdrawer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mobilevisionbarcodescanner/mobilevisionbarcodescanner.iml" filepath="$PROJECT_DIR$/mobilevisionbarcodescanner/mobilevisionbarcodescanner.iml" />
       <module fileurl="file://$PROJECT_DIR$/ratethisapp/ratethisapp.iml" filepath="$PROJECT_DIR$/ratethisapp/ratethisapp.iml" />
     </modules>
   </component>

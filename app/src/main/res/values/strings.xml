@@ -15,7 +15,7 @@
     <string name="fab_setwalletname">Set Wallet Name</string>
     <string name="drawer_import">Import Wallets</string>
     <string name="drawer_about">About Us</string>
-
+    <string name="drawer_donate">Donate</string>
 
     <string name="fr_price_current_price">Current Price</string>
     <string name="fr_wallet_overall_balance">Overall Balance</string>

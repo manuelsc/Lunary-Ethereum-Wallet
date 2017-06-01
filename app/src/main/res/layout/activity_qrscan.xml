@@ -37,15 +37,10 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <fragment
+    <FrameLayout
         android:id="@+id/barcode"
-        android:name="com.google.android.gms.samples.vision.barcodereader.BarcodeCapture"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:gvb_auto_focus="true"
-        app:gvb_code_format="qr_code"
-        app:gvb_flash="false"
-        app:gvb_rect_colors="@array/rect_color" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>
 

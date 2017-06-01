@@ -27,8 +27,6 @@ import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -180,9 +178,9 @@ public class FragmentWallets extends Fragment implements View.OnClickListener, V
                 ac.snackError("Can't fetch account balances. No connection?");
         }
 
-        Tracker t = ((AnalyticsApplication) ac.getApplication()).getDefaultTracker();
-        t.setScreenName("Wallet Fragment");
-        t.send(new HitBuilders.ScreenViewBuilder().build());
+        if(((AnalyticsApplication) ac.getApplication()).isGooglePlayBuild()) {
+            ((AnalyticsApplication) ac.getApplication()).track("Wallet Fragment");
+        }
 
         return rootView;
     }

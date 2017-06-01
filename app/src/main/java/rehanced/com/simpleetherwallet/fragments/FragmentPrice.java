@@ -24,8 +24,6 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IFillFormatter;
 import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -56,6 +54,7 @@ public class FragmentPrice extends Fragment {
     private ImageView left, right;
     private MainActivity ac;
     private LinearLayout colorPadding;
+    private LinearLayout priceSwitch;
 
     private static final int [] TIMESTAMPS = new int[]{
             86400, // 24 hours
@@ -92,8 +91,9 @@ public class FragmentPrice extends Fragment {
         price = (TextView) rootView.findViewById(R.id.price);
         left = (ImageView) rootView.findViewById(R.id.wleft);
         right = (ImageView) rootView.findViewById(R.id.wright);
+        priceSwitch = ((LinearLayout) rootView.findViewById(R.id.priceSwitch));
 
-        price.setOnClickListener(new View.OnClickListener() {
+        priceSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 displayInUsd = !displayInUsd;
@@ -110,6 +110,9 @@ public class FragmentPrice extends Fragment {
 
         if(ac != null && ac.getPreferences() != null)
             displayInUsd = ac.getPreferences().getBoolean("price_displayInUsd", true);
+
+        if(ac != null && ac.getPreferences() != null)
+            displayType = ac.getPreferences().getInt("displaytype_chart", 1);
 
         left.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,10 +140,9 @@ public class FragmentPrice extends Fragment {
             }
         });
 
-
-        Tracker t = ((AnalyticsApplication) ac.getApplication()).getDefaultTracker();
-        t.setScreenName("Price Fragment");
-        t.send(new HitBuilders.ScreenViewBuilder().build());
+        if(((AnalyticsApplication) ac.getApplication()).isGooglePlayBuild()) {
+            ((AnalyticsApplication) ac.getApplication()).track("Price Fragment");
+        }
 
         general();
         update();
@@ -163,6 +165,12 @@ public class FragmentPrice extends Fragment {
         priceChart.setVisibility(View.INVISIBLE);
         chartTitle.setText(TITLE_TEXTS[displayType]);
         colorPadding.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLittleDarker));
+        if(ac != null && ac.getPreferences() != null){
+            SharedPreferences.Editor editor = ac.getPreferences().edit();
+            editor.putInt("displaytype_chart", displayType);
+            editor.apply();
+        }
+
         //swipeLayout.setRefreshing(true);
         try {
             loadPriceData(TIMESTAMPS[displayType], PERIOD[displayType]);
@@ -194,7 +202,7 @@ public class FragmentPrice extends Fragment {
                     float commas = displayInUsd ? 100 : 10000;
                     for (int i = 0; i < data.length(); i++) {
                         JSONObject o = data.getJSONObject(i);
-                        yVals.add(new Entry(o.getLong("date"), (float) Math.floor(o.getDouble("weightedAverage")*exchangeRate * commas) / commas));
+                        yVals.add(new Entry(o.getLong("date"), (float) Math.floor(o.getDouble("high")*exchangeRate * commas) / commas));
                     }
 
                     ac.runOnUiThread(new Runnable() {

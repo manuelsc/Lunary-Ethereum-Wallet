@@ -7,15 +7,14 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +27,7 @@ import rehanced.com.simpleetherwallet.data.WalletDisplay;
 import rehanced.com.simpleetherwallet.utils.AddressNameConverter;
 import rehanced.com.simpleetherwallet.utils.WalletAdapter;
 
-public class FragmentChooseRecipient extends Fragment implements View.OnClickListener{
+public class FragmentChooseRecipient extends Fragment implements View.OnClickListener, View.OnCreateContextMenuListener{
 
     private RecyclerView recyclerView;
     private WalletAdapter walletAdapter;
@@ -83,12 +82,40 @@ public class FragmentChooseRecipient extends Fragment implements View.OnClickLis
 
         update();
 
-        Tracker t = ((AnalyticsApplication) ac.getApplication()).getDefaultTracker();
-        t.setScreenName("Recipient Fragment");
-        t.send(new HitBuilders.ScreenViewBuilder().build());
+        if(((AnalyticsApplication) ac.getApplication()).isGooglePlayBuild()) {
+            ((AnalyticsApplication) ac.getApplication()).track("Recipient Fragment");
+        }
 
         return rootView;
     }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        menu.setHeaderTitle("Addressbook Settings");
+        menu.add(0, 400, 0, "Remove");
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        int position = -1;
+        try {
+            position = walletAdapter.getPosition();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return super.onContextItemSelected(item);
+        }
+
+        switch (item.getItemId()) {
+            case 400: // Remove
+                AddressNameConverter.getInstance(ac).put(wallets.get(position).getPublicKey(), null, ac);
+                wallets.remove(position);
+                if(walletAdapter != null)
+                    walletAdapter.notifyDataSetChanged();
+                break;
+        }
+        return super.onContextItemSelected(item);
+    }
+
 
     public void setRecipientAddress(String address){
         if(addressBox == null) return;
