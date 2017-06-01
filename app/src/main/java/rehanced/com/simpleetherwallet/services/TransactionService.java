@@ -4,8 +4,6 @@ import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -13,6 +11,7 @@ import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.spongycastle.util.encoders.Hex;
 import org.web3j.crypto.Credentials;
@@ -49,8 +48,6 @@ public class TransactionService extends IntentService {
             String password = intent.getStringExtra("PASSWORD");
 
             final Credentials keys = WalletStorage.getInstance(getApplicationContext()).getFullWallet(getApplicationContext(), password, fromAddress);
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            final long currentNonceForAddress = preferences.getLong("NONCE"+fromAddress, -1) + 1 ; // -1 weil 0 auch gültig ist, sprich keine Transaktion und im nächsten schritt +1 = 0 CHECK;
 
             EtherscanAPI.getInstance().getNonceForAddress(fromAddress, new Callback() {
                 @Override
@@ -82,9 +79,7 @@ public class TransactionService extends IntentService {
 
                         byte [] signed = TransactionEncoder.signMessage(tx, (byte) 1, keys);
 
-
                         forwardTX(signed);
-
                     } catch(Exception e){
                         e.printStackTrace();
                         error("Can't connect to network, retry it later");
@@ -107,10 +102,19 @@ public class TransactionService extends IntentService {
 
             @Override
             public void onResponse(Response response) throws IOException {
+                String received = response.body().string();
                 try{
-                    suc(new JSONObject(response.body().string()).getString("result"));
+                    suc(new JSONObject(received).getString("result"));
                 }catch(Exception e){
-                    e.printStackTrace();
+                    // Advanced error handling. If etherscan returns error message show the shortened version in notification. Else abbort with unknown error
+                    try {
+                        String errormsg = new JSONObject(received).getJSONObject("error").getString("message");
+                        if(errormsg.indexOf(".") > 0)
+                            errormsg = errormsg.substring(0, errormsg.indexOf("."));
+                        error(errormsg); // f.E Insufficient funds
+                    } catch (JSONException e1) {
+                        error("Unknown error occured");
+                    }
                 }
             }
         });

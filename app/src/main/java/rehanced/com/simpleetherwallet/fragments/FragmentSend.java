@@ -30,7 +30,9 @@ import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
+import rehanced.com.simpleetherwallet.BuildConfig;
 import rehanced.com.simpleetherwallet.R;
 import rehanced.com.simpleetherwallet.activities.AnalyticsApplication;
 import rehanced.com.simpleetherwallet.activities.SendActivity;
@@ -54,6 +56,7 @@ public class FragmentSend extends Fragment {
     private SeekBar gas;
     private ImageView toicon, fromicon;
     private Spinner spinner;
+    private BigInteger gaslimit = new BigInteger("21000");
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -203,7 +206,7 @@ public class FragmentSend extends Fragment {
                     BigDecimal enteredAmount = new BigDecimal(totalCost.getText().toString());
                     BigDecimal available = new BigDecimal(ethAvailable.getText().toString());
 
-                    if(enteredAmount.compareTo(available) < 1 ){
+                    if(enteredAmount.compareTo(available) < 1 || BuildConfig.DEBUG){
                         askForPasswordAndDecode(spinner.getSelectedItem().toString());
                     } else {
                         ac.snackError("Not enough Ether on that Address");
@@ -224,7 +227,25 @@ public class FragmentSend extends Fragment {
         return rootView;
     }
 
+    private void getEstimatedGasPriceLimit(){
+        try {
+            EtherscanAPI.getInstance().getGasLimitEstimate(toAddress.getText().toString(), new Callback() {
+                @Override
+                public void onFailure(Request request, IOException e) {}
 
+                @Override
+                public void onResponse(Response response) throws IOException {
+                    try {
+                        gaslimit = ResponseParser.parseGasPrice(response.body().string());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void askForPasswordAndDecode(final String fromAddress){
         AlertDialog.Builder builder = new AlertDialog.Builder(ac,  R.style.AlertDialogTheme);
@@ -281,7 +302,7 @@ public class FragmentSend extends Fragment {
         txService.putExtra("TO_ADDRESS", toAddress.getText().toString());
         txService.putExtra("AMOUNT", amount.getText().toString()); // In ether, gets converted by the service itself
         txService.putExtra("GAS_PRICE", new BigDecimal((gas.getProgress()+2)+"").multiply(new BigDecimal("1000000000")).toPlainString());// "21000000000");
-        txService.putExtra("GAS_LIMIT", "21000"); // 21000 is exactly one TX cost (TODO: Let user raise it for Contract executions)
+        txService.putExtra("GAS_LIMIT", gaslimit.toString()); // 21000 is exactly one TX cost (TODO: Let user raise it for Contract executions)
         txService.putExtra("PASSWORD", password);
         ac.startService(txService);
 
@@ -305,6 +326,7 @@ public class FragmentSend extends Fragment {
         String name = AddressNameConverter.getInstance(c).get(to);
         toName.setText(name == null ? to.substring(0, 10) : name);
         toicon.setImageBitmap(Blockies.createIcon(to.toLowerCase()));
+        getEstimatedGasPriceLimit();
     }
 
 

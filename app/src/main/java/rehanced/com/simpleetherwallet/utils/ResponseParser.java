@@ -88,6 +88,11 @@ public class ResponseParser {
         return new BigDecimal(balance).divide(new BigDecimal(1000000000000000000d), comma, BigDecimal.ROUND_UP).toPlainString();
     }
 
+    public static BigInteger parseGasPrice(String response) throws Exception {
+        String gasprice = new JSONObject(response).getString("result");
+        return new BigInteger(gasprice.substring(2), 16);
+    }
+
     // Only call for each address, not the combined one
     /*public static void saveNewestNoncesOfAddresses(Context c, ArrayList<TransactionDisplay> tx, String address){
         try{

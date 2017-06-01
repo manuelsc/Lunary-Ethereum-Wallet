@@ -41,6 +41,14 @@ public class EtherscanAPI {
         get("http://api.etherscan.io/api?module=stats&action=ethprice&apikey="+token, b);
     }
 
+    public void getGasPrice(Callback b) throws IOException{
+        get("https://api.etherscan.io/api?module=proxy&action=eth_gasPrice&apikey="+token, b);
+    }
+
+    public void getGasLimitEstimate(String to, Callback b) throws IOException{
+        get("https://api.etherscan.io/api?module=proxy&action=eth_estimateGas&to="+to+"&value=0xff22&gasPrice=0x051da038cc&gas=0xffffff&apikey="+token, b);
+    }
+
     public void getBalance(String address, Callback b) throws IOException {
         get("http://api.etherscan.io/api?module=account&action=balance&address="+address+"&apikey="+token, b);
     }
