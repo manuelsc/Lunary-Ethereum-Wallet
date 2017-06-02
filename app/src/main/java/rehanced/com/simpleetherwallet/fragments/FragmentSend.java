@@ -99,13 +99,15 @@ public class FragmentSend extends Fragment {
         gas.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                gasText.setText(i+2+"");
-                BigDecimal gasPrice = (new BigDecimal("21000").multiply(new BigDecimal((i+2)+""))).divide(new BigDecimal("1000000000"), 6, BigDecimal.ROUND_DOWN);
+                gasText.setText(i+1+"");
+                BigDecimal gasPrice = (new BigDecimal("21000").multiply(new BigDecimal((i+1)+""))).divide(new BigDecimal("1000000000"), 6, BigDecimal.ROUND_DOWN);
                 String cost =  gasPrice.toPlainString();
 
                 txCost.setText(cost);
                 if(amount.getText().length() > 0)
                     totalCost.setText(gasPrice.add(new BigDecimal(amount.getText().toString())).toPlainString());
+                else
+                    totalCost.setText(cost);
             }
 
             @Override
@@ -206,7 +208,7 @@ public class FragmentSend extends Fragment {
                     BigDecimal enteredAmount = new BigDecimal(totalCost.getText().toString());
                     BigDecimal available = new BigDecimal(ethAvailable.getText().toString());
 
-                    if(enteredAmount.compareTo(available) < 1 || BuildConfig.DEBUG){
+                    if(enteredAmount.compareTo(available) < 0 || BuildConfig.DEBUG){
                         askForPasswordAndDecode(spinner.getSelectedItem().toString());
                     } else {
                         ac.snackError("Not enough Ether on that Address");
@@ -301,7 +303,7 @@ public class FragmentSend extends Fragment {
         txService.putExtra("FROM_ADDRESS", fromAddress);
         txService.putExtra("TO_ADDRESS", toAddress.getText().toString());
         txService.putExtra("AMOUNT", amount.getText().toString()); // In ether, gets converted by the service itself
-        txService.putExtra("GAS_PRICE", new BigDecimal((gas.getProgress()+2)+"").multiply(new BigDecimal("1000000000")).toPlainString());// "21000000000");
+        txService.putExtra("GAS_PRICE", new BigDecimal((gas.getProgress()+1)+"").multiply(new BigDecimal("1000000000")).toPlainString());// "21000000000");
         txService.putExtra("GAS_LIMIT", gaslimit.toString());
         txService.putExtra("PASSWORD", password);
         ac.startService(txService);
