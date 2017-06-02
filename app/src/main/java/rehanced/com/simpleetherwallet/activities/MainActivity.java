@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements NetworkUpdateList
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(getResources().getString(R.string.drawer_import)).withIcon(R.drawable.ic_action_wallet3),
                         new PrimaryDrawerItem().withName(getResources().getString(R.string.action_settings)).withIcon(R.drawable.ic_setting),
-                        new PrimaryDrawerItem().withName(getResources().getString(R.string.action_settings)).withIcon(R.drawable.ic_about)
+                        new PrimaryDrawerItem().withName(getResources().getString(R.string.drawer_about)).withIcon(R.drawable.ic_about)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -176,6 +176,7 @@ public class MainActivity extends AppCompatActivity implements NetworkUpdateList
         }
         //Security.removeProvider("BC");
         Security.insertProviderAt(new org.spongycastle.jce.provider.BouncyCastleProvider(), 1);
+
     }
 
     // Spongy Castle Provider

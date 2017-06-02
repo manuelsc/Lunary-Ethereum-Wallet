@@ -11,7 +11,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Locale;
+import java.text.DecimalFormat;
 
 import rehanced.com.simpleetherwallet.data.CurrencyEntry;
 import rehanced.com.simpleetherwallet.interfaces.NetworkUpdateListener;
@@ -22,6 +22,9 @@ public class ExchangeCalculator {
     private static ExchangeCalculator instance;
     private long lastUpdateTimestamp = 0;
     private double rateForChartDisplay = 1;
+    private DecimalFormat formatterUsd = new DecimalFormat("#,###,###.##");
+    private DecimalFormat formatterCrypt = new DecimalFormat("#,###,###.####");
+    private DecimalFormat formatterCryptExact = new DecimalFormat("#,###,###.#######");
 
     private ExchangeCalculator(){}
 
@@ -74,26 +77,44 @@ public class ExchangeCalculator {
     }
 
     public String displayBalanceNicely(double d){
-        if(d == (long) d && index == 2)
-            return String.format(Locale.US, "%d",(long)d);
+        if(index == 2)
+            return displayUsdNicely(d);
         else
-            return String.format(Locale.US, "%s",d);
+            return displayEthNicely(d);
     }
+
+    public String displayUsdNicely(double d){
+        return formatterUsd.format(d);
+    }
+
+    public String displayEthNicely(double d){
+        return formatterCrypt.format(d);
+    }
+
+    public String displayEthNicelyExact(double d) {
+        return formatterCryptExact.format(d);
+    }
+
 
     public double convertRate(double balance, double rate){
         if(index == 2) {
-            if (balance * rate > 100000) // dont display cents if bigger than 100k
+            if (balance * rate >= 100000) // dont display cents if bigger than 100k
                 return (int)Math.floor(balance * rate);
             return Math.floor(balance * rate * 100) / 100;
-        } else
+        } else {
+            if (balance * rate >= 1000)
+                return Math.floor(balance * rate * 10) / 10;
+            if (balance * rate >= 100)
+                return Math.floor(balance * rate * 100) / 100;
             return Math.floor(balance * rate * 1000) / 1000;
+        }
     }
 
     public String convertRateExact(BigDecimal balance, double rate){
         if(index == 2) {
-            return (Math.floor(balance.doubleValue() * rate * 100) / 100) + "";
+            return displayUsdNicely(Math.floor(balance.doubleValue() * rate * 100) / 100) + "";
         } else
-            return balance.multiply(new BigDecimal(rate)).setScale(7, RoundingMode.CEILING).toPlainString();
+            return displayEthNicelyExact(balance.multiply(new BigDecimal(rate)).setScale(7, RoundingMode.CEILING).doubleValue());
     }
 
     public double convertToUsd(double balance){

@@ -59,7 +59,7 @@ public class NotificationService extends IntentService {
                         String address = "";
                         SharedPreferences.Editor editor = preferences.edit();
                         for(int i = 0; i < data.length(); i++){
-                            if(!preferences.getString(data.getJSONObject(i).getString("account"), data.getJSONObject(i).getString("balance")).equals(data.getJSONObject(i).getString("balance"))) { // TODO: ADD ! AT THE BEGINNING
+                            if(!preferences.getString(data.getJSONObject(i).getString("account"), data.getJSONObject(i).getString("balance")).equals(data.getJSONObject(i).getString("balance"))) {
                                 if(new BigInteger(preferences.getString(data.getJSONObject(i).getString("account"), data.getJSONObject(i).getString("balance"))).compareTo(new BigInteger(data.getJSONObject(i).getString("balance"))) < 1) { // Nur wenn höhere Balance als vorher
                                     notify = true;
                                     address = data.getJSONObject(i).getString("account");

@@ -318,7 +318,10 @@ public class FragmentPrice extends Fragment {
 
     public void update(){
         if(price != null)
-            price.setText(displayInUsd ? ExchangeCalculator.getInstance().getUSDPrice()+" "+ExchangeCalculator.getInstance().getMainCurreny().getName() : ExchangeCalculator.getInstance().getBTCPrice()+" BTC");
+            price.setText(displayInUsd ?
+                    ExchangeCalculator.getInstance().displayUsdNicely(ExchangeCalculator.getInstance().getUSDPrice())+" "+ExchangeCalculator.getInstance().getMainCurreny().getName() :
+                    ExchangeCalculator.getInstance().displayEthNicely(ExchangeCalculator.getInstance().getBTCPrice())+" BTC"
+            );
         onItemsLoadComplete();
     }
 

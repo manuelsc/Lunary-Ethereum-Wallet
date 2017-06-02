@@ -83,7 +83,7 @@ public class RequestEtherActivity extends AppCompatActivity implements View.OnCl
                 if(s.length() != 0) {
                     try {
                         double amountd = Double.parseDouble(amount.getText().toString());
-                        usdPrice.setText(ExchangeCalculator.getInstance().convertToUsd(amountd)+" "+ExchangeCalculator.getInstance().getMainCurreny().getName());
+                        usdPrice.setText(ExchangeCalculator.getInstance().displayUsdNicely(ExchangeCalculator.getInstance().convertToUsd(amountd))+" "+ExchangeCalculator.getInstance().getMainCurreny().getName());
                         updateQR();
                     } catch(Exception e){
                         e.printStackTrace();

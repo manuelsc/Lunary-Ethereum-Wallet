@@ -87,7 +87,7 @@ public class FragmentSend extends Fragment {
             if(amount.getText().toString().length() != 0) {
                 try {
                     double amountd = Double.parseDouble(amount.getText().toString());
-                    usdPrice.setText(ExchangeCalculator.getInstance().convertToUsd(amountd)+" "+ExchangeCalculator.getInstance().getMainCurreny().getName());
+                    usdPrice.setText(ExchangeCalculator.getInstance().displayUsdNicely(ExchangeCalculator.getInstance().convertToUsd(amountd))+" "+ExchangeCalculator.getInstance().getMainCurreny().getName());
 
                     totalCost.setText(new BigDecimal(txCost.getText().toString()).add(new BigDecimal(amount.getText().toString())).toPlainString());
                 } catch(Exception e){
@@ -302,7 +302,7 @@ public class FragmentSend extends Fragment {
         txService.putExtra("TO_ADDRESS", toAddress.getText().toString());
         txService.putExtra("AMOUNT", amount.getText().toString()); // In ether, gets converted by the service itself
         txService.putExtra("GAS_PRICE", new BigDecimal((gas.getProgress()+2)+"").multiply(new BigDecimal("1000000000")).toPlainString());// "21000000000");
-        txService.putExtra("GAS_LIMIT", gaslimit.toString()); // 21000 is exactly one TX cost (TODO: Let user raise it for Contract executions)
+        txService.putExtra("GAS_LIMIT", gaslimit.toString());
         txService.putExtra("PASSWORD", password);
         ac.startService(txService);
 

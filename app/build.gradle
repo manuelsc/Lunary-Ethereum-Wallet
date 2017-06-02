@@ -12,6 +12,9 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
+
+
+
     }
     buildTypes {
         release {
@@ -29,9 +32,6 @@ android {
     packagingOptions {
         exclude 'META-INF/NOTICE' // will not include NOTICE file
         exclude 'META-INF/LICENSE' // will not include LICENSE file
-        // as noted by @Vishnuvathsan you may also need to include
-        // variations on the file name. It depends on your dependencies.
-        // Some other common variations on notice and license file names
         exclude 'META-INF/notice'
         exclude 'META-INF/notice.txt'
         exclude 'META-INF/license'
@@ -48,14 +48,17 @@ android {
         }
 
         fdroid {
+            externalNativeBuild {
+                cmake {
+                  //  path 'CMakeLists.txt'
+                }
+            }
         }
     }
+   /* */
 }
 
-
-
 dependencies {
-    //compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -63,9 +66,6 @@ dependencies {
     compile project(':MPChartLib')
     compile project(':Fab')
     compile 'me.dm7.barcodescanner:zxing:1.8.4'
-    //compile files('libs/core-3.2.0.jar')
-    //compile files('libs/spongycastle.jar')
-    //compile files('libs/prov-1.56.0.0.jar')
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.squareup.okhttp:okhttp:2.0.0'
