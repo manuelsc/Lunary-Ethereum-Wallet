@@ -66,6 +66,5 @@ freeline_project_description.json
 
 #API Key
 app/src/googleplay/java/rehanced/com/simpleetherwallet/APIKey.java
-app/src/main/res/xml/global_tracker.xml
 app/src/googleplay/java/rehanced/com/simpleetherwallet/utils/FakeAPIKeyConverter.java
 
