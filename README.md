@@ -20,7 +20,7 @@ Lunary is a beautiful designed, easy to use, secure and Open Source Ethereum Wal
 * Supporting 8 Currencies: USD, EUR, GBP, CHF, AUD, CAD, JPY, RUB
 
 ## Build:
-Before building add your own APIKey class
+Google Play flavor requires own API key:
 ```
 public class APIKey {
     public static final String API_KEY = ""; // Enter your API Key obtained from Etherscan.io

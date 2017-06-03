@@ -1,3 +1,4 @@
+import org.apache.tools.ant.taskdefs.condition.Os
 apply plugin: 'com.android.application'
 
 android {
@@ -7,12 +8,11 @@ android {
         applicationId "com.rehanced.lunary"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 7
-        versionName "1.15"
+        versionCode 8
+        versionName "1.17"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
-
 
 
     }
@@ -22,7 +22,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
 
     compileOptions {
         targetCompatibility 1.7
@@ -48,14 +47,23 @@ android {
         }
 
         fdroid {
-            externalNativeBuild {
-                cmake {
-                  //  path 'CMakeLists.txt'
-                }
-            }
+
         }
     }
-   /* */
+
+    // call regular ndk-build(.cmd) script from app directory
+    task ndkBuild(type: Exec) {
+        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+            commandLine 'ndk-build.cmd', 'NDK_LIBS_OUT=main/jniLibs', '-C', file('src').absolutePath
+        } else {
+            commandLine 'ndk-build', 'NDK_LIBS_OUT=main/jniLibs','-C', file('src').absolutePath
+        }
+    }
+
+    tasks.withType(JavaCompile) {
+        compileTask -> compileTask.dependsOn ndkBuild
+    }
+
 }
 
 dependencies {

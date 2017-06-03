@@ -68,3 +68,6 @@ freeline_project_description.json
 app/src/googleplay/java/rehanced/com/simpleetherwallet/APIKey.java
 app/src/googleplay/java/rehanced/com/simpleetherwallet/utils/FakeAPIKeyConverter.java
 
+# Compiled libscrypts
+app/src/obj/
+app/src/main/jniLibs/

@@ -100,7 +100,7 @@ public class FragmentSend extends Fragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 gasText.setText(i+1+"");
-                BigDecimal gasPrice = (new BigDecimal("21000").multiply(new BigDecimal((i+1)+""))).divide(new BigDecimal("1000000000"), 6, BigDecimal.ROUND_DOWN);
+                BigDecimal gasPrice = (new BigDecimal(gaslimit).multiply(new BigDecimal((i+1)+""))).divide(new BigDecimal("1000000000"), 6, BigDecimal.ROUND_DOWN);
                 String cost =  gasPrice.toPlainString();
 
                 txCost.setText(cost);

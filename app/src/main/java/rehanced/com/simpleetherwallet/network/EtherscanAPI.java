@@ -1,7 +1,5 @@
 package rehanced.com.simpleetherwallet.network;
 
-import android.util.Log;
-
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -89,6 +87,5 @@ public class EtherscanAPI {
         client.setConnectTimeout(20, TimeUnit.SECONDS); // connect timeout
         client.setReadTimeout(20, TimeUnit.SECONDS);
         token = new Key(APIKey.API_KEY).toString();
-        Log.d("key", token); // TODO REMOVE
     }
 }
