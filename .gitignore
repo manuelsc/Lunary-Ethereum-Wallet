@@ -71,3 +71,7 @@ app/src/googleplay/java/rehanced/com/simpleetherwallet/utils/FakeAPIKeyConverter
 # Compiled libscrypts
 app/src/obj/
 app/src/main/jniLibs/
+
+#Tests
+app/src/test/
+app/src/androidTest/
