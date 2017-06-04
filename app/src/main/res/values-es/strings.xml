@@ -7,14 +7,12 @@
 
     <string name="fab_scan">Escanea Dirección / Clave</string>
     <string name="fab_add_watch">Observar una Cartera</string>
-    <string name="fab_add_aswatch">Guardar Cartera para 
-Observación</string>
+    <string name="fab_add_aswatch">Guardar Cartera para Observación</string>
     <string name="fab_gen_new">Generar Cartera Nueva</string>
     <string name="fab_request">Solicitar</string>
     <string name="fab_send">Mandar</string>
     <string name="fab_sendether">Mandar Ether</string>
-    <string name="fab_setwalletname">Asignar Nombre de la 
-Cartera</string>
+    <string name="fab_setwalletname">Asignar Nombre de la Cartera</string>
     <string name="drawer_import">Importar Carteras</string>
     <string name="drawer_about">Sobre Nosotros</string>
     <string name="drawer_donate">Donar</string>
@@ -23,13 +21,10 @@ Cartera</string>
     <string name="fr_wallet_overall_balance">Saldo Total</string>
     <string name="fr_detail_acc_balance">Saldo de la Cuenta</string>
 
-    <string name="main_ac_wallet_added_suc">La cartera ha sido guardado 
-con éxito</string>
+    <string name="main_ac_wallet_added_suc">La cartera ha sido guardado con éxito</string>
     <string name="main_ac_wallet_added_er">Cartera ya existía</string>
-    <string name="main_ac_wallet_added_fatal">Dirección no 
-valida</string>
-    <string name="detail_acc_name_changed_suc">Nombre cambiado 
-con éxito</string>
+    <string name="main_ac_wallet_added_fatal">Dirección no valida</string>
+    <string name="detail_acc_name_changed_suc">Nombre cambiado con éxito</string>
     <string name="title_activity_settings">Ajustes</string>
 
     <string name="pref_header_general">General</string>
@@ -104,8 +99,7 @@ con éxito</string>
 
     <string name="generate_text">Se va a generar una nueva cartera encriptada en este dispositivo. Recomendamos que elijas una contraseña fuerte para asegurar la mejor seguridad posible de tus fondos. Por favor, ten en cuenta que el proceso de generación de una cartera segura es muy intenso y puede tardar unos cuantos minutos. El proceso se ejecutará de fondo para que puedas seguir utilizando el móvil mientras esperas. Se mostrará el estado de la generación en la barra de notificaciones y te avisaremos en cuanto acabe.  </string>
 
-    <string name="import_text">Vas a importar una clave privada desencriptada. Recomendamos que elijas una contraseña fuerte para asegurar la mejor seguridad posible de tus fondos. Por favor, ten en cuenta que el proceso de generación de una cartera segura es muy intenso y puede tardar unos cuantos minutos. El proceso se ejecutará de fondo para que puedas seguir utilizando el móvil mientras esperas. Se mostrará el estado de la generación en la barra de notificaciones y te avisaremos en cuanto acabe.  
-</string>
+    <string name="import_text">Vas a importar una clave privada desencriptada. Recomendamos que elijas una contraseña fuerte para asegurar la mejor seguridad posible de tus fondos. Por favor, ten en cuenta que el proceso de generación de una cartera segura es muy intenso y puede tardar unos cuantos minutos. El proceso se ejecutará de fondo para que puedas seguir utilizando el móvil mientras esperas. Se mostrará el estado de la generación en la barra de notificaciones y te avisaremos en cuanto acabe.</string>
 
     <string name="wallet_gen_service_title">Generando Cartera Nueva</string>
     <string name="wallet_gen_service_title_import">Importando Cartera</string>
