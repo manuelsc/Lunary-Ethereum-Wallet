@@ -238,7 +238,7 @@
                 android:layout_gravity="right">
                 <TextView
                     android:id="@+id/txCost"
-                    android:text="0.000441"
+                    android:text="0.000252"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="right"
@@ -278,7 +278,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:max="40"
-            android:progress="19"
+            android:progress="10"
             android:layout_height="wrap_content" />
 
         <LinearLayout
@@ -297,16 +297,31 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="10dp" />
 
-            <TextView
-                android:id="@+id/gasText"
-                android:text="21"
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:layout_marginTop="5dp"
-                android:textColor="@color/colorPrimaryDark"
-                android:gravity="center" />
+                android:gravity="center"
+                android:layout_weight="1">
+                <TextView
+                    android:id="@+id/gasText"
+                    android:text="12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:gravity="center" />
+
+                <TextView
+                    android:text="Gwei"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    android:gravity="center"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                </LinearLayout>
 
             <TextView
                 android:text="@string/fragment_send_faster"
@@ -347,7 +362,7 @@
                 android:layout_gravity="right">
                 <TextView
                     android:id="@+id/totalCost"
-                    android:text="0.000441"
+                    android:text="0.000252"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="right"
