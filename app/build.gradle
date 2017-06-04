@@ -29,8 +29,8 @@ android {
     }
 
     packagingOptions {
-        exclude 'META-INF/NOTICE' // will not include NOTICE file
-        exclude 'META-INF/LICENSE' // will not include LICENSE file
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
         exclude 'META-INF/notice'
         exclude 'META-INF/notice.txt'
         exclude 'META-INF/license'
@@ -47,16 +47,32 @@ android {
         }
 
         fdroid {
-
         }
     }
 
-    // call regular ndk-build(.cmd) script from app directory
     task ndkBuild(type: Exec) {
+        def rootDir = project.rootDir
+        def localProperties = new File(rootDir, "local.properties")
+        Properties properties = new Properties()
+        localProperties.withInputStream { instr ->
+            properties.load(instr)
+        }
+        def ndkDir = properties.getProperty('ndk.dir')
+
         if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-            commandLine 'ndk-build.cmd', 'NDK_LIBS_OUT=main/jniLibs', '-C', file('src').absolutePath
+            commandLine ndkDir + '\\ndk-build.cmd',
+                    'NDK_LIBS_OUT=main/jniLibs',
+                    'NDK_PROJECT_PATH='+rootDir+'\\app\\src',
+                    'APP_BUILD_SCRIPT=jni/Android.mk',
+                    '-C',
+                    file('src').absolutePath
         } else {
-            commandLine 'ndk-build', 'NDK_LIBS_OUT=main/jniLibs','-C', file('src').absolutePath
+            commandLine ndkDir + '/ndk-build',
+                    'NDK_LIBS_OUT=main/jniLibs',
+                    'NDK_PROJECT_PATH='+rootDir+'/app/src',
+                    'APP_BUILD_SCRIPT=jni/Android.mk',
+                    '-C',
+                    file('src').absolutePath
         }
     }
 
