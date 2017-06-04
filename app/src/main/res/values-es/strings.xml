@@ -1,0 +1,219 @@
+<resources>
+    <string name="app_name">Lunary</string>
+
+
+    <string name="action_settings">Ajustes</string>
+    <string name="title_activity_main">Lunary</string>
+
+    <string name="fab_scan">Escanea Dirección / Clave</string>
+    <string name="fab_add_watch">Observar una Cartera</string>
+    <string name="fab_add_aswatch">Guardar Cartera para 
+Observación</string>
+    <string name="fab_gen_new">Generar Cartera Nueva</string>
+    <string name="fab_request">Solicitar</string>
+    <string name="fab_send">Mandar</string>
+    <string name="fab_sendether">Mandar Ether</string>
+    <string name="fab_setwalletname">Asignar Nombre de la 
+Cartera</string>
+    <string name="drawer_import">Importar Carteras</string>
+    <string name="drawer_about">Sobre Nosotros</string>
+    <string name="drawer_donate">Donar</string>
+
+    <string name="fr_price_current_price">Precio Actual</string>
+    <string name="fr_wallet_overall_balance">Saldo Total</string>
+    <string name="fr_detail_acc_balance">Saldo de la Cuenta</string>
+
+    <string name="main_ac_wallet_added_suc">La cartera ha sido guardado 
+con éxito</string>
+    <string name="main_ac_wallet_added_er">Cartera ya existía</string>
+    <string name="main_ac_wallet_added_fatal">Dirección no 
+valida</string>
+    <string name="detail_acc_name_changed_suc">Nombre cambiado 
+con éxito</string>
+    <string name="title_activity_settings">Ajustes</string>
+
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_social_recommendations">Mostrar transacciones sin valor</string>
+    <string name="pref_description_social_recommendations">Mostrar transacciones de contratos que no cambian el valor de ether</string>
+
+
+    <string name="pref_title_start">Poner Cartera como pestaña principal</string>
+    <string name="pref_sum_start">Al abrir la aplicación, abrirá la pestaña de Cartera en lugar de la de Precio</string>
+
+    <string name="pref_header_data_sync">Datos &amp; sincronización</string>
+
+    <string name="pref_title_sync_frequency">Frecuencia de Sincronización</string>
+    <string name="pref_sum_sync_frequency">Intervalo de comprobación para transacciones nuevas</string>
+
+    <string name="pref_currencys_title">Moneda Local</string>
+    <string-array name="pref_currencys">
+        <item>USD</item>
+        <item>EUR</item>
+        <item>CHF</item>
+        <item>GPB</item>
+        <item>AUD</item>
+        <item>CAD</item>
+        <item>JPY</item>
+        <item>RUB</item>
+    </string-array>
+
+    <string-array name="pref_sync_frequency_titles">
+        <item>1 hora</item>
+        <item>2 horas</item>
+        <item>4 horas</item>
+        <item>6 horas</item>
+        <item>8 horas</item>
+        <item>16 horas</item>
+        <item>24 horass</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>1</item>
+        <item>2</item>
+        <item>4</item>
+        <item>6</item>
+        <item>8</item>
+        <item>16</item>
+        <item>24</item>
+    </string-array>
+
+
+    <string name="notification_title">Transacción Recibida</string>
+
+    <string-array name="multi_select_list_preference_default_value" />
+
+    <string name="pref_title_system_sync_settings">Ajustes de sincronización</string>
+
+    <string name="pref_header_notifications">Notificaciones</string>
+
+    <string name="pref_title_new_message_notifications">Transacciones Entrantes</string>
+    <string name="pref_title_new_message_notifications_sum">Mostrar una notificación al recibir una transacción nueva en una de tus carteras</string>
+
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Sin Sonido</string>
+
+    <string name="pref_title_vibrate">Vibrar</string>
+    <string name="title_activity_wallet_gen">Generar Cartera</string>
+
+    <string name="prompt_email">Contraseña</string>
+    <string name="prompt_password">Confirmar Contraseña</string>
+    <string name="action_sign_in">Generar</string>
+
+    <string name="error_invalid_password">La contraseña es demasiado corta (Mínimo: 9)</string>
+    <string name="error_incorrect_password">Las contraseñas no coinciden</string>
+
+    <string name="generate_text">Se va a generar una nueva cartera encriptada en este dispositivo. Recomendamos que elijas una contraseña fuerte para asegurar la mejor seguridad posible de tus fondos. Por favor, ten en cuenta que el proceso de generación de una cartera segura es muy intenso y puede tardar unos cuantos minutos. El proceso se ejecutará de fondo para que puedas seguir utilizando el móvil mientras esperas. Se mostrará el estado de la generación en la barra de notificaciones y te avisaremos en cuanto acabe.  </string>
+
+    <string name="import_text">Vas a importar una clave privada desencriptada. Recomendamos que elijas una contraseña fuerte para asegurar la mejor seguridad posible de tus fondos. Por favor, ten en cuenta que el proceso de generación de una cartera segura es muy intenso y puede tardar unos cuantos minutos. El proceso se ejecutará de fondo para que puedas seguir utilizando el móvil mientras esperas. Se mostrará el estado de la generación en la barra de notificaciones y te avisaremos en cuanto acabe.  
+</string>
+
+    <string name="wallet_gen_service_title">Generando Cartera Nueva</string>
+    <string name="wallet_gen_service_title_import">Importando Cartera</string>
+    <string name="choose_recipient_enterscan">Introducir / Escanear Dirección de Destino</string>
+    <string name="choose_recipient_contacts">O Elegir Destino de la Agenda de Contactos</string>
+
+    <string name="choose_your_address">De</string>
+    <string name="send_to">A</string>
+    <string name="choose_ether_amount">Ether Disponible</string>
+    <string name="choose_gas">Coste de la Transacción</string>
+
+
+    <string name="request_activity_ether">Cantidad de Solicitud</string>
+    <string name="request_activity_to">Tus Carteras / Direcciones</string>
+
+    <string name="no_tx_history">Aquí puedes ver todo el ether que mandas o recibes. Una vez que hayas añadido una cartera y mandado ether a ella, verás la transacción y todas las futuras transacciones en esta pestaña.</string>
+    <string name="no_wallet_history">No tienes ningúna cartera de momento. Puedes crear o importar una facilmente con el botón abajo.</string>
+
+
+    <string name="tos"><![CDATA[
+<p><h2>Terms and Conditions ("Terms")</h2></p>
+
+<p>Last updated: May 28, 2017</p>
+
+<p>Please read these Terms and Conditions ("Terms", "Terms and Conditions") carefully before using the Lunary Ether Wallet (the "Service") operated by Lunary Ether Wallet, Rehanced ("us", "we", or "our").
+
+Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all visitors, users and others who access or use the Service.
+
+By accessing or using the Service you agree to be bound by these Terms. If you disagree with any part of the terms then you may not access the Service. This Terms & Conditions agreement is licensed by TermsFeed to Lunary Ether Wallet.</p>
+
+<p><b>Links To Other Web Sites</b></p>
+
+<p>Our Service may contain links to third-party web sites or services that are not owned or controlled by Lunary Ether Wallet.
+
+Lunary Ether Wallet has no control over, and assumes no responsibility for, the content, privacy policies, or practices of any third party web sites or services. You further acknowledge and agree that Lunary Ether Wallet shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with use of or reliance on any such content, goods or services available on or through any such web sites or services.
+
+We strongly advise you to read the terms and conditions and privacy policies of any third-party web sites or services that you visit.</p>
+
+
+<p><b>ASSUMPTION OF RISK</b></p>
+
+<p>You acknowledge and agree that there are risks associated with utilizing an app service including, but not limited to, the risk of failure of hardware, software, the risk of malicious software introduction, and the risk that third parties may obtain unauthorized access to information stored within your device. You acknowledge and agree that we will not be responsible for any communication failures, disruptions, errors, distortions or delays you may experience when using our app, however caused. We take no responsibility for and will not be liable for any losses, damages or claims arising from the use of our app, including, but not limited to, any losses, damages or claims arising from (a) passwords being "Bruteforced", (b) hardware failure or data loss, (c) forgotten passwords, (d) corrupted wallet files, (e) incorrectly constructed transactions or mistyped Ether addresses; or (f) unauthorized access to mobile applications, (g)"phishing," viruses, third-party attacks or any other unauthorized third-party activities. </p>
+
+<p><b>SUSPENSION; TERMINATION </b></p>
+
+<p>We do not and can not terminate your usage of this app or any of your wallets. However we are using a third party API called "Etherscan.IO" to fetch certain statistics like transaction history and account balances. This API is not provided by us and etherscan.io who reseveres its right through their terms of service to terminate any abuse of their API such as request spamming or similar. In case of termiantion from Etherscan.IO certain features of this app are not available to you any more such as fetching transaction histories and account balances. Your wallets and its funds aswell as basic app features like exporting your wallets and generating new ones will always be available to you regardless of an etherscan.io account termination or not. For more information about etherscan.io take a look at their terms of service here: <a href="https://etherscan.io/terms">https://etherscan.io/terms</a>
+</p>
+
+<p><b>Governing Law</b></p>
+
+<p>These Terms shall be governed and construed in accordance with the laws of Austria, without regard to its conflict of law provisions.
+
+Our failure to enforce any right or provision of these Terms will not be considered a waiver of those rights. If any provision of these Terms is held to be invalid or unenforceable by a court, the remaining provisions of these Terms will remain in effect. These Terms constitute the entire agreement between us regarding our Service, and supersede and replace any prior agreements we might have between us regarding the Service.</p>
+
+<p><b>DISCLAIMER OF WARRANTIES </b></p>
+<p>(a) TO THE MAXIMUM EXTENT PERMITTED UNDER APPLICABLE LAW, AND EXCEPT AS EXPRESSLY PROVIDED TO THE CONTRARY IN A WRITING BY US, OUR SERVICES ARE PROVIDED ON AN “AS IS” AND “AS AVAILABLE” BASIS. TO THE MAXIMUM EXTENT PERMITTED UNDER APPLICABLE LAW. WE EXPRESSLY DISCLAIM, AND YOU WAIVE, ALL WARRANTIES OF ANY KIND, WHETHER EXPRESS OR IMPLIED, INCLUDING, WITHOUT LIMITATION, IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT AS TO OUR SERVICES, INCLUDING THE INFORMATION, CONTENT AND MATERIALS CONTAINED THEREIN.</p>
+
+<p>(b) YOU ACKNOWLEDGE THAT INFORMATION YOU STORE OR TRANSFER THROUGH OUR SERVICES MAY BECOME IRRETRIEVABLY LOST OR CORRUPTED OR TEMPORARILY UNAVAILABLE DUE TO A VARIETY OF CAUSES, INCLUDING SOFTWARE FAILURES, PROTOCOL CHANGES BY THIRD PARTY PROVIDERS, INTERNET OUTAGES, FORCE MAJEURE EVENT OR OTHER DISASTERS, SCHEDULED OR UNSCHEDULED MAINTENANCE, OR OTHER CAUSES EITHER WITHIN OR OUTSIDE OUR CONTROL. YOU ARE SOLELY RESPONSIBLE FOR BACKING UP AND MAINTAINING DUPLICATE COPIES OF ANY INFORMATION YOU STORE OR TRANSFER THROUGH OUR SERVICES. </p>
+
+<p><b>LIMITATION OF LIABILITY</b></p>
+
+<p>EXCEPT AS OTHERWISE REQUIRED BY LAW, IN NO EVENT SHALL COMPANY, OUR DIRECTORS, MEMBERS, EMPLOYEES OR AGENTS BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES, OR ANY OTHER DAMAGES OF ANY KIND, INCLUDING BUT NOT LIMITED TO LOSS OF USE, LOSS OF PROFITS OR LOSS OF DATA, WHETHER IN AN ACTION IN CONTRACT, TORT (INCLUDING BUT NOT LIMITED TO NEGLIGENCE) OR OTHERWISE, ARISING OUT OF OR IN ANY WAY CONNECTED WITH THE USE OF OR INABILITY TO USE OUR SERVICES OR THE COMPANY MATERIALS, INCLUDING WITHOUT LIMITATION ANY DAMAGES CAUSED BY OR RESULTING FROM RELIANCE BY ANY USER ON ANY INFORMATION OBTAINED FROM COMPANY, OR THAT RESULT FROM MISTAKES, OMISSIONS, INTERRUPTIONS, DELETION OF FILES OR EMAIL, ERRORS, DEFECTS, VIRUSES, DELAYS IN OPERATION OR TRANSMISSION OR ANY FAILURE OF PERFORMANCE, WHETHER OR NOT RESULTING FROM A FORCE MAJEURE EVENT, COMMUNICATIONS FAILURE, THEFT, DESTRUCTION OR UNAUTHORIZED ACCESS TO COMPANY’S RECORDS, PROGRAMS OR SERVICES. </p>
+
+<p><b>Changes</b></p>
+
+<p>We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material we will try to provide at least 30 days notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.
+
+By continuing to access or use our Service after those revisions become effective, you agree to be bound by the revised terms. If you do not agree to the new terms, please stop using the Service.
+</p>
+
+<p><b>Contact Us</b></p>
+
+<p>If you have any questions about these Terms, please contact us.</p>
+
+<br/><br/>
+
+<p><h2>Disclaimer</h2></p>
+
+<p>Last updated: May 28, 2017</p>
+
+<p>The information contained on http://rehanced.com website and mobile app (the "Service") is for general information purposes only.</p>
+
+<p>Lunary Ether Wallet assumes no responsibility for errors or omissions in the contents on the Service.</p>
+
+<p>In no event shall Lunary Ether Wallet be liable for any special, direct, indirect, consequential, or incidental damages or any damages or loss of profits whatsoever, whether in an action of contract, negligence or other tort, arising out of or in connection with the use of the Service or the contents of the Service. Lunary Ether Wallet reserves the right to make additions, deletions, or modification to the contents on the Service at any time without prior notice.</p>
+
+<p>Your wallets and private keys generated by this app are only stored locally on your device. Should you lose your wallet or keys (f.e in case of a device malfunction, factory reset, loss, physical damages, viruses or malware on the device or any other interaction with your device that may directly or indirectly result in data loss or manipulation) we are not able to help you return your funds or restore your keys because we don\'t have that data. Everything wallet related is stored physically on your device and only on your device. We are not liable for any loss of coins ("ether") or tokens in any of above mentioned cases or malfunction of our service or harmfull apps by third parties.</p>
+
+
+<p><h2>Privacy Policy - Lunary Ether Wallet</h2></p>
+
+<p><b>Data protection</b></p>
+
+<p>We do not collect or save any of your private data by ourself as we do not communicate with a server owned by us. Information just as account balances, transaction histories and other similar to Ethereum related information are part of a public available and distributed ledger called "Blockchain". This information is not stored by us on any of our servers, the mentioned information is fetched from this Blockchain via a third party service called etherscan.io. You also agree to this etherscan.io privacy policy as found here: <a href="https://etherscan.io/terms">https://etherscan.io/terms</a>
+We use the etherscan.io service to fetch Blockchain information and use it to display it to you via our app. Your Wallets, including its private keys, which are generated by this app are stored only locally on your device and are never shared or transmitted via web.
+If there are further questions please don\'t hesitate to contact us as we are happy to help you in this regard.
+For app usage statistics we use Google Analytics. More details about Google Analytics can be found in the paragraph "Privacy Policy for the use of Google Analytics".</p>
+
+<p><b>Privacy Policy for the use of Google Analytics</b></p>
+
+<p>This app uses Google Analytics, an analytics service provided by Google, Inc. (“Google”). Google Analytics uses “cookies”, which are text files placed on your device, to help analyze how users use it. The information generated about your use of this app (including your IP address) is sent to and stored at a Google server in the U.S.A. Google will use this information on behalf of the operator of this app for the purpose of evaluating your use of the app, compiling reports on activity for operators and providing them other services relating to app activity and usage. The IP-address, that your device conveys within the scope of Google Analytics, will not be associated with any other data held by Google. For more information about Google Analytics visit <a href="https://google.com/analytics/terms">https://google.com/analytics/terms</a></p>
+
+
+<p>By using this application you agree to our Privicy Policy and the processing of the collected information by Google, according to the above mentioned purposes. If you do not consent to such processing, please do not further access or use our applications.
+More details about this topic can be found in Google\'s Privacy Policies:
+<a href="https://google.com/policies/privacy">https://google.com/policies/privacy</a> </p>
+
+]]>
+    </string>
+
+</resources>
