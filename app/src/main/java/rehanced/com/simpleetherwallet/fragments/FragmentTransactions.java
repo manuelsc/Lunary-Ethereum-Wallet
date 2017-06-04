@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import rehanced.com.simpleetherwallet.R;
 import rehanced.com.simpleetherwallet.activities.AddressDetailActivity;
 import rehanced.com.simpleetherwallet.data.TransactionDisplay;
 import rehanced.com.simpleetherwallet.network.EtherscanAPI;
@@ -45,7 +46,7 @@ public class FragmentTransactions extends FragmentTransactionsAbstract {
                         @Override
                         public void run() {
                             onItemsLoadComplete();
-                            ((AddressDetailActivity)ac).snackError("No internet connection");
+                            ((AddressDetailActivity)ac).snackError(getString(R.string.err_no_con));
                         }
                     });
                 }
@@ -68,7 +69,7 @@ public class FragmentTransactions extends FragmentTransactionsAbstract {
                         @Override
                         public void run() {
                             onItemsLoadComplete();
-                            ((AddressDetailActivity)ac).snackError("No internet connection");
+                            ((AddressDetailActivity)ac).snackError(getString(R.string.err_no_con));
                         }
                     });
                 }

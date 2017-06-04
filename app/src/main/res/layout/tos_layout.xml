@@ -53,7 +53,7 @@
         android:layout_marginTop="5dp"
         android:textColor="#fff"
         android:theme="@style/WhiteCheck"
-        android:text="I agree to terms of service" />
+        android:text="@string/app_intro_iagree" />
     </LinearLayout>
 
 </LinearLayout>

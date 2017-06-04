@@ -246,11 +246,11 @@ public class FragmentWallets extends Fragment implements View.OnClickListener, V
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        menu.setHeaderTitle("Wallet Settings");
-        menu.add(0, 200, 0, "Change Wallet Name");
-        menu.add(0, 201, 0, "Address to Clipboard");
-        menu.add(0, 202, 0, "Export Wallet");
-        menu.add(0, 203, 0, "Delete Wallet");
+        menu.setHeaderTitle(R.string.wallet_menu_title);
+        menu.add(0, 200, 0, R.string.wallet_menu_changename);
+        menu.add(0, 201, 0, R.string.wallet_menu_copyadd);
+        menu.add(0, 202, 0, R.string.wallet_menu_export);
+        menu.add(0, 203, 0, R.string.wallet_menu_delete);
     }
 
     @Override
@@ -297,8 +297,8 @@ public class FragmentWallets extends Fragment implements View.OnClickListener, V
 
     public void export(){
         boolean suc = WalletStorage.getInstance(ac).exportWallet(ac);
-        if(suc) ac.snackError("Wallet successfully exported");
-        else ac.snackError("Please grant write permission to export wallets");
+        if(suc) ac.snackError(getString(R.string.wallet_suc_exported));
+        else ac.snackError(getString(R.string.wallet_no_permission));
     }
 
     public void generateDialog(){
@@ -311,9 +311,9 @@ public class FragmentWallets extends Fragment implements View.OnClickListener, V
                 builder = new AlertDialog.Builder(ac, R.style.AlertDialogTheme);
             else
                 builder = new AlertDialog.Builder(ac);
-            builder.setTitle("Not So Fast");
-            builder.setMessage("We are currently generating a wallet for you, you can see the progress in your notification bar. Don't worry, we will notify you as soon as your wallet generation is finished :-) If you really wish to generate another one please wait for the current wallet to be completed first.");
-            builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+            builder.setTitle(R.string.wallet_one_at_a_time);
+            builder.setMessage(R.string.wallet_one_at_a_time_text);
+            builder.setNeutralButton(R.string.button_ok, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
@@ -329,16 +329,16 @@ public class FragmentWallets extends Fragment implements View.OnClickListener, V
             builder = new AlertDialog.Builder(ac, R.style.AlertDialogTheme);
         else
             builder = new AlertDialog.Builder(ac);
-        builder.setTitle("ATTENTION: Wallet Removal");
+        builder.setTitle(R.string.wallet_removal_title);
 
         if(type == WalletDisplay.WATCH_ONLY)
-            builder.setMessage("Are you sure you want to delete your watch only wallet?");
+            builder.setMessage(R.string.wallet_removal_sure);
         else if(type == WalletDisplay.NORMAL)
-            builder.setMessage("! THIS IS A WALLET WITH A PRIVATE KEY !\nIF YOU HAVE NO BACKUP AND CONTINUE ALL YOUR ETHER ON THAT WALLET WILL BE LOST FOR EVER! ARE YOU SURE YOU WANT TO PROCEED?\nWALLLET ADDRESS: "+address);
+            builder.setMessage(getString(R.string.wallet_removal_privkey)+address);
         else if(type == Byte.MAX_VALUE){
-            builder.setMessage("ARE YOU SURE? WALLET AND ALL COINS / TOKEN ON IT ARE GOING TO GET PERMANENTLY REMOVED. THIS IS THE LAST WARNING FOR WALLET: "+address);
+            builder.setMessage(getString(R.string.wallet_removal_last_warning)+address);
         }
-        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.button_yes, new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -355,7 +355,7 @@ public class FragmentWallets extends Fragment implements View.OnClickListener, V
                 }
             }
         });
-        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.button_no, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -371,7 +371,7 @@ public class FragmentWallets extends Fragment implements View.OnClickListener, V
             builder = new AlertDialog.Builder(ac, R.style.AlertDialogTheme);
         else
             builder = new AlertDialog.Builder(ac);
-        builder.setTitle("Name Your Wallet");
+        builder.setTitle(R.string.name_your_wallet);
 
         final EditText input = new EditText(ac);
         input.setText(AddressNameConverter.getInstance(ac).get(address));
@@ -396,7 +396,7 @@ public class FragmentWallets extends Fragment implements View.OnClickListener, V
                 }
             }
         });
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 AddressNameConverter.getInstance(ac).put(address, input.getText().toString(), ac);
@@ -406,7 +406,7 @@ public class FragmentWallets extends Fragment implements View.OnClickListener, V
                 dialog.dismiss();
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 InputMethodManager inputMgr = (InputMethodManager)input.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);

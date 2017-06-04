@@ -194,7 +194,7 @@
             android:id="@+id/amount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ether Amount"
+            android:hint="@string/fragment_send_ether_amount"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
@@ -290,7 +290,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:text="Cheaper"
+                android:text="@string/fragment_send_cheaper"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -309,7 +309,7 @@
                 android:gravity="center" />
 
             <TextView
-                android:text="Faster"
+                android:text="@string/fragment_send_faster"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -331,7 +331,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:text="Total"
+                android:text="@string/fragment_send_total"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -385,7 +385,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:text="Send"/>
+            android:text="@string/fragment_send_send_button"/>
 
     </LinearLayout>
 

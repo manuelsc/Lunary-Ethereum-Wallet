@@ -203,9 +203,9 @@ public class FragmentDetailOverview extends Fragment {
         else
             builder = new AlertDialog.Builder(ac);
         if(type == AddressDetailActivity.OWN_WALLET)
-            builder.setTitle("Name Your Address");
+            builder.setTitle(R.string.name_your_address);
         else
-            builder.setTitle("Name This Address");
+            builder.setTitle(R.string.name_this_address);
 
         final EditText input = new EditText(ac);
         input.setText(AddressNameConverter.getInstance(ac).get(ethaddress));
@@ -230,7 +230,7 @@ public class FragmentDetailOverview extends Fragment {
                 }
             }
         });
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 InputMethodManager inputMgr = (InputMethodManager)input.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -240,7 +240,7 @@ public class FragmentDetailOverview extends Fragment {
 
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 InputMethodManager inputMgr = (InputMethodManager)input.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);

@@ -28,14 +28,14 @@
 
     <string name="pref_header_general">Allgemein</string>
 
-    <string name="pref_title_social_recommendations">0 Betrag Transaktionen anzeigen</string>
+    <string name="pref_title_social_recommendations">0 Betrag Überweisungen anzeigen</string>
     <string name="pref_description_social_recommendations">Wenn aktiviert werden Contract aufrufe mit leerem Betrag ebenfalls angezeigt</string>
 
     <string name="pref_title_start">Konto Ansicht als Startbildschirm</string>
     <string name="pref_sum_start">Wenn aktiviert wird beim starten der App direkt zur Konto Ansicht gewechselt</string>
 
     <string name="pref_title_sync_frequency">Benachrichtigungen Sync</string>
-    <string name="pref_sum_sync_frequency">Update intervall für neue Transaktionen</string>
+    <string name="pref_sum_sync_frequency">Update intervall für neue Überweisungen</string>
 
     <string name="pref_currencys_title">Anzuzeigende Währung</string>
     <string-array name="pref_currencys">
@@ -69,7 +69,7 @@
     </string-array>
 
 
-    <string name="notification_title">Transaktionseingang</string>
+    <string name="notification_title">Überweisungseingang</string>
 
     <string-array name="multi_select_list_preference_default_value" />
 
@@ -78,8 +78,8 @@
     <!-- Example settings for Notifications -->
     <string name="pref_header_notifications">Benachrichtigungen</string>
 
-    <string name="pref_title_new_message_notifications">Eingehende Transaktionen</string>
-    <string name="pref_title_new_message_notifications_sum">Benachrichtigt dich bei neuen eingehenden Transaktionen</string>
+    <string name="pref_title_new_message_notifications">Eingehende Überweisungen</string>
+    <string name="pref_title_new_message_notifications_sum">Benachrichtigt dich bei neuen eingehenden Überweisungen</string>
 
     <string name="pref_title_ringtone">Ringtone</string>
     <string name="pref_ringtone_silent">Silent</string>
@@ -106,8 +106,8 @@
 
     <string name="choose_your_address">Von</string>
     <string name="send_to">Zu</string>
-    <string name="choose_ether_amount">Verfügbarer Ether Betrag</string>
-    <string name="choose_gas">Transaktionskosten</string>
+    <string name="choose_ether_amount">Verfügbare Ether</string>
+    <string name="choose_gas">Überweisungskosten</string>
 
 
     <string name="request_activity_ether">Betrag</string>
@@ -115,6 +115,91 @@
 
     <string name="no_tx_history">Das ist deine Transaktionsübersicht mit allen Ether Ein- und Ausgängen. Füge ein Konto mit bestehenden Betrag hinzu um dessen Transaktionen anzuzeigen.</string>
     <string name="no_wallet_history">Zurzeit verfügst du über keine Konten. Generiere oder importiere einfach ein Konto mit der runden Schaltfläche unten.</string>
+
+
+    <string name="app_intro_text">Willkommen bei Lunary - dem kostenlosen und Open Source Ethereum Konto für Android! Bevor wir loslegen können nimm dir bitte kurz Zeit dich durch unsere AGB zu lesen.</string>
+    <string name="app_intro_title">Lunary Wallet</string>
+    <string name="app_intro_please_agree">Bitte lies die AGB und stimme diesen zu</string>
+    <string name="app_intro_iagree">Ich stimme den AGB zu</string>
+    <string name="fragment_send_ether_amount">Ether Betrag</string>
+    <string name="fragment_send_cheaper">Günstiger</string>
+    <string name="fragment_send_faster">Schneller</string>
+    <string name="fragment_send_total">Gesamt</string>
+    <string name="fragment_send_send_button">Senden</string>
+    <string name="fragment_recipient_hint_address">Adresse</string>
+    <string name="fragment_recipient_continue">Weiter</string>
+    <string name="fragment_detail_add_sharing">Adresse Teilen</string>
+    <string name="fragment_detail_share_button">Teilen</string>
+    <string name="walletgen_title">Generiere Konto</string>
+    <string name="request_ether_title">Ether Anfordern</string>
+    <string name="qr_scan_title">QR Adresse</string>
+    <string name="activity_send_title">Überweisungen</string>
+    <string name="last_24_hours">Letzten 24 Stunden</string>
+    <string name="last_7_days">Letzten 7 Tage</string>
+    <string name="last_30_days">Letzten 30 Tage</string>
+    <string name="last_year">Letztes Jahr</string>
+    <string name="err_no_con">Keine Internetverbindung</string>
+    <string name="wallet_menu_title">Konto Einstellungen</string>
+    <string name="wallet_menu_changename">Bearbeite Kontonamen</string>
+    <string name="wallet_menu_copyadd">Adresse kopieren</string>
+    <string name="wallet_menu_export">Konto exportieren</string>
+    <string name="wallet_menu_delete">Konto löschen</string>
+    <string name="wallet_suc_exported">Konto erfolgreich exportiert</string>
+    <string name="wallet_no_permission">Bitte gestatte Lunary Schreibrechte um zu exportieren</string>
+    <string name="wallet_one_at_a_time">Nicht so schnell</string>
+    <string name="wallet_one_at_a_time_text">Wir generieren für dich gerade ein Konto, du siehst den Fortschritt in deiner Nachrichtenleiste. Keine Sorge, wir melden sich sobald wir mit der Erstellung fertig sind :-) Bevor du ein weiteres Konto erstellen kannst warte bitte die erste Erstellung ab.</string>
+    <string name="button_ok">OK</string>
+    <string name="wallet_removal_title">ACHTUNG: Konto Entfernung</string>
+    <string name="wallet_removal_sure">Möchtest du deine Beobachteradresse wirklich löschen?</string>
+    <string name="wallet_removal_privkey">! DAS IST EIN KONTO MIT PRIVATEM SCHLÜSSEL ! WENN DU KEINE SICHERUNG VON DIESEM KONTO HAST UND FORTFÄHRST WERDEN ALLE DEINE ETHER ODER TOKEN AUF DIESEM KONTO FÜR IMMER VERSCHWINDEN! BIST DU DIR SICHER DAS DU FORTFAHREN MÖCHTEST? KONTO ADRESSE:</string>
+    <string name="wallet_removal_last_warning">BIST DU DIR GANZ SICHER? KONTO UND ALLE BETRÄGE / TOKEN WERDEN FÜR IMMER GELÖSCHT. DAS IST DIE LETZTE WARNUNG FÜR DEIN KONTO:</string>
+    <string name="button_yes">JA</string>
+    <string name="button_no">NEIN</string>
+    <string name="name_your_wallet">Benenne dein Konto</string>
+    <string name="button_cancel">Abbrechen</string>
+    <string name="name_other_address">Benenne diese Adresse</string>
+    <string name="trans_menu_title">Transaktionseinstellungen</string>
+    <string name="trans_menu_changename">Bearbeite Adressnamen</string>
+    <string name="trans_menu_viewreceiver">Betrachte Empfängeradresse</string>
+    <string name="trans_menu_openinb">Öffne in Webbrowser</string>
+    <string name="trans_no_trans_found">Keine Transaktionen für diese Adresse gefunden</string>
+    <string name="err_send_not_enough_ether">Nicht genügend Ether auf diesem Konto</string>
+    <string name="err_send_invalidamount">Ungültiger Betrag</string>
+    <string name="err_send_noreceiver">Kein Empfänger angegeben</string>
+    <string name="err_send_noamount">Kein Betrag angegeben</string>
+    <string name="name_your_address">Benenne deine Adresse</string>
+    <string name="name_this_address">Benenne diese Adresse</string>
+    <string name="addressbook_menu_title">Adressbuch Einstellungen</string>
+    <string name="addressbook_menu_remove">Entfernen</string>
+    <string name="import_title">Importiere Konto</string>
+    <string name="import_button">Importieren</string>
+    <string name="main_grant_permission_export">Bitte gestatte Lunary Schreibrechte zum exportieren</string>
+    <string name="main_grant_permission_import">Bitte gestatte Lunary Leserechte zum importieren</string>
+    <string name="dialog_watch_only_title">Beobachter Adresse</string>
+    <string name="dialog_importing_wallets_title">Importiere Konten?</string>
+    <string name="dialog_importing_wallets_text">Wir haben %1$d neue(s) Konto/en gefunden. Möchtest du die folgenden Importieren: %3$s</string>
+    <string name="dialog_ex_nofull_title">Kein vollständiges Konto</string>
+    <string name="dialog_ex_nofull_text">Beobachteradressen können nicht expotiert werden.</string>
+    <string name="dialog_exporting_title">Konto exportieren</string>
+    <string name="dialog_exporting_text">Eine Kopie deines Ethereum Kontos wird im \"Lunary\" Ordner vom Hauptverzeichniss deines Geräts angelegt. Bitte beachte das andere Anwendungen auf deinem Gerät technisch gesehen ebenfalls Zugriff auf jedes exportierte Konto haben. Daher legen wir dir unbedingt nahe das Konto aus dem Ordner wieder zu löschen nachdem du deine Sicherung auf zB einem PC durchgeführt hast.</string>
+    <string name="dialog_nofullwallet">Kein vollständiges Konto</string>
+    <string name="dialog_nofullwallet_text">Um Beträge versenden zu können benötigst du ein vollständiges Ethereum Konto mit privatem Schlüssel. Bitte generiere oder importiere zunächst eines.</string>
+    <string name="dialog_no_wallets">Keine Konten</string>
+    <string name="dialog_no_wallets_text">Um Beträge anfordern zu können benötigst du zuerst ein Konto oder eine Beobachteradresse.</string>
+    <string name="dialog_no_wallets_found">Keine Konten gefunden</string>
+    <string name="dialog_no_wallets_found_text">Bitte platziere die Konten die du importieren möchtest direkt in den Lunary Ordner auf eine korrekte Namensbezeichnung. Wenn du Konten von deinem PC (zB Mist) importieren möchtest muss der Name nicht mehr angepasst werden.</string>
+    <string name="notification_ticker">Eingehende Ether Überweisung…</string>
+    <string name="notification_transfersuc">Überweisung erfolgreich</string>
+    <string name="notification_transferfail">Überweisung gescheitert</string>
+    <string name="notification_transferingticker">Überweise Ether…</string>
+    <string name="notification_transfering_title">Überweise Ether</string>
+    <string name="notification_might_take_a_minute">Das dauert vielleicht eine Minute</string>
+    <string name="notification_wallgen_maytake">Das dauert vielleicht einige Minuten</string>
+    <string name="notification_wallgen_title">Generiere Konto…</string>
+    <string name="notification_wallimp_title">Importiere Konto…</string>
+    <string name="notification_wallgen_finished">Konto erstellung abgeschlossen!</string>
+    <string name="notification_wallimp_finished">Konto importierung abgeschlossen!</string>
+    <string name="notification_click_to_view">Klicken zum öffnen</string>
 
 
     <string name="tos"><![CDATA[
@@ -207,5 +292,6 @@ More details about this topic can be found in Google\'s Privacy Policies:
 
 ]]>
     </string>
+
 
 </resources>

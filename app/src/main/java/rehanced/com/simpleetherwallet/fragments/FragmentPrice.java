@@ -63,12 +63,7 @@ public class FragmentPrice extends Fragment {
             31536000 // Year
     };
 
-    private static final String [] TITLE_TEXTS = new String[]{
-            "Last 24 Hours",
-            "Last 7 Days",
-            "Last 30 Days",
-            "Last Year"
-    };
+    private static String [] TITLE_TEXTS;
 
     private static final int [] PERIOD = new int[]{
             300,
@@ -85,6 +80,12 @@ public class FragmentPrice extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_price, container, false);
 
         ac =(MainActivity) getActivity();
+        TITLE_TEXTS = new String[]{
+                getString(R.string.last_24_hours),
+                getString(R.string.last_7_days),
+                getString(R.string.last_30_days),
+                getString(R.string.last_year)
+        };
 
         priceChart = (LineChart) rootView.findViewById(R.id.chart1);
         chartTitle = (TextView) rootView.findViewById(R.id.chartTitle);
@@ -188,7 +189,7 @@ public class FragmentPrice extends Fragment {
                     @Override
                     public void run() {
                         onItemsLoadComplete();
-                        ac.snackError("No internet connection", Snackbar.LENGTH_LONG);
+                        ac.snackError(getString(R.string.err_no_con), Snackbar.LENGTH_LONG);
                     }
                 });
             }

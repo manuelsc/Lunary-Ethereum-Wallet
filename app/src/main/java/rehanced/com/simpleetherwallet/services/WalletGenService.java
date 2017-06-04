@@ -79,11 +79,11 @@ public class WalletGenService extends IntentService {
         builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setColor(0x2d435c)
-                .setTicker(normalMode ? "Generating Wallet..." : "Importing Wallet...")
+                .setTicker(normalMode ? getString(R.string.notification_wallgen_title) : getString(R.string.notification_wallimp_title))
                 .setContentTitle(this.getResources().getString(normalMode ? R.string.wallet_gen_service_title : R.string.wallet_gen_service_title_import))
                 .setOngoing(true)
                 .setProgress(0, 0, true)
-                .setContentText("This may take a couple minutes");
+                .setContentText(getString(R.string.notification_wallgen_maytake));
         final NotificationManager mNotifyMgr =
                 (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
@@ -92,7 +92,7 @@ public class WalletGenService extends IntentService {
 
     private void finished(String address){
         builder
-                .setContentTitle(normalMode ? "Wallet Creation Finished!" : "Wallet Import Finished!")
+                .setContentTitle(normalMode ? getString(R.string.notification_wallgen_finished) : getString(R.string.notification_wallimp_finished))
                 .setLargeIcon(Blockies.createIcon(address.toLowerCase()))
                 .setAutoCancel(true)
                 .setLights(Color.CYAN, 3000, 3000)
@@ -100,7 +100,7 @@ public class WalletGenService extends IntentService {
                 .setProgress(100, 100, false)
                 .setOngoing(false)
                 .setAutoCancel(true)
-                .setContentText("Click to view");
+                .setContentText(getString(R.string.notification_click_to_view));
 
         if (android.os.Build.VERSION.SDK_INT >= 18) // Android bug in 4.2, just disable it for everyone then...
             builder.setVibrate(new long[] { 1000, 1000});

@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements NetworkUpdateList
                     if(fragments != null && fragments[1] != null)
                         ((FragmentWallets)fragments[1]).export();
                 } else {
-                    snackError("Please grant write permission to export Wallets");
+                    snackError(getString(R.string.main_grant_permission_export));
                 }
                 return;
             }case ExternalStorageHandler.REQUEST_READ_STORAGE: {
@@ -207,7 +207,7 @@ public class MainActivity extends AppCompatActivity implements NetworkUpdateList
                         e.printStackTrace();
                     }
                 } else {
-                    snackError("Please grant read permission to import Wallets");
+                    snackError(getString(R.string.main_grant_permission_import));
                 }
                 return;
             }
@@ -360,7 +360,9 @@ public class MainActivity extends AppCompatActivity implements NetworkUpdateList
             case 3: {
                 new AlertDialog.Builder(this)
                         .setTitle("About Lunary")
-                        .setMessage("This is an independent app, it is not associated with Ethereum or the Ethereum Foundation in any way.\n" +
+                        .setMessage("This is an independent and open source app, it is not associated with Ethereum or the Ethereum Foundation in any way.\n" +
+                                "App developed by Manuel S. C. for Rehanced, 2017\n"
+                                + "WWW.REHANCED.COM\n" +
                                 "\nCredits:\n" +
                                 "MaterialDrawer by Mike Penz\n" +
                                 "MPAndroidChart by Philipp Jahoda\n" +
@@ -373,9 +375,7 @@ public class MainActivity extends AppCompatActivity implements NetworkUpdateList
                                 "Web3j by Conor Svensson\n" +
                                 "Ethereum Foundation for usage of the icon according to (CC A 3.0)\n"+
                                 "Powered by Etherscan.io APIs\n\n" +
-                                "App developed by Manuel S. C. for Rehanced, Mai 2017\n"
-                                + "WWW.REHANCED.COM\n" +
-                                "Published under GPL3")
+                                "Lunary is published under GPL3")
                         .setIcon(android.R.drawable.ic_dialog_info)
                         .show();
                 break;

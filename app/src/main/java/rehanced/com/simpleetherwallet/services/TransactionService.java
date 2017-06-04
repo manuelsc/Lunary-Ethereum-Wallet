@@ -122,7 +122,7 @@ public class TransactionService extends IntentService {
 
     private void suc(String hash){
         builder
-                .setContentTitle("Transfer successfull")
+                .setContentTitle(getString(R.string.notification_transfersuc))
                 .setProgress(100, 100, false)
                 .setOngoing(false)
                 .setAutoCancel(true)
@@ -144,7 +144,7 @@ public class TransactionService extends IntentService {
 
     private void error(String err){
         builder
-                .setContentTitle("Transfer Failed")
+                .setContentTitle(getString(R.string.notification_transferfail))
                 .setProgress(100, 100, false)
                 .setOngoing(false)
                 .setAutoCancel(true)
@@ -167,9 +167,9 @@ public class TransactionService extends IntentService {
         builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setColor(0x2d435c)
-                .setTicker("Transfering Ether...")
-                .setContentTitle("Transfering Ether")
-                .setContentText("This might take a minute")
+                .setTicker(getString(R.string.notification_transferingticker))
+                .setContentTitle(getString(R.string.notification_transfering_title))
+                .setContentText(getString(R.string.notification_might_take_a_minute))
                 .setOngoing(true)
                 .setProgress(0, 0, true);
         final NotificationManager mNotifyMgr =

@@ -64,7 +64,7 @@
                     android:id="@+id/walletname"
                     android:singleLine="true"
                     android:textColor="@color/colorPrimaryDark"
-                    android:text="Coldstorage"/> <!--android:textColor="@color/colorPrimaryDark" -->
+                    android:text=""/> <!--android:textColor="@color/colorPrimaryDark" -->
 
                 <ImageView
                     android:layout_width="14dp"
@@ -101,7 +101,7 @@
                     android:textSize="11sp"
                     android:layout_gravity="center"
                     android:id="@+id/walletaddress"
-                    android:text="0x4d0D46A6A90Eb900783Fd40Be051A9792480f1F7"/>
+                    android:text=""/>
 
             </LinearLayout>
             </LinearLayout>

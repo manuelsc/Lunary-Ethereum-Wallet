@@ -100,7 +100,7 @@
                 android:textSize="12sp"
                 android:gravity="center"
                 android:id="@+id/ethaddress"
-                android:text="0x4d0D46A6A90Eb900783Fd40Be051A9792480f1F7" />
+                android:text="" />
 
         </LinearLayout>
 
@@ -117,7 +117,7 @@
 
 
     <TextView
-        android:text="Address Sharing"
+        android:text="@string/fragment_detail_add_sharing"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="19dp"
@@ -145,7 +145,7 @@
             android:layout_width="match_parent"
             app:backgroundTint="@color/colorPrimaryDark"
             android:textColor="#ffffff"
-            android:text="Share"
+            android:text="@string/fragment_detail_share_button"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="9dp"

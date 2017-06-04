@@ -23,7 +23,7 @@ public class AppIntroActivity extends AppIntro2 {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        addSlide(AppIntroFragment.newInstance("Lunary Wallet", "Welcome to Lunary Ether Wallet and many thanks for your support. Before starting, please take some time to read through our terms of service.", R.drawable.ether_intro, Color.parseColor("#49627e")));
+        addSlide(AppIntroFragment.newInstance(getString(R.string.app_intro_title), getString(R.string.app_intro_text), R.drawable.ether_intro, Color.parseColor("#49627e")));
         tosFragment = new ToSFragment();
         addSlide(tosFragment);
 
@@ -45,7 +45,7 @@ public class AppIntroActivity extends AppIntro2 {
             setResult(RESULT_OK, data);
             finish();
         }else
-            Toast.makeText(this, "Please read and agree to the terms of service before proceeding", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.app_intro_please_agree, Toast.LENGTH_SHORT).show();
     }
 
     @Override

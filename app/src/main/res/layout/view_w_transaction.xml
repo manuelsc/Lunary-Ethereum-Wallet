@@ -53,7 +53,7 @@
                     android:id="@+id/walletname"
                     android:singleLine="true"
                     android:textColor="@color/colorPrimaryDark"
-                    android:text="Coldstorage"/>
+                    android:text=""/>
 
                     <ImageView
                         android:layout_width="14dp"
@@ -137,7 +137,7 @@
                     android:gravity="top"
                     android:id="@+id/month"
                     android:textColor="#222222"
-                    android:text="7. March 2017"/>
+                    android:text=""/>
 
         </LinearLayout>
         </LinearLayout>

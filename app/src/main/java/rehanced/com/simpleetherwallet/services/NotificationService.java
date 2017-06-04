@@ -92,7 +92,7 @@ public class NotificationService extends IntentService {
                 .setSmallIcon(R.drawable.ic_notification)
                 .setLargeIcon(Blockies.createIcon(address.toLowerCase()))
                 .setColor(0x2d435c)
-                .setTicker("Incoming Ether Transaction...")
+                .setTicker(getString(R.string.notification_ticker))
                 .setLights(Color.CYAN, 3000, 3000)
                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
                 .setContentTitle(this.getResources().getString(R.string.notification_title))

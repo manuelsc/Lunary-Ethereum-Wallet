@@ -67,7 +67,7 @@ public abstract class FragmentTransactionsAbstract extends Fragment implements V
         ac = this.getActivity();
         if(getArguments() != null) {
             address = getArguments().getString("ADDRESS");
-            ((TextView) rootView.findViewById(R.id.infoText)).setText("No transactions found for this address.");
+            ((TextView) rootView.findViewById(R.id.infoText)).setText(R.string.trans_no_trans_found);
         }
 
         nothingToShow = (FrameLayout) rootView.findViewById(R.id.nothing_found);
@@ -187,10 +187,10 @@ public abstract class FragmentTransactionsAbstract extends Fragment implements V
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        menu.setHeaderTitle("Transaction Settings");
-        menu.add(0, 100, 0, "Change Address Name");//groupId, itemId, order, title
-        menu.add(0, 101, 0, "View Receiver Address");
-        menu.add(0, 102, 0, "Open in Browser");
+        menu.setHeaderTitle(R.string.trans_menu_title);
+        menu.add(0, 100, 0, R.string.trans_menu_changename);//groupId, itemId, order, title
+        menu.add(0, 101, 0, R.string.trans_menu_viewreceiver);
+        menu.add(0, 102, 0, R.string.trans_menu_openinb);
     }
 
     @Override
@@ -230,7 +230,7 @@ public abstract class FragmentTransactionsAbstract extends Fragment implements V
             builder = new AlertDialog.Builder(ac, R.style.AlertDialogTheme);
         else
             builder = new AlertDialog.Builder(ac);
-        builder.setTitle("Name Other Address");
+        builder.setTitle(R.string.name_other_address);
 
         final EditText input = new EditText(ac);
         input.setText(AddressNameConverter.getInstance(ac).get(address));
@@ -256,7 +256,7 @@ public abstract class FragmentTransactionsAbstract extends Fragment implements V
                 }
             }
         });
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 AddressNameConverter.getInstance(ac).put(address, input.getText().toString(), ac);
@@ -266,7 +266,7 @@ public abstract class FragmentTransactionsAbstract extends Fragment implements V
                 dialog.dismiss();
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();

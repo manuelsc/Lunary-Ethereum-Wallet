@@ -48,8 +48,8 @@ public class WalletGenActivity extends AppCompatActivity {
         if(getIntent().hasExtra("PRIVATE_KEY")){
             privateKeyProvided  = getIntent().getStringExtra("PRIVATE_KEY");
             walletGenText.setText(getResources().getText(R.string.import_text));
-            toolbar_title.setText("Import Wallet");
-            mEmailSignInButton.setText("Import");
+            toolbar_title.setText(R.string.import_title);
+            mEmailSignInButton.setText(R.string.import_button);
         }
 
         if(((AnalyticsApplication) this.getApplication()).isGooglePlayBuild()) {

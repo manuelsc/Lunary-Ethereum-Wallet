@@ -196,11 +196,11 @@ public class FragmentSend extends Fragment {
             @Override
             public void onClick(View view) {
                 if(amount.getText().length() <= 0 || new BigDecimal(amount.getText().toString()).compareTo(new BigDecimal("0")) <= 0) {
-                    ac.snackError("No amount specified");
+                    ac.snackError(getString(R.string.err_send_noamount));
                     return;
                 }
                 if(toAddress == null || toAddress.getText().length() == 0){
-                    ac.snackError("No receiver specified");
+                    ac.snackError(getString(R.string.err_send_noreceiver));
                     return;
                 }
                 if(spinner == null || spinner.getSelectedItem() == null) return;
@@ -211,10 +211,10 @@ public class FragmentSend extends Fragment {
                     if(enteredAmount.compareTo(available) < 0 || BuildConfig.DEBUG){
                         askForPasswordAndDecode(spinner.getSelectedItem().toString());
                     } else {
-                        ac.snackError("Not enough Ether on that Address");
+                        ac.snackError(getString(R.string.err_send_not_enough_ether));
                     }
                 } catch(Exception e){
-                    ac.snackError("Invalid Amount");
+                    ac.snackError(getString(R.string.err_send_invalidamount));
                 }
 
             }

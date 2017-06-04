@@ -91,8 +91,8 @@ public class FragmentChooseRecipient extends Fragment implements View.OnClickLis
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        menu.setHeaderTitle("Addressbook Settings");
-        menu.add(0, 400, 0, "Remove");
+        menu.setHeaderTitle(R.string.addressbook_menu_title);
+        menu.add(0, 400, 0, R.string.addressbook_menu_remove);
     }
 
     @Override

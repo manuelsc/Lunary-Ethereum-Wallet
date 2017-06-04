@@ -43,7 +43,7 @@ public class AnalyticsApplication extends Application {
         }
         mTracker.send(new HitBuilders.EventBuilder()
                 .setCategory("Action")
-                .setAction("Send Ether")
+                .setAction(s)
                 .build());
     }
 

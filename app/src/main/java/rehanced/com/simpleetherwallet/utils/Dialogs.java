@@ -30,7 +30,7 @@ public class Dialogs {
             builder = new AlertDialog.Builder(c, R.style.AlertDialogTheme);
         else
             builder = new AlertDialog.Builder(c);
-        builder.setTitle("Watch Only Address");
+        builder.setTitle(R.string.dialog_watch_only_title);
 
         final EditText input = new EditText(c);
         input.setSingleLine();
@@ -53,7 +53,7 @@ public class Dialogs {
                 }
             }
         });
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
@@ -83,7 +83,7 @@ public class Dialogs {
                 dialog.dismiss();
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 InputMethodManager inputMgr = (InputMethodManager)input.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -106,9 +106,9 @@ public class Dialogs {
             builder = new AlertDialog.Builder(c, R.style.AlertDialogTheme);
         else
             builder = new AlertDialog.Builder(c);
-        builder.setTitle("Importing Wallets?");
-        builder.setMessage("We've detected "+files.size()+" new wallet"+(files.size() > 1 ? "s" : "")+" in our Lunary folder. Would you like to import: "+addresses+"\n");
-        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.dialog_importing_wallets_title);
+        builder.setMessage(String.format(c.getString(R.string.dialog_importing_wallets_text), files.size(), files.size() > 1 ? "s" : "", addresses));
+        builder.setPositiveButton(R.string.button_yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 try {
@@ -123,7 +123,7 @@ public class Dialogs {
                 dialog.cancel();
             }
         });
-        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.button_no, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
@@ -139,9 +139,9 @@ public class Dialogs {
             builder = new AlertDialog.Builder(c, R.style.AlertDialogTheme);
         else
             builder = new AlertDialog.Builder(c);
-        builder.setTitle("No Full Wallet");
-        builder.setMessage("Watch only wallets can not be exported.");
-        builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.dialog_ex_nofull_title);
+        builder.setMessage(R.string.dialog_ex_nofull_text);
+        builder.setNeutralButton(R.string.button_ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
@@ -157,12 +157,10 @@ public class Dialogs {
             builder = new AlertDialog.Builder(c, R.style.AlertDialogTheme);
         else
             builder = new AlertDialog.Builder(c);
-        builder.setTitle("Exporting your Wallet");
-        builder.setMessage("A copy of your Ethereum wallet will be placed inside the folder \"Lunary\" in the root directory of your Android phone. " +
-                "Please note that other applications that run on your device can technically access any wallets that you have exported. " +
-                "Due to this, we highly recommend erasing all exported wallets from the Lunary folder as soon as you have finished backing them up.");
-        builder.setPositiveButton("OK", yes);
-        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.dialog_exporting_title);
+        builder.setMessage(R.string.dialog_exporting_text);
+        builder.setPositiveButton(R.string.button_ok, yes);
+        builder.setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -177,9 +175,9 @@ public class Dialogs {
             builder = new AlertDialog.Builder(c, R.style.AlertDialogTheme);
         else
             builder = new AlertDialog.Builder(c);
-        builder.setTitle("No Full Wallet");
-        builder.setMessage("In order to send funds you need a full wallet with a private key. Please generate or import one first.");
-        builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.dialog_nofullwallet);
+        builder.setMessage(R.string.dialog_nofullwallet_text);
+        builder.setNeutralButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
@@ -195,9 +193,9 @@ public class Dialogs {
             builder = new AlertDialog.Builder(c, R.style.AlertDialogTheme);
         else
             builder = new AlertDialog.Builder(c);
-        builder.setTitle("No Wallets");
-        builder.setMessage("In order to request funds you need a wallet or a watch only address.");
-        builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.dialog_no_wallets);
+        builder.setMessage(R.string.dialog_no_wallets_text);
+        builder.setNeutralButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
@@ -213,9 +211,9 @@ public class Dialogs {
             builder = new AlertDialog.Builder(c, R.style.AlertDialogTheme);
         else
             builder = new AlertDialog.Builder(c);
-        builder.setTitle("No Wallets Found");
-        builder.setMessage("Please place the wallet you want to import inside the Lunary folder and make sure it is correctly named. When importing from Mist or other desktop client you don't have to rename your wallet.");
-        builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.dialog_no_wallets_found);
+        builder.setMessage(R.string.dialog_no_wallets_found_text);
+        builder.setNeutralButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
