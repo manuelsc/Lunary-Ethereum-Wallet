@@ -2,46 +2,51 @@
     <string name="app_name">Lunary</string>
 
 
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Ajustes</string>
     <string name="title_activity_main">Lunary</string>
 
-    <string name="fab_scan">Scan Address / Key</string>
-    <string name="fab_add_watch">Add Watch Only Wallet</string>
-    <string name="fab_add_aswatch">Add as Watch Only Wallet</string>
-    <string name="fab_gen_new">Generate New Wallet</string>
-    <string name="fab_request">Request</string>
-    <string name="fab_send">Send</string>
-    <string name="fab_sendether">Send Ether</string>
-    <string name="fab_setwalletname">Set Wallet Name</string>
-    <string name="drawer_import">Import Wallets</string>
-    <string name="drawer_about">About Us</string>
-    <string name="drawer_donate">Donate</string>
+    <string name="fab_scan">Escanea Dirección / Clave</string>
+    <string name="fab_add_watch">Observar una Cartera</string>
+    <string name="fab_add_aswatch">Guardar Cartera para 
+Observación</string>
+    <string name="fab_gen_new">Generar Cartera Nueva</string>
+    <string name="fab_request">Solicitar</string>
+    <string name="fab_send">Mandar</string>
+    <string name="fab_sendether">Mandar Ether</string>
+    <string name="fab_setwalletname">Asignar Nombre de la 
+Cartera</string>
+    <string name="drawer_import">Importar Carteras</string>
+    <string name="drawer_about">Sobre Nosotros</string>
+    <string name="drawer_donate">Donar</string>
 
-    <string name="fr_price_current_price">Current Price</string>
-    <string name="fr_wallet_overall_balance">Overall Balance</string>
-    <string name="fr_detail_acc_balance">Account Balance</string>
+    <string name="fr_price_current_price">Precio Actual</string>
+    <string name="fr_wallet_overall_balance">Saldo Total</string>
+    <string name="fr_detail_acc_balance">Saldo de la Cuenta</string>
 
-    <string name="main_ac_wallet_added_suc">Your wallet was added successfully</string>
-    <string name="main_ac_wallet_added_er">Wallet was already added</string>
-    <string name="main_ac_wallet_added_fatal">Err Not a valid ethereum address</string>
-    <string name="detail_acc_name_changed_suc">Wallet successfully renamed</string>
-    <string name="title_activity_settings">Settings</string>
+    <string name="main_ac_wallet_added_suc">La cartera ha sido guardado 
+con éxito</string>
+    <string name="main_ac_wallet_added_er">Cartera ya existía</string>
+    <string name="main_ac_wallet_added_fatal">Dirección no 
+valida</string>
+    <string name="detail_acc_name_changed_suc">Nombre cambiado 
+con éxito</string>
+    <string name="title_activity_settings">Ajustes</string>
 
     <string name="pref_header_general">General</string>
 
-    <string name="pref_title_social_recommendations">Show zero amount transactions</string>
-    <string name="pref_description_social_recommendations">Whether to hide contract calls without any ether amount or not</string>
+    <string name="pref_title_social_recommendations">Mostrar transacciones sin valor</string>
+    <string name="pref_description_social_recommendations">Mostrar transacciones de contratos que no cambian el valor de ether</string>
 
 
-    <string name="pref_title_start">Wallet as default tab</string>
-    <string name="pref_sum_start">If enabled the app will start preselected in the wallet tab instead of the price tab</string>
+    <string name="pref_title_start">Poner Cartera como pestaña principal</string>
+    <string name="pref_sum_start">Al abrir la aplicación, abrirá la pestaña de Cartera en lugar de la de Precio</string>
 
-    <string name="pref_header_data_sync">Data &amp; sync</string>
+    <string name="pref_header_data_sync">Datos &amp; sincronización</string>
 
-    <string name="pref_title_sync_frequency">Notification Sync</string>
-    <string name="pref_sum_sync_frequency">Sync interval to check for new transactions</string>
+    <string name="pref_title_sync_frequency">Frecuencia de Sincronización</string>
+    <string name="pref_sum_sync_frequency">Intervalo de comprobación para transacciones nuevas</string>
 
-    <string name="pref_currencys_title">Display Currency</string>
+    <string name="pref_currencys_title">Moneda Local</string>
     <string-array name="pref_currencys">
         <item>USD</item>
         <item>EUR</item>
@@ -54,13 +59,13 @@
     </string-array>
 
     <string-array name="pref_sync_frequency_titles">
-        <item>1 hour</item>
-        <item>2 hours</item>
-        <item>4 hours</item>
-        <item>6 hours</item>
-        <item>8 hours</item>
-        <item>16 hours</item>
-        <item>24 hours</item>
+        <item>1 hora</item>
+        <item>2 horas</item>
+        <item>4 horas</item>
+        <item>6 horas</item>
+        <item>8 horas</item>
+        <item>16 horas</item>
+        <item>24 horass</item>
     </string-array>
     <string-array name="pref_sync_frequency_values">
         <item>1</item>
@@ -73,50 +78,51 @@
     </string-array>
 
 
-    <string name="notification_title">Transaction Received</string>
+    <string name="notification_title">Transacción Recibida</string>
 
     <string-array name="multi_select_list_preference_default_value" />
 
-    <string name="pref_title_system_sync_settings">System sync settings</string>
+    <string name="pref_title_system_sync_settings">Ajustes de sincronización</string>
 
-    <string name="pref_header_notifications">Notifications</string>
+    <string name="pref_header_notifications">Notificaciones</string>
 
-    <string name="pref_title_new_message_notifications">Incoming Transactions</string>
-    <string name="pref_title_new_message_notifications_sum">Notify you about incoming transactions to any of your wallets</string>
+    <string name="pref_title_new_message_notifications">Transacciones Entrantes</string>
+    <string name="pref_title_new_message_notifications_sum">Mostrar una notificación al recibir una transacción nueva en una de tus carteras</string>
 
     <string name="pref_title_ringtone">Ringtone</string>
-    <string name="pref_ringtone_silent">Silent</string>
+    <string name="pref_ringtone_silent">Sin Sonido</string>
 
-    <string name="pref_title_vibrate">Vibrate</string>
-    <string name="title_activity_wallet_gen">Generate Wallet</string>
+    <string name="pref_title_vibrate">Vibrar</string>
+    <string name="title_activity_wallet_gen">Generar Cartera</string>
 
-    <string name="prompt_email">Password</string>
-    <string name="prompt_password">Confirm Password</string>
-    <string name="action_sign_in">Generate</string>
+    <string name="prompt_email">Contraseña</string>
+    <string name="prompt_password">Confirmar Contraseña</string>
+    <string name="action_sign_in">Generar</string>
 
-    <string name="error_invalid_password">This password is too short (Min: 9)</string>
-    <string name="error_incorrect_password">Passwords do not match</string>
+    <string name="error_invalid_password">La contraseña es demasiado corta (Mínimo: 9)</string>
+    <string name="error_incorrect_password">Las contraseñas no coinciden</string>
 
-    <string name="generate_text">You are about to generate a new and encrypted offline wallet on this device. We recommend choosing a strong password in order to be able to ensure the best security possible for your funds. Please note that generating a strong and secure wallet is a highly compute-intensive task that can take up to several minutes! This process will be performed in the background so you can still use your phone as you usually would in the meantime. The progress is displayed in the notification bar of your device and as soon as we have finished generating your wallet, we will let you know.</string>
+    <string name="generate_text">Se va a generar una nueva cartera encriptada en este dispositivo. Recomendamos que elijas una contraseña fuerte para asegurar la mejor seguridad posible de tus fondos. Por favor, ten en cuenta que el proceso de generación de una cartera segura es muy intenso y puede tardar unos cuantos minutos. El proceso se ejecutará de fondo para que puedas seguir utilizando el móvil mientras esperas. Se mostrará el estado de la generación en la barra de notificaciones y te avisaremos en cuanto acabe.  </string>
 
-    <string name="import_text">You are about to import an unencrypted private key. We recommend choosing a strong password in order to be able to ensure the best security possible for your funds. Please note that importing a strong and secure wallet is a highly compute-intensive task that can take up to several minutes! This process will be performed in the background so you can still use your phone as you usually would in the meantime. The progress is displayed in the notification bar of your device and as soon as we have finished generating your wallet, we will let you know.</string>
+    <string name="import_text">Vas a importar una clave privada desencriptada. Recomendamos que elijas una contraseña fuerte para asegurar la mejor seguridad posible de tus fondos. Por favor, ten en cuenta que el proceso de generación de una cartera segura es muy intenso y puede tardar unos cuantos minutos. El proceso se ejecutará de fondo para que puedas seguir utilizando el móvil mientras esperas. Se mostrará el estado de la generación en la barra de notificaciones y te avisaremos en cuanto acabe.  
+</string>
 
-    <string name="wallet_gen_service_title">Generating New Wallet</string>
-    <string name="wallet_gen_service_title_import">Importing Wallet</string>
-    <string name="choose_recipient_enterscan">Enter / Scan Recipient Address</string>
-    <string name="choose_recipient_contacts">Or Choose Recipient from Address Book</string>
+    <string name="wallet_gen_service_title">Generando Cartera Nueva</string>
+    <string name="wallet_gen_service_title_import">Importando Cartera</string>
+    <string name="choose_recipient_enterscan">Introducir / Escanear Dirección de Destino</string>
+    <string name="choose_recipient_contacts">O Elegir Destino de la Agenda de Contactos</string>
 
-    <string name="choose_your_address">From</string>
-    <string name="send_to">To</string>
-    <string name="choose_ether_amount">Available Ether</string>
-    <string name="choose_gas">Transaction Cost</string>
+    <string name="choose_your_address">De</string>
+    <string name="send_to">A</string>
+    <string name="choose_ether_amount">Ether Disponible</string>
+    <string name="choose_gas">Coste de la Transacción</string>
 
 
-    <string name="request_activity_ether">Request Amount</string>
-    <string name="request_activity_to">Your Wallets / Addresses</string>
+    <string name="request_activity_ether">Cantidad de Solicitud</string>
+    <string name="request_activity_to">Tus Carteras / Direcciones</string>
 
-    <string name="no_tx_history">This is the transaction overview showing all ether sent and received to and from other people. After adding a wallet and transferring some ether to it, the transaction and all future transactions will be displayed here.</string>
-    <string name="no_wallet_history">You currently do not have any wallets. You can easily create or import one using the button below.</string>
+    <string name="no_tx_history">Aquí puedes ver todo el ether que mandas o recibes. Una vez que hayas añadido una cartera y mandado ether a ella, verás la transacción y todas las futuras transacciones en esta pestaña.</string>
+    <string name="no_wallet_history">No tienes ningúna cartera de momento. Puedes crear o importar una facilmente con el botón abajo.</string>
 
 
     <string name="tos"><![CDATA[
