@@ -39,7 +39,7 @@
     <string name="pref_header_data_sync">Data &amp; sync</string>
 
     <string name="pref_title_sync_frequency">Notification Sync</string>
-    <string name="pref_sum_sync_frequency">Sync intervall to check for new transactions</string>
+    <string name="pref_sum_sync_frequency">Sync interval to check for new transactions</string>
 
     <string name="pref_currencys_title">Display Currency</string>
     <string-array name="pref_currencys">
