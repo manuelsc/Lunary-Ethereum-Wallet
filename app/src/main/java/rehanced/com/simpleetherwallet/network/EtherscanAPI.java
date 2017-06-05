@@ -46,6 +46,10 @@ public class EtherscanAPI {
         get("https://api.etherscan.io/api?module=proxy&action=eth_gasPrice&apikey="+token, b);
     }
 
+    public void getTokenBalances(String address, Callback b) throws IOException {
+        get("https://api.ethplorer.io/getAddressInfo/"+address+"?apiKey=freekey", b);
+    }
+
     public void getGasLimitEstimate(String to, Callback b) throws IOException{
         get("https://api.etherscan.io/api?module=proxy&action=eth_estimateGas&to="+to+"&value=0xff22&gasPrice=0x051da038cc&gas=0xffffff&apikey="+token, b);
     }

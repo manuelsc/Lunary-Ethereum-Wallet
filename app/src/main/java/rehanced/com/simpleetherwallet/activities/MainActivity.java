@@ -374,7 +374,8 @@ public class MainActivity extends AppCompatActivity implements NetworkUpdateList
                                 "Poloniex for price data\n"+
                                 "Web3j by Conor Svensson\n" +
                                 "Ethereum Foundation for usage of the icon according to (CC A 3.0)\n"+
-                                "Powered by Etherscan.io APIs\n\n" +
+                                "Powered by Etherscan.io APIs\n" +
+                                "Token balances powered by Ethplorer.io\n" +
                                 "Lunary is published under GPL3")
                         .setIcon(android.R.drawable.ic_dialog_info)
                         .show();
