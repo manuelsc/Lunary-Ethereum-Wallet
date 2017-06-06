@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 
+import rehanced.com.simpleetherwallet.data.TokenDisplay;
 import rehanced.com.simpleetherwallet.data.TransactionDisplay;
 import rehanced.com.simpleetherwallet.data.WalletDisplay;
 import rehanced.com.simpleetherwallet.data.WatchWallet;
@@ -73,6 +74,25 @@ public class ResponseParser {
                     storedwallets.get(i).getPubKey(),
                     balance,
                     storedwallets.get(i) instanceof WatchWallet ? WalletDisplay.WATCH_ONLY : WalletDisplay.NORMAL
+            ));
+        }
+        return display;
+    }
+
+    public static ArrayList<TokenDisplay> parseTokens(String response) throws Exception{
+        ArrayList<TokenDisplay> display = new ArrayList<TokenDisplay>();
+        JSONArray data = new JSONObject(response).getJSONArray("tokens");
+        for(int i=0; i < data.length(); i++){
+            JSONObject currentToken = data.getJSONObject(i);
+            display.add(new TokenDisplay(
+                    currentToken.getJSONObject("tokenInfo").getString("name"),
+                    currentToken.getJSONObject("tokenInfo").getString("symbol"),
+                    new BigDecimal(currentToken.getString("balance")),
+                    currentToken.getJSONObject("tokenInfo").getInt("decimals"),
+                    currentToken.getJSONObject("tokenInfo").getJSONObject("price").getDouble("rate"),
+                    currentToken.getJSONObject("tokenInfo").getString("address"),
+                    currentToken.getJSONObject("tokenInfo").getString("totalSupply"),
+                    currentToken.getJSONObject("tokenInfo").getLong("holdersCount")
             ));
         }
         return display;

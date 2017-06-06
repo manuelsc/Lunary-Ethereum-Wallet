@@ -200,7 +200,7 @@
     <string name="notification_wallgen_finished">Konto erstellung abgeschlossen!</string>
     <string name="notification_wallimp_finished">Konto importierung abgeschlossen!</string>
     <string name="notification_click_to_view">Klicken zum öffnen</string>
-
+    <string name="ether_and_token">Ether and Token</string>
 
     <string name="tos"><![CDATA[
 <p><h2>Terms and Conditions ("Terms")</h2></p>
@@ -292,6 +292,7 @@ More details about this topic can be found in Google\'s Privacy Policies:
 
 ]]>
     </string>
+
 
 
 </resources>

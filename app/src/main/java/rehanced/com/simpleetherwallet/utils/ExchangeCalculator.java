@@ -12,8 +12,10 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.List;
 
 import rehanced.com.simpleetherwallet.data.CurrencyEntry;
+import rehanced.com.simpleetherwallet.data.TokenDisplay;
 import rehanced.com.simpleetherwallet.interfaces.NetworkUpdateListener;
 import rehanced.com.simpleetherwallet.network.EtherscanAPI;
 
@@ -95,6 +97,15 @@ public class ExchangeCalculator {
         return formatterCryptExact.format(d);
     }
 
+    /**
+     * Converts given tokenbalance to ETH
+     * @param tokenbalance native token balance
+     * @param tokenusd price in USD for each token
+     * @return Ether worth of given tokens
+     */
+    public double convertTokenToEther(double tokenbalance, double tokenusd){
+        return Math.floor((( (tokenbalance * tokenusd) / conversionNames[2].getRate()) * 100 )) / 100;
+    }
 
     public double convertRate(double balance, double rate){
         if(index == 2) {
@@ -119,6 +130,20 @@ public class ExchangeCalculator {
 
     public double convertToUsd(double balance){
         return Math.floor(balance * getUSDPrice() * 100) / 100;
+    }
+
+    /**
+     * Used for DetailFragmentOverview "Overall Balance"
+     * @param token List of all tokens on an address
+     * @return ether price of all tokens combined (exclusive ether balance itself)
+     */
+    public double sumUpTokenEther(List<TokenDisplay> token){
+        double summedEther = 0;
+        for(TokenDisplay t : token){
+            if(t.getShorty().equals("ETH")) continue;
+            summedEther += convertTokenToEther(t.getBalanceDouble(), t.getUsdprice());
+        }
+        return summedEther;
     }
 
     public double getUSDPrice(){

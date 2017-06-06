@@ -15,7 +15,6 @@ import rehanced.com.simpleetherwallet.utils.Key;
 
 public class EtherscanAPI {
 
-    private final OkHttpClient client;
     private String token;
 
     private static EtherscanAPI instance;
@@ -82,14 +81,13 @@ public class EtherscanAPI {
         Request request = new Request.Builder()
                 .url(url)
                 .build();
-
+        OkHttpClient client = new OkHttpClient();
+        client.setConnectTimeout(20, TimeUnit.SECONDS);
+        client.setReadTimeout(20, TimeUnit.SECONDS);
         client.newCall(request).enqueue(b);
     }
 
     private EtherscanAPI(){
-        client = new OkHttpClient();
-        client.setConnectTimeout(20, TimeUnit.SECONDS); // connect timeout
-        client.setReadTimeout(20, TimeUnit.SECONDS);
         token = new Key(APIKey.API_KEY).toString();
     }
 }

@@ -3,18 +3,20 @@ package rehanced.com.simpleetherwallet.fragments;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -23,19 +25,22 @@ import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.WriterException;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
+import org.json.JSONException;
+
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import rehanced.com.simpleetherwallet.R;
 import rehanced.com.simpleetherwallet.activities.AddressDetailActivity;
 import rehanced.com.simpleetherwallet.activities.SendActivity;
 import rehanced.com.simpleetherwallet.data.CurrencyEntry;
+import rehanced.com.simpleetherwallet.data.TokenDisplay;
 import rehanced.com.simpleetherwallet.data.WatchWallet;
 import rehanced.com.simpleetherwallet.network.EtherscanAPI;
 import rehanced.com.simpleetherwallet.utils.AddressNameConverter;
@@ -43,20 +48,22 @@ import rehanced.com.simpleetherwallet.utils.Blockies;
 import rehanced.com.simpleetherwallet.utils.Dialogs;
 import rehanced.com.simpleetherwallet.utils.ExchangeCalculator;
 import rehanced.com.simpleetherwallet.utils.ResponseParser;
+import rehanced.com.simpleetherwallet.utils.TokenAdapter;
 import rehanced.com.simpleetherwallet.utils.WalletStorage;
-import rehanced.com.simpleetherwallet.utils.qr.Contents;
-import rehanced.com.simpleetherwallet.utils.qr.QREncoder;
 
-public class FragmentDetailOverview extends Fragment {
+public class FragmentDetailOverview extends Fragment implements View.OnClickListener, View.OnCreateContextMenuListener{
 
     private AddressDetailActivity ac;
     private String ethaddress = "";
     private byte type;
     private TextView balance, address, currency;
-    private ImageView icon, qrcode;
+    private ImageView icon;
     private LinearLayout header;
     BigDecimal balanceDouble = new BigDecimal("1");
     private FloatingActionMenu fabmenu;
+    private RecyclerView recyclerView;
+    private TokenAdapter walletAdapter;
+    private List<TokenDisplay> token = new ArrayList<>();
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -66,23 +73,23 @@ public class FragmentDetailOverview extends Fragment {
         ethaddress = getArguments().getString("ADDRESS");
         type = getArguments().getByte("TYPE");
 
-        ImageView icon = (ImageView) rootView.findViewById(R.id.addressimage);
-        TextView address = (TextView) rootView.findViewById(R.id.ethaddress);
-        final TextView balance = (TextView) rootView.findViewById(R.id.balance);
+        icon = (ImageView) rootView.findViewById(R.id.addressimage);
+        address = (TextView) rootView.findViewById(R.id.ethaddress);
+        balance = (TextView) rootView.findViewById(R.id.balance);
         currency = (TextView) rootView.findViewById(R.id.currency) ;
         header = (LinearLayout) rootView.findViewById(R.id.header);
         fabmenu =(FloatingActionMenu) rootView.findViewById(R.id.fabmenu);
 
-        Button clipboard = (Button) rootView.findViewById(R.id.copytoclip);
-        clipboard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i=new Intent(android.content.Intent.ACTION_SEND);
-                i.setType("text/plain");
-                i.putExtra(android.content.Intent.EXTRA_TEXT, ethaddress);
-                startActivity(Intent.createChooser(i,"Share via"));
-            }
-        });
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+        walletAdapter = new TokenAdapter(token, ac, this, this);
+        LinearLayoutManager mgr  = new LinearLayoutManager(ac.getApplicationContext());
+        RecyclerView.LayoutManager mLayoutManager = mgr;
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(walletAdapter);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),mgr.getOrientation());
+        recyclerView.addItemDecoration(dividerItemDecoration);
+
 
         header.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +97,7 @@ public class FragmentDetailOverview extends Fragment {
                 CurrencyEntry cur = ExchangeCalculator.getInstance().next();
                 balance.setText(ExchangeCalculator.getInstance().convertRateExact(balanceDouble, cur.getRate())+"");
                 currency.setText(cur.getName());
+                walletAdapter.notifyDataSetChanged();
                 if(ac != null)
                     ac.broadCastDataSetChanged();
             }
@@ -97,30 +105,6 @@ public class FragmentDetailOverview extends Fragment {
 
         icon.setImageBitmap(Blockies.createIcon(ethaddress, 24));
         address.setText(ethaddress);
-
-        int qrCodeDimention = 600;
-
-        qrcode = (ImageView) rootView.findViewById(R.id.qrcode);
-
-        QREncoder qrCodeEncoder = new QREncoder(ethaddress, null,
-                Contents.Type.TEXT, BarcodeFormat.QR_CODE.toString(), qrCodeDimention);
-
-        try {
-            Bitmap bitmap = qrCodeEncoder.encodeAsBitmap();
-            qrcode.setImageBitmap(bitmap);
-        } catch (WriterException e) {
-            e.printStackTrace();
-        }
-
-        qrcode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!fabmenu.isMenuHidden())
-                    fabmenu.hideMenu(true);
-                else
-                    fabmenu.showMenu(true);
-            }
-        });
 
         FloatingActionButton fab_setName = (FloatingActionButton) rootView.findViewById(R.id.set_name);
         fab_setName.setOnClickListener(new View.OnClickListener() {
@@ -162,32 +146,9 @@ public class FragmentDetailOverview extends Fragment {
             fab_add.setVisibility(View.GONE);
         }
 
+
         try {
-            EtherscanAPI.getInstance().getBalance(ethaddress, new Callback() {
-                @Override
-                public void onFailure(Request request, IOException e) {
-                    ac.snackError("Can't connect to network");
-                }
-
-                @Override
-                public void onResponse(final Response response) throws IOException {
-                    ac.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                balanceDouble = new BigDecimal(ResponseParser.parseBalance(response.body().string()));
-                               // balance.setText(ExchangeCalculator.getInstance().convertRateExact(balanceDouble, ExchangeCalculator.getInstance().get));
-                                CurrencyEntry cur = ExchangeCalculator.getInstance().getCurrent();
-                                balance.setText(ExchangeCalculator.getInstance().convertRateExact(balanceDouble, cur.getRate())+"");
-                                currency.setText(cur.getName());
-                            } catch (Exception e) {
-                                ac.snackError("Invalid server response");
-                            }
-                        }
-                    });
-
-                }
-            });
+            update();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -195,6 +156,73 @@ public class FragmentDetailOverview extends Fragment {
         return rootView;
     }
 
+
+    public void update() throws IOException {
+        token.clear();
+        EtherscanAPI.getInstance().getBalance(ethaddress, new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                ac.snackError("Can't connect to network");
+            }
+
+            @Override
+            public void onResponse(final Response response) throws IOException {
+                try {
+                    balanceDouble = new BigDecimal(ResponseParser.parseBalance(response.body().string()));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                final CurrencyEntry cur = ExchangeCalculator.getInstance().getCurrent();
+                token.add(0, new TokenDisplay("Ether", "ETH", balanceDouble.multiply(new BigDecimal(1000d)), 3, 1, "", "", 0));
+                ac.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // balance.setText(ExchangeCalculator.getInstance().convertRateExact(balanceDouble, ExchangeCalculator.getInstance().get));
+                        balance.setText(ExchangeCalculator.getInstance().convertRateExact(balanceDouble, cur.getRate()) + "");
+                        currency.setText(cur.getName());
+                        walletAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        });
+
+        EtherscanAPI.getInstance().getTokenBalances(ethaddress, new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                ac.snackError("Can't connect to network");
+            }
+
+            @Override
+            public void onResponse(final Response response) throws IOException {
+                ac.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            try {
+                                token.addAll(ResponseParser.parseTokens(response.body().string()));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                return;
+                            }
+                            balanceDouble = balanceDouble.add(new BigDecimal(ExchangeCalculator.getInstance().sumUpTokenEther(token)));
+                            final CurrencyEntry cur = ExchangeCalculator.getInstance().getCurrent();
+                            ac.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    balance.setText(ExchangeCalculator.getInstance().convertRateExact(balanceDouble, cur.getRate()) + "");
+                                    currency.setText(cur.getName());
+                                    walletAdapter.notifyDataSetChanged();
+                                }
+                            });
+                        } catch (Exception e) {
+                            ac.snackError("Invalid server response");
+                        }
+                    }
+                });
+            }
+        });
+
+    }
 
     public void setName(){
         AlertDialog.Builder builder;
@@ -252,4 +280,8 @@ public class FragmentDetailOverview extends Fragment {
         builder.show();
     }
 
+    @Override
+    public void onClick(View view) {
+        
+    }
 }
