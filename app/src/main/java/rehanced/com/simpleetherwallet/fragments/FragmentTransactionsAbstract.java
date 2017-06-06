@@ -98,9 +98,9 @@ public abstract class FragmentTransactionsAbstract extends Fragment implements V
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy){
                 if (dy > 0)
-                    send.hide(true);
+                    fabmenu.hideMenu(true);
                 else if (dy < 0)
-                    send.show(true);
+                    fabmenu.showMenu(true);
             }
         });
 

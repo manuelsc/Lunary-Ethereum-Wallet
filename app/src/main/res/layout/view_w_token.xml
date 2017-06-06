@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+    android:background="@drawable/ripple"
+    android:clickable="true"
+        android:id="@+id/container">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:paddingBottom="3dp"
+            android:paddingTop="2dp"
+            android:id="@+id/mainpanel">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="60dp"
+            android:gravity="center"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="match_parent">
+            <TextView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginRight="3dp"
+                android:background="@drawable/tokencircle"
+                android:text="GNT"
+                android:textSize="13sp"
+                android:textColor="#FFFFFF"
+                android:gravity="center"
+                android:id="@+id/addressimage" />
+
+                </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_gravity="bottom"
+                    android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:id="@+id/tokenname"
+                    android:singleLine="true"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text=""/> <!--android:textColor="@color/colorPrimaryDark" -->
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_gravity="bottom"
+                    android:gravity="right"
+                    android:id="@+id/etherbalance"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_weight="1"
+                    android:text=""/> <!--@color/colorPrimary -->
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:textSize="11sp"
+                    android:layout_gravity="center"
+                    android:id="@+id/nativebalance"
+                    android:text=""/>
+
+            </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+</LinearLayout>

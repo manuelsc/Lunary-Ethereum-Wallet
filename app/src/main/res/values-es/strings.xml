@@ -202,6 +202,7 @@
     <string name="notification_wallgen_finished">Generación de Cartera completo!</string>
     <string name="notification_wallimp_finished">Importación de Cartera completo!</string>
     <string name="notification_click_to_view">Toca para ver más</string>
+    <string name="ether_and_token">Ether and Token</string>
 
 
     <string name="tos"><![CDATA[
@@ -294,5 +295,6 @@ More details about this topic can be found in Google\'s Privacy Policies:
 
 ]]>
     </string>
+
 
 </resources>

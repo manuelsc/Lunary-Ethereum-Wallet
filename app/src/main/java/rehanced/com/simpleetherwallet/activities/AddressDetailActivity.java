@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import rehanced.com.simpleetherwallet.R;
 import rehanced.com.simpleetherwallet.fragments.FragmentDetailOverview;
+import rehanced.com.simpleetherwallet.fragments.FragmentDetailShare;
 import rehanced.com.simpleetherwallet.fragments.FragmentTransactions;
 import rehanced.com.simpleetherwallet.utils.AddressNameConverter;
 
@@ -48,14 +49,16 @@ public class AddressDetailActivity extends AppCompatActivity {
 
         coord = (CoordinatorLayout) findViewById(R.id.main_content);
 
-        fragments = new Fragment[2];
-        fragments[0] = new FragmentDetailOverview();
-        fragments[1] = new FragmentTransactions();
+        fragments = new Fragment[3];
+        fragments[0] = new FragmentDetailShare();
+        fragments[1] = new FragmentDetailOverview();
+        fragments[2] = new FragmentTransactions();
         Bundle bundle = new Bundle();
         bundle.putString("ADDRESS", address);
         bundle.putByte("TYPE", type);
         fragments[0].setArguments(bundle);
         fragments[1].setArguments(bundle);
+        fragments[2].setArguments(bundle);
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
@@ -66,10 +69,12 @@ public class AddressDetailActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
         tabLayout.setupWithViewPager(mViewPager);
 
-        tabLayout.getTabAt(0).setIcon(R.drawable.ic_wallet);
-        tabLayout.getTabAt(1).setIcon(R.drawable.ic_transactions);
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_action_share);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_wallet);
+        tabLayout.getTabAt(2).setIcon(R.drawable.ic_transactions);
+        mViewPager.setCurrentItem(1);
 
-        mViewPager.setOffscreenPageLimit(2);
+        mViewPager.setOffscreenPageLimit(3);
     }
 
     public void setTitle(String s){
@@ -94,8 +99,8 @@ public class AddressDetailActivity extends AppCompatActivity {
     }
 
     public void broadCastDataSetChanged(){
-        if(fragments != null && fragments[1] != null) {
-            ((FragmentTransactions) fragments[1]).notifyDataSetChanged();
+        if(fragments != null && fragments[2] != null) {
+            ((FragmentTransactions) fragments[2]).notifyDataSetChanged();
         }
     }
 
