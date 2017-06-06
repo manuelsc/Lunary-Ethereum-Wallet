@@ -154,7 +154,7 @@
     <string name="button_ok">OK</string>
     <string name="wallet_removal_title">ATTENTION: Wallet Removal</string>
     <string name="wallet_removal_sure">Are you sure you want to delete your watch only wallet?</string>
-    <string name="wallet_removal_privkey">! THIS IS A WALLET WITH A PRIVATE KEY ! IF YOU HAVE NO BACKUP AND CONTINUE ALL YOUR ETHER ON THAT WALLET WILL BE LOST FOR EVER! ARE YOU SURE YOU WANT TO PROCEED? WALLLET ADDRESS:</string>
+    <string name="wallet_removal_privkey">! THIS IS A WALLET WITH A PRIVATE KEY ! IF YOU HAVE NO BACKUP AND CONTINUE ALL YOUR ETHER ON THAT WALLET WILL BE LOST FOR EVER! ARE YOU SURE YOU WANT TO PROCEED? WALLET ADDRESS:</string>
     <string name="wallet_removal_last_warning">ARE YOU SURE? WALLET AND ALL COINS / TOKEN ON IT ARE GOING TO GET PERMANENTLY REMOVED. THIS IS THE LAST WARNING FOR WALLET:</string>
     <string name="button_yes">YES</string>
     <string name="button_no">NO</string>

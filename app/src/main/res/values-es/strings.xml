@@ -7,12 +7,12 @@
 
     <string name="fab_scan">Escanea Dirección / Clave</string>
     <string name="fab_add_watch">Observar una Cartera</string>
-    <string name="fab_add_aswatch">Guardar Cartera para Observación</string>
+    <string name="fab_add_aswatch">Guardar Cartera de Observar</string>
     <string name="fab_gen_new">Generar Cartera Nueva</string>
     <string name="fab_request">Solicitar</string>
     <string name="fab_send">Mandar</string>
     <string name="fab_sendether">Mandar Ether</string>
-    <string name="fab_setwalletname">Asignar Nombre de la Cartera</string>
+    <string name="fab_setwalletname">Asignar Nombre a la Cartera</string>
     <string name="drawer_import">Importar Carteras</string>
     <string name="drawer_about">Sobre Nosotros</string>
     <string name="drawer_donate">Donar</string>
@@ -21,22 +21,22 @@
     <string name="fr_wallet_overall_balance">Saldo Total</string>
     <string name="fr_detail_acc_balance">Saldo de la Cuenta</string>
 
-    <string name="main_ac_wallet_added_suc">La cartera ha sido guardado con éxito</string>
-    <string name="main_ac_wallet_added_er">Cartera ya existía</string>
-    <string name="main_ac_wallet_added_fatal">Dirección no valida</string>
+    <string name="main_ac_wallet_added_suc">Cartera guardado con éxito</string>
+    <string name="main_ac_wallet_added_er">Cartera ya existe</string>
+    <string name="main_ac_wallet_added_fatal">Dirección inválida</string>
     <string name="detail_acc_name_changed_suc">Nombre cambiado con éxito</string>
     <string name="title_activity_settings">Ajustes</string>
 
     <string name="pref_header_general">General</string>
 
-    <string name="pref_title_social_recommendations">Mostrar transacciones sin valor</string>
-    <string name="pref_description_social_recommendations">Mostrar transacciones de contratos que no cambian el valor de ether</string>
+    <string name="pref_title_social_recommendations">Mostrar transacciones sin cantidad</string>
+    <string name="pref_description_social_recommendations">Mostrar transacciones de contratos que no incluyen una cantidad de Ether</string>
 
 
     <string name="pref_title_start">Poner Cartera como pestaña principal</string>
     <string name="pref_sum_start">Al abrir la aplicación, abrirá la pestaña de Cartera en lugar de la de Precio</string>
 
-    <string name="pref_header_data_sync">Datos &amp; sincronización</string>
+    <string name="pref_header_data_sync">Datos &amp; Sincronización</string>
 
     <string name="pref_title_sync_frequency">Frecuencia de Sincronización</string>
     <string name="pref_sum_sync_frequency">Intervalo de comprobación para transacciones nuevas</string>
@@ -60,7 +60,7 @@
         <item>6 horas</item>
         <item>8 horas</item>
         <item>16 horas</item>
-        <item>24 horass</item>
+        <item>24 horas</item>
     </string-array>
     <string-array name="pref_sync_frequency_values">
         <item>1</item>
@@ -97,9 +97,9 @@
     <string name="error_invalid_password">La contraseña es demasiado corta (Mínimo: 9)</string>
     <string name="error_incorrect_password">Las contraseñas no coinciden</string>
 
-    <string name="generate_text">Se va a generar una nueva cartera encriptada en este dispositivo. Recomendamos que elijas una contraseña fuerte para asegurar la mejor seguridad posible de tus fondos. Por favor, ten en cuenta que el proceso de generación de una cartera segura es muy intenso y puede tardar unos cuantos minutos. El proceso se ejecutará de fondo para que puedas seguir utilizando el móvil mientras esperas. Se mostrará el estado de la generación en la barra de notificaciones y te avisaremos en cuanto acabe.  </string>
+    <string name="generate_text">Se va a generar una nueva cartera encriptada en este dispositivo. Recomendamos que elijas una contraseña fuerte para asegurar la mejor seguridad posible de tus fondos. Por favor, ten en cuenta que el proceso de generación de una cartera segura es muy intenso y puede tardar unos minutos. El proceso se ejecutará de fondo para que puedas seguir utilizando el móvil mientras esperas. Se mostrará el estado de la generación en la barra de notificaciones y te avisaremos en cuanto acabe.  </string>
 
-    <string name="import_text">Vas a importar una clave privada desencriptada. Recomendamos que elijas una contraseña fuerte para asegurar la mejor seguridad posible de tus fondos. Por favor, ten en cuenta que el proceso de generación de una cartera segura es muy intenso y puede tardar unos cuantos minutos. El proceso se ejecutará de fondo para que puedas seguir utilizando el móvil mientras esperas. Se mostrará el estado de la generación en la barra de notificaciones y te avisaremos en cuanto acabe.</string>
+    <string name="import_text">Vas a importar una clave privada desencriptada. Recomendamos que elijas una contraseña fuerte para asegurar la mejor seguridad posible de tus fondos. Por favor, ten en cuenta que el proceso de generación de una cartera segura es muy intenso y puede tardar unos minutos. El proceso se ejecutará de fondo para que puedas seguir utilizando el móvil mientras esperas. Se mostrará el estado de la generación en la barra de notificaciones y te avisaremos en cuanto acabe.</string>
 
     <string name="wallet_gen_service_title">Generando Cartera Nueva</string>
     <string name="wallet_gen_service_title_import">Importando Cartera</string>
@@ -115,94 +115,95 @@
     <string name="request_activity_ether">Cantidad de Solicitud</string>
     <string name="request_activity_to">Tus Carteras / Direcciones</string>
 
-    <string name="no_tx_history">Aquí puedes ver todo el ether que mandas o recibes. Una vez que hayas añadido una cartera y mandado ether a ella, verás la transacción y todas las futuras transacciones en esta pestaña.</string>
+    <string name="no_tx_history">Aquí verás todo el ether que mandas o recibes. Una vez que hayas añadido una cartera y mandado ether a ella, verás la transacción y todas las futuras transacciones en esta pestaña.</string>
     <string name="no_wallet_history">No tienes ningúna cartera de momento. Puedes crear o importar una facilmente con el botón abajo.</string>
 
 
-    <string name="app_intro_text">Welcome to Lunary - the free and Open Source Ether Wallet for Android! Before starting, please take some time to read through our terms of service.</string>
+    <string name="app_intro_text">Bienvenidos a Lunary - la cartera de Ether gratis y de código abierto para Android!</string>
     <string name="app_intro_title">Lunary Wallet</string>
-    <string name="app_intro_please_agree">Please read and agree to the terms of service before proceeding</string>
-    <string name="app_intro_iagree">I agree to terms of service</string>
-    <string name="fragment_send_ether_amount">Ether Amount</string>
-    <string name="fragment_send_cheaper">Cheaper</string>
-    <string name="fragment_send_faster">Faster</string>
+    <string name="app_intro_please_agree">Antes de seguir por favor, lea y acepta los términos de servicio</string>
+    <string name="app_intro_iagree">Acepto los términos de servicio</string>
+    <string name="fragment_send_ether_amount">Cantidad de Ether</string>
+    <string name="fragment_send_cheaper">Más barato</string>
+    <string name="fragment_send_faster">Más Rápido</string>
     <string name="fragment_send_total">Total</string>
-    <string name="fragment_send_send_button">Send</string>
-    <string name="fragment_recipient_hint_address">Address</string>
-    <string name="fragment_recipient_continue">Continue</string>
-    <string name="fragment_detail_add_sharing">Address Sharing</string>
-    <string name="fragment_detail_share_button">Share</string>
-    <string name="walletgen_title">Generate Wallet</string>
-    <string name="request_ether_title">Request Ether</string>
-    <string name="qr_scan_title">QR Address</string>
-    <string name="activity_send_title">Transaction</string>
-    <string name="last_24_hours">Last 24 Hours</string>
-    <string name="last_7_days">Last 7 Days</string>
-    <string name="last_30_days">Last 30 Days</string>
-    <string name="last_year">Last Year</string>
-    <string name="err_no_con">No internet connection</string>
-    <string name="wallet_menu_title">Wallet Settings</string>
-    <string name="wallet_menu_changename">Change Wallet Name</string>
-    <string name="wallet_menu_copyadd">Address to Clipboard</string>
-    <string name="wallet_menu_export">Export Wallet</string>
-    <string name="wallet_menu_delete">Delete Wallet</string>
-    <string name="wallet_suc_exported">Wallet successfully exported</string>
-    <string name="wallet_no_permission">Please grant write permission to export wallets</string>
-    <string name="wallet_one_at_a_time">Not So Fast</string>
-    <string name="wallet_one_at_a_time_text">We are currently generating a wallet for you, you can see the progress in your notification bar. Don\'t worry, we will notify you as soon as your wallet generation is finished :-) If you really wish to generate another one please wait for the current wallet to be completed first.</string>
+    <string name="fragment_send_send_button">Enviar</string>
+    <string name="fragment_recipient_hint_address">Dirección</string>
+    <string name="fragment_recipient_continue">Seguir</string>
+    <string name="fragment_detail_add_sharing">Compartir Dirección</string>
+    <string name="fragment_detail_share_button">Compartir</string>
+    <string name="walletgen_title">Generar Cartera</string>
+    <string name="request_ether_title">Solicitar Ether</string>
+    <string name="qr_scan_title">Dirección QR</string>
+    <string name="activity_send_title">Transacción</string>
+    <string name="last_24_hours">Últimas 24 Horas</string>
+    <string name="last_7_days">Últimos 7 Días</string>
+    <string name="last_30_days">Últimos 30 Días</string>
+    <string name="last_year">Último Año</string>
+    <string name="err_no_con">No hay conexión a Internet</string>
+    <string name="wallet_menu_title">Ajustes de la Cartera</string>
+    <string name="wallet_menu_changename">Cambiar Nombre de Cartera</string>
+    <string name="wallet_menu_copyadd">Dirección a Portapapeles</string>
+    <string name="wallet_menu_export">Exportar Cartera</string>
+    <string name="wallet_menu_delete">Eliminar Cartera</string>
+    <string name="wallet_suc_exported">Cartera exportada con éxito</string>
+    <string name="wallet_no_permission">Por favor, concede el permiso de escritura para exportar la cartera</string>
+    <string name="wallet_one_at_a_time">No tan rápido</string>
+    <string name="wallet_one_at_a_time_text">Estamos generando la cartera, puedes ver el progreso en tu barra de notificaciones. No te preocupes, te avisaremos en cuanto acabe :-) Si deseas generar otra por favor, espera hasta que termine la que esta en proceso.</string>
     <string name="button_ok">OK</string>
-    <string name="wallet_removal_title">ATTENTION: Wallet Removal</string>
-    <string name="wallet_removal_sure">Are you sure you want to delete your watch only wallet?</string>
-    <string name="wallet_removal_privkey">! THIS IS A WALLET WITH A PRIVATE KEY ! IF YOU HAVE NO BACKUP AND CONTINUE ALL YOUR ETHER ON THAT WALLET WILL BE LOST FOR EVER! ARE YOU SURE YOU WANT TO PROCEED? WALLLET ADDRESS:</string>
-    <string name="wallet_removal_last_warning">ARE YOU SURE? WALLET AND ALL COINS / TOKEN ON IT ARE GOING TO GET PERMANENTLY REMOVED. THIS IS THE LAST WARNING FOR WALLET:</string>
-    <string name="button_yes">YES</string>
+    <string name="wallet_removal_title">ADVERTENCIA: Eliminación de Cartera</string>
+    <string name="wallet_removal_sure">¿Estás seguro de que quieres eliminar la cartera de observar?</string>
+    <string name="wallet_removal_privkey">ESTA CARTERA CONTIENE UNA CLAVE PRIVADA! SI NO TIENES UNA COPIA DE SEGURIDAD PERDERAS TODO EL ETHER QUE CONTIENE LA CARTERA PARA SIEMPRE! ESTAS SEGURO DE QUE QUIERES SEGUIR? DIRECCCION DE LA CARTERA:</string>
+    <string name="wallet_removal_last_warning">ESTAS SEGURO? LA CARTERA Y TODO EL ETHER / LOS TOKENS SERAN PERMANENTAMENTE ELIMINADOS DEL DISPOSITIVO Y SIN OTRA COPIA DE LA CLAVE NO PODRAS VOLVER A ACEDERLOS. POR ULTIMA VEZ LA DIRECCION ES:</string>
+    <string name="button_yes">SI</string>
     <string name="button_no">NO</string>
-    <string name="name_your_wallet">Name Your Wallet</string>
-    <string name="button_cancel">Cancel</string>
-    <string name="name_other_address">Name Other Address</string>
-    <string name="trans_menu_title">Transaction Settings</string>
-    <string name="trans_menu_changename">Change Address Name</string>
-    <string name="trans_menu_viewreceiver">View Receiver Address</string>
-    <string name="trans_menu_openinb">Open in Browser</string>
-    <string name="trans_no_trans_found">No transactions found for this address.</string>
-    <string name="err_send_not_enough_ether">Not enough Ether on that Address</string>
-    <string name="err_send_invalidamount">Invalid Amount</string>
-    <string name="err_send_noreceiver">No receiver specified</string>
-    <string name="err_send_noamount">No amount specified</string>
-    <string name="name_your_address">Name Your Address</string>
-    <string name="name_this_address">Name This Address</string>
-    <string name="addressbook_menu_title">Addressbook Settings</string>
-    <string name="addressbook_menu_remove">Remove</string>
-    <string name="import_title">Import Wallet</string>
-    <string name="import_button">Import</string>
-    <string name="main_grant_permission_export">Please grant write permission to export Wallets</string>
-    <string name="main_grant_permission_import">Please grant read permission to import Wallets</string>
-    <string name="dialog_watch_only_title">Watch Only Address</string>
-    <string name="dialog_importing_wallets_title">Importing Wallets?</string>
-    <string name="dialog_importing_wallets_text">We have detected %1$d new wallet%2$s in our Lunary folder. Would you like to import: %3$s</string>
-    <string name="dialog_ex_nofull_title">No Full Wallet</string>
-    <string name="dialog_ex_nofull_text">Watch only wallets can not be exported.</string>
-    <string name="dialog_exporting_title">Exporting your Wallet</string>
-    <string name="dialog_exporting_text">A copy of your Ethereum wallet will be placed inside the folder \"Lunary\" in the root directory of your Android phone. Please note that other applications that run on your device can technically access any wallets that you have exported. Due to this, we highly recommend erasing all exported wallets from the Lunary folder as soon as you have finished backing them up.</string>
-    <string name="dialog_nofullwallet">No Full Wallet</string>
-    <string name="dialog_nofullwallet_text">In order to send funds you need a full wallet with a private key. Please generate or import one first.</string>
-    <string name="dialog_no_wallets">No Wallets</string>
-    <string name="dialog_no_wallets_text">In order to request funds you need a wallet or a watch only address.</string>
-    <string name="dialog_no_wallets_found">No Wallets Found</string>
-    <string name="dialog_no_wallets_found_text">Please place the wallet you want to import inside the Lunary folder and make sure it is correctly named. When importing from Mist or other desktop client you don\'t have to rename your wallet.</string>
-    <string name="notification_ticker">Incoming Ether Transaction…</string>
-    <string name="notification_transfersuc">Transfer successful</string>
-    <string name="notification_transferfail">Transfer Failed</string>
-    <string name="notification_transferingticker">Transferring Ether…</string>
-    <string name="notification_transfering_title">Transferring Ether</string>
-    <string name="notification_might_take_a_minute">This might take a minute</string>
-    <string name="notification_wallgen_maytake">This may take a couple minutes</string>
-    <string name="notification_wallgen_title">Generating Wallet…</string>
-    <string name="notification_wallimp_title">Importing Wallet…</string>
-    <string name="notification_wallgen_finished">Wallet Creation Finished!</string>
-    <string name="notification_wallimp_finished">Wallet Import Finished!</string>
-    <string name="notification_click_to_view">Click to view</string>
+    <string name="name_your_wallet">Asignar Nombre a la Cartera</string>
+    <string name="button_cancel">Cancelar</string>
+    <string name="name_other_address">Asignar Nombre a Otra Dirección</string>
+    <string name="trans_menu_title">Ajustes de Transacción</string>
+    <string name="trans_menu_changename">Cambiar Nombre de la Dirección</string>
+    <string name="trans_menu_viewreceiver">Ver Dirección del Destinatario </string>
+    <string name="trans_menu_openinb">Abrir en Navegador</string>
+    <string name="trans_no_trans_found">No se han encontrado transacciones para esta dirección.</string>
+    <string name="err_send_not_enough_ether">La dirección no tiene suficiente Ether</string>
+    <string name="err_send_invalidamount">Cantidad Inválida</string>
+    <string name="err_send_noreceiver">Falta el Destino</string>
+    <string name="err_send_noamount">Falta la Cantidad</string>
+    <string name="name_your_address">Asignar Nombre a Tu Dirección</string>
+    <string name="name_this_address">Asignar Nombre a Esta Dirección</string>
+    <string name="addressbook_menu_title">Ajustes de la Agenda</string>
+    <string name="addressbook_menu_remove">Eliminar</string>
+    <string name="import_title">Importa Cartera</string>
+    <string name="import_button">Importar</string>
+    <string name="main_grant_permission_export">Por favor, concede el permiso de escritura para exportar carteras</string>
+    <string name="main_grant_permission_import">Por favor, concede el permiso de lectura para importar carteras</string>
+    <string name="dialog_watch_only_title">Dirección de Observar</string>
+    <string name="dialog_importing_wallets_title">Importar Carteras?</string>
+    <string name="dialog_importing_wallets_text">Hemos detectado %1$d cartera%2$s nueva%2$s en la carpeta de Lunary. ¿Quiéres que importemos: %3$s</string>
+    <string name="dialog_ex_nofull_title">Cartera sin Clave Privada</string>
+    <string name="dialog_ex_nofull_text">No se pueden exportar las cartera de observar</string>
+    <string name="dialog_exporting_title">Exportando tu Cartera</string>
+    <string name="dialog_exporting_text">Se guardará una copia de tu cartera de Ethereum dentro de la carpeta \"Lunary\" en el directorio raíz de tu dispositivo. Ten en cuenta que en teoría cualquier otra aplicación pueda acceder a las carteras que has exportado. Por eso recomendamos que elimines todas las carteras de la carpeta de Lunary en cuanto hayas hecho una copia de seguridad de ellas. </string>
+    <string name="dialog_nofullwallet">Cartera sin Clave Privada</string>
+    <string name="dialog_nofullwallet_text">Para mandar fondos necesitas una cartera con una clave privada. Por favor, genera o importa una antes de seguir.</string>
+    <string name="dialog_no_wallets">Sin Cartera</string>
+    <string name="dialog_no_wallets_text">Para solicitar fondos necesitas una cartera o una dirección de observar.</string>
+    <string name="dialog_no_wallets_found">No hay Carteras</string>
+    <string name="dialog_no_wallets_found_text">Por favor, mete la cartera que quieres importar dentro de la carpeta de Lunary y asegurate de que el nombre esta correcto. Al importar de Mist u otro cliente de ordenador no hace falta cambiar el nombre de la cartera.</string>
+    <string name="notification_ticker">Transacción de Ether Entrante...</string>
+    <string name="notification_transfersuc">Transferencia Exitosa</string>
+    <string name="notification_transferfail">Transferencia Fallida</string>
+    <string name="notification_transferingticker">Enviando Ether...</string>
+    <string name="notification_transfering_title">Enviando Ether</string>
+    <string name="notification_might_take_a_minute">Esto puede tardar unos minutos</string>
+    <string name="notification_wallgen_maytake">Esto puede tardar unos minutos</string>
+    <string name="notification_wallgen_title">Generando Cartera...</string>
+    <string name="notification_wallimp_title">Importando Cartera...</string>
+    <string name="notification_wallgen_finished">Generación de Cartera completo!</string>
+    <string name="notification_wallimp_finished">Importación de Cartera completo!</string>
+    <string name="notification_click_to_view">Toca para ver más</string>
     <string name="ether_and_token">Ether and Token</string>
+
 
     <string name="tos"><![CDATA[
 <p><h2>Terms and Conditions ("Terms")</h2></p>
