@@ -24,9 +24,6 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IFillFormatter;
 import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,6 +32,9 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 import rehanced.com.simpleetherwallet.R;
 import rehanced.com.simpleetherwallet.activities.AnalyticsApplication;
 import rehanced.com.simpleetherwallet.activities.MainActivity;
@@ -184,7 +184,7 @@ public class FragmentPrice extends Fragment {
 
         EtherscanAPI.getInstance().getPriceChart((System.currentTimeMillis()/1000)-time, period, displayInUsd, new Callback() { // 1467321600,
             @Override
-            public void onFailure(Request request, IOException e) {
+            public void onFailure(Call call, IOException e) {
                 ac.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -195,7 +195,7 @@ public class FragmentPrice extends Fragment {
             }
 
             @Override
-            public void onResponse(Response response) throws IOException {
+            public void onResponse(Call call, Response response) throws IOException {
                 final ArrayList<Entry> yVals = new ArrayList<Entry>();
                 try {
                     JSONArray data = new JSONArray(response.body().string());

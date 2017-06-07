@@ -14,7 +14,9 @@ import rehanced.com.simpleetherwallet.data.TokenDisplay;
 import rehanced.com.simpleetherwallet.data.TransactionDisplay;
 import rehanced.com.simpleetherwallet.data.WalletDisplay;
 import rehanced.com.simpleetherwallet.data.WatchWallet;
+import rehanced.com.simpleetherwallet.interfaces.LastIconLoaded;
 import rehanced.com.simpleetherwallet.interfaces.StorableWallet;
+import rehanced.com.simpleetherwallet.network.EtherscanAPI;
 
 
 public class ResponseParser {
@@ -79,7 +81,7 @@ public class ResponseParser {
         return display;
     }
 
-    public static ArrayList<TokenDisplay> parseTokens(String response) throws Exception{
+    public static ArrayList<TokenDisplay> parseTokens(Context c, String response, LastIconLoaded callback) throws Exception{
         ArrayList<TokenDisplay> display = new ArrayList<TokenDisplay>();
         JSONArray data = new JSONObject(response).getJSONArray("tokens");
         for(int i=0; i < data.length(); i++){
@@ -94,6 +96,10 @@ public class ResponseParser {
                     currentToken.getJSONObject("tokenInfo").getString("totalSupply"),
                     currentToken.getJSONObject("tokenInfo").getLong("holdersCount")
             ));
+
+            // Download icon and cache it
+            EtherscanAPI.getInstance().loadTokenIcon(c, currentToken.getJSONObject("tokenInfo").getString("name"), i == data.length() -1, callback);
+
         }
         return display;
     }

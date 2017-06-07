@@ -1,21 +1,28 @@
 package rehanced.com.simpleetherwallet.fragments;
 
+import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.view.LayoutInflater;
 import android.view.View;
-
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
+import android.view.ViewGroup;
 
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 import rehanced.com.simpleetherwallet.activities.MainActivity;
 import rehanced.com.simpleetherwallet.data.TransactionDisplay;
 import rehanced.com.simpleetherwallet.interfaces.StorableWallet;
 import rehanced.com.simpleetherwallet.network.EtherscanAPI;
+import rehanced.com.simpleetherwallet.utils.AppBarStateChangeListener;
+import rehanced.com.simpleetherwallet.utils.RequestCache;
 import rehanced.com.simpleetherwallet.utils.ResponseParser;
 import rehanced.com.simpleetherwallet.utils.WalletStorage;
+
+import static android.view.View.GONE;
 
 
 public class FragmentTransactionsAll extends FragmentTransactionsAbstract  {
@@ -23,7 +30,26 @@ public class FragmentTransactionsAll extends FragmentTransactionsAbstract  {
     protected TransactionDisplay unconfirmed;
     private long unconfirmed_addedTime;
 
-    public void update(){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView  = super.onCreateView(inflater, container, savedInstanceState);
+        MainActivity ac = (MainActivity) this.ac;
+        if(ac != null && ac.getAppBar() != null) {
+            ac.getAppBar().addOnOffsetChangedListener(new AppBarStateChangeListener() {
+                @Override
+                public void onStateChanged(AppBarLayout appBarLayout, State state) {
+                    if(state == State.COLLAPSED){
+                        fabmenu.hideMenu(true);
+                    } else {
+                        fabmenu.showMenu(true);
+                    }
+                }
+            });
+        }
+        return rootView;
+    }
+
+
+    public void update(boolean force){
         if(ac == null) return;
         getWallets().clear();
         if(swipeLayout != null)
@@ -34,66 +60,82 @@ public class FragmentTransactionsAll extends FragmentTransactionsAbstract  {
             nothingToShow.setVisibility(View.VISIBLE);
             onItemsLoadComplete();
         } else {
-            nothingToShow.setVisibility(View.GONE);
+            nothingToShow.setVisibility(GONE);
             for (int i = 0; i < storedwallets.size(); i++) {
                 try {
                     final StorableWallet currentWallet = storedwallets.get(i);
 
                     EtherscanAPI.getInstance().getNormalTransactions(currentWallet.getPubKey(), new Callback() {
                         @Override
-                        public void onFailure(Request request, IOException e) {
-                            ac.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    onItemsLoadComplete();
-                                    ((MainActivity)ac).snackError("No internet connection");
-                                }
-                            });
+                        public void onFailure(Call call, IOException e) {
+                            if(isAdded()) {
+                                ac.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        onItemsLoadComplete();
+                                        ((MainActivity) ac).snackError("No internet connection");
+                                    }
+                                });
+                            }
                         }
 
                         @Override
-                        public void onResponse(Response response) throws IOException {
-                            final ArrayList<TransactionDisplay> w = new ArrayList<TransactionDisplay>(ResponseParser.parseTransactions(response.body().string(), "Unnamed Address", currentWallet.getPubKey(), TransactionDisplay.NORMAL));
-                            ac.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    onComplete(w, storedwallets);
-                                }
-                            });
+                        public void onResponse(Call call, Response response) throws IOException {
+                            String restring = response.body().string();
+                            if(restring != null && restring.length() > 2)
+                                RequestCache.getInstance().put(RequestCache.TYPE_TXS_NORMAL, currentWallet.getPubKey(), restring);
+                            final ArrayList<TransactionDisplay> w = new ArrayList<TransactionDisplay>(ResponseParser.parseTransactions(restring, "Unnamed Address", currentWallet.getPubKey(), TransactionDisplay.NORMAL));
+                            if(isAdded()) {
+                                ac.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        onComplete(w, storedwallets);
+                                    }
+                                });
+                            }
                         }
-                    });
+                    }, force);
                     EtherscanAPI.getInstance().getInternalTransactions(currentWallet.getPubKey(), new Callback() {
                         @Override
-                        public void onFailure(Request request, IOException e) {
-                            ac.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    onItemsLoadComplete();
-                                    ((MainActivity)ac).snackError("No internet connection");
-                                }
-                            });
+                        public void onFailure(Call call, IOException e) {
+                            if(isAdded()) {
+                                ac.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        onItemsLoadComplete();
+                                        ((MainActivity) ac).snackError("No internet connection");
+                                    }
+                                });
+                            }
                         }
 
                         @Override
-                        public void onResponse(Response response) throws IOException {
-                            final ArrayList<TransactionDisplay> w = new ArrayList<TransactionDisplay>(ResponseParser.parseTransactions(response.body().string(), "Unnamed Address", currentWallet.getPubKey(), TransactionDisplay.CONTRACT));
-                            ac.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    onComplete(w, storedwallets);
-                                }
-                            });
+                        public void onResponse(Call call, Response response) throws IOException {
+                            String restring = response.body().string();
+                            if(restring != null && restring.length() > 2)
+                                RequestCache.getInstance().put(RequestCache.TYPE_TXS_INTERNAL, currentWallet.getPubKey(), restring);
+                            final ArrayList<TransactionDisplay> w = new ArrayList<TransactionDisplay>(ResponseParser.parseTransactions(restring, "Unnamed Address", currentWallet.getPubKey(), TransactionDisplay.CONTRACT));
+                            if(isAdded()) {
+                                ac.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        onComplete(w, storedwallets);
+                                    }
+                                });
+                            }
                         }
-                    });
+                    }, force);
                 } catch (IOException e) {
-                    if (ac != null)
-                        ((MainActivity) ac).snackError("Can't fetch account balances. No connection?");
+                    if(isAdded()) {
+                        if (ac != null)
+                            ((MainActivity) ac).snackError("Can't fetch account balances. No connection?");
 
-                    // So "if(getRequestCount() >= storedwallets.size()*2)" limit can be reached even if there are expetions for certain addresses (2x because of internal and normal)
-                    addRequestCount();
-                    addRequestCount();
-                    onItemsLoadComplete();
-                    e.printStackTrace();
+                        // So "if(getRequestCount() >= storedwallets.size()*2)" limit can be reached even if there are expetions for certain addresses (2x because of internal and normal)
+                        addRequestCount();
+                        addRequestCount();
+                        onItemsLoadComplete();
+                        e.printStackTrace();
+                    }
                 }
 
             }
@@ -117,7 +159,7 @@ public class FragmentTransactionsAll extends FragmentTransactionsAbstract  {
                 }
             }
 
-            nothingToShow.setVisibility(wallets.size() == 0 ? View.VISIBLE : View.GONE);
+            nothingToShow.setVisibility(wallets.size() == 0 ? View.VISIBLE : GONE);
             walletAdapter.notifyDataSetChanged();
         }
     }

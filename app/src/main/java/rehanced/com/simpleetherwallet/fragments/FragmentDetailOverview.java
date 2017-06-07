@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -25,9 +26,6 @@ import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
 import org.json.JSONException;
 
@@ -36,22 +34,28 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 import rehanced.com.simpleetherwallet.R;
 import rehanced.com.simpleetherwallet.activities.AddressDetailActivity;
 import rehanced.com.simpleetherwallet.activities.SendActivity;
 import rehanced.com.simpleetherwallet.data.CurrencyEntry;
 import rehanced.com.simpleetherwallet.data.TokenDisplay;
 import rehanced.com.simpleetherwallet.data.WatchWallet;
+import rehanced.com.simpleetherwallet.interfaces.LastIconLoaded;
 import rehanced.com.simpleetherwallet.network.EtherscanAPI;
 import rehanced.com.simpleetherwallet.utils.AddressNameConverter;
+import rehanced.com.simpleetherwallet.utils.AppBarStateChangeListener;
 import rehanced.com.simpleetherwallet.utils.Blockies;
 import rehanced.com.simpleetherwallet.utils.Dialogs;
 import rehanced.com.simpleetherwallet.utils.ExchangeCalculator;
 import rehanced.com.simpleetherwallet.utils.ResponseParser;
 import rehanced.com.simpleetherwallet.utils.TokenAdapter;
+import rehanced.com.simpleetherwallet.utils.RequestCache;
 import rehanced.com.simpleetherwallet.utils.WalletStorage;
 
-public class FragmentDetailOverview extends Fragment implements View.OnClickListener, View.OnCreateContextMenuListener{
+public class FragmentDetailOverview extends Fragment implements View.OnClickListener, View.OnCreateContextMenuListener, LastIconLoaded {
 
     private AddressDetailActivity ac;
     private String ethaddress = "";
@@ -59,7 +63,7 @@ public class FragmentDetailOverview extends Fragment implements View.OnClickList
     private TextView balance, address, currency;
     private ImageView icon;
     private LinearLayout header;
-    BigDecimal balanceDouble = new BigDecimal("1");
+    BigDecimal balanceDouble = new BigDecimal("0");
     private FloatingActionMenu fabmenu;
     private RecyclerView recyclerView;
     private TokenAdapter walletAdapter;
@@ -79,6 +83,11 @@ public class FragmentDetailOverview extends Fragment implements View.OnClickList
         currency = (TextView) rootView.findViewById(R.id.currency) ;
         header = (LinearLayout) rootView.findViewById(R.id.header);
         fabmenu =(FloatingActionMenu) rootView.findViewById(R.id.fabmenu);
+
+        CurrencyEntry cur = ExchangeCalculator.getInstance().getCurrent();
+        balanceDouble = new BigDecimal(getArguments().getDouble("BALANCE"));
+        balance.setText(ExchangeCalculator.getInstance().convertRateExact(balanceDouble, cur.getRate())+"");
+        currency.setText(cur.getName());
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         walletAdapter = new TokenAdapter(token, ac, this, this);
@@ -146,7 +155,18 @@ public class FragmentDetailOverview extends Fragment implements View.OnClickList
             fab_add.setVisibility(View.GONE);
         }
 
-
+        if(ac.getAppBar() != null) {
+            ac.getAppBar().addOnOffsetChangedListener(new AppBarStateChangeListener() {
+                @Override
+                public void onStateChanged(AppBarLayout appBarLayout, State state) {
+                    if(state == State.COLLAPSED){
+                        fabmenu.hideMenu(true);
+                    } else {
+                        fabmenu.showMenu(true);
+                    }
+                }
+            });
+        }
         try {
             update();
         } catch (IOException e) {
@@ -159,16 +179,17 @@ public class FragmentDetailOverview extends Fragment implements View.OnClickList
 
     public void update() throws IOException {
         token.clear();
+        balanceDouble = new BigDecimal("0");
         EtherscanAPI.getInstance().getBalance(ethaddress, new Callback() {
             @Override
-            public void onFailure(Request request, IOException e) {
+            public void onFailure(Call call, IOException e) {
                 ac.snackError("Can't connect to network");
             }
 
             @Override
-            public void onResponse(final Response response) throws IOException {
+            public void onResponse(Call call, Response response) throws IOException {
                 try {
-                    balanceDouble = new BigDecimal(ResponseParser.parseBalance(response.body().string()));
+                    balanceDouble = balanceDouble.add(new BigDecimal(ResponseParser.parseBalance(response.body().string())));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -188,40 +209,34 @@ public class FragmentDetailOverview extends Fragment implements View.OnClickList
 
         EtherscanAPI.getInstance().getTokenBalances(ethaddress, new Callback() {
             @Override
-            public void onFailure(Request request, IOException e) {
+            public void onFailure(Call call, IOException e) {
                 ac.snackError("Can't connect to network");
             }
 
             @Override
-            public void onResponse(final Response response) throws IOException {
-                ac.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            try {
-                                token.addAll(ResponseParser.parseTokens(response.body().string()));
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                return;
-                            }
-                            balanceDouble = balanceDouble.add(new BigDecimal(ExchangeCalculator.getInstance().sumUpTokenEther(token)));
-                            final CurrencyEntry cur = ExchangeCalculator.getInstance().getCurrent();
-                            ac.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    balance.setText(ExchangeCalculator.getInstance().convertRateExact(balanceDouble, cur.getRate()) + "");
-                                    currency.setText(cur.getName());
-                                    walletAdapter.notifyDataSetChanged();
-                                }
-                            });
-                        } catch (Exception e) {
-                            ac.snackError("Invalid server response");
-                        }
-                    }
-                });
-            }
-        });
+            public void onResponse(Call call, final Response response) throws IOException {
+                try {
+                    String restring = response.body().string();
+                    if(restring != null && restring.length() > 2)
+                        RequestCache.getInstance().put(RequestCache.TYPE_TOKEN, ethaddress, restring);
+                    token.addAll(ResponseParser.parseTokens(ac, restring, FragmentDetailOverview.this));
 
+                    balanceDouble = balanceDouble.add(new BigDecimal(ExchangeCalculator.getInstance().sumUpTokenEther(token)));
+
+                    final CurrencyEntry cur = ExchangeCalculator.getInstance().getCurrent();
+                    ac.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            balance.setText(ExchangeCalculator.getInstance().convertRateExact(balanceDouble, cur.getRate()) + "");
+                            currency.setText(cur.getName());
+                            walletAdapter.notifyDataSetChanged();
+                        }
+                    });
+                } catch (Exception e) {
+                    //ac.snackError("Invalid server response");
+                }
+            }
+        }, false);
     }
 
     public void setName(){
@@ -283,5 +298,17 @@ public class FragmentDetailOverview extends Fragment implements View.OnClickList
     @Override
     public void onClick(View view) {
         
+    }
+
+    @Override
+    public void onLastIconDownloaded() {
+        if(walletAdapter != null && ac != null) {
+            ac.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    walletAdapter.notifyDataSetChanged();
+                }
+            });
+        }
     }
 }

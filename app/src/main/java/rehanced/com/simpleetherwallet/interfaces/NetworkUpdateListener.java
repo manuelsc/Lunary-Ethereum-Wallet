@@ -1,6 +1,7 @@
 package rehanced.com.simpleetherwallet.interfaces;
 
-import com.squareup.okhttp.Response;
+
+import okhttp3.Response;
 
 public interface NetworkUpdateListener {
 

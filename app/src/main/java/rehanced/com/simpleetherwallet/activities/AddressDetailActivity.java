@@ -1,6 +1,7 @@
 package rehanced.com.simpleetherwallet.activities;
 
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -30,6 +31,7 @@ public class AddressDetailActivity extends AppCompatActivity {
     private byte type;
     private TextView title;
     private CoordinatorLayout coord;
+    private AppBarLayout appbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,7 @@ public class AddressDetailActivity extends AppCompatActivity {
         title.setText(type == OWN_WALLET ? (walletname == null ? "Unnamed Wallet" : walletname) : "Address");
 
         coord = (CoordinatorLayout) findViewById(R.id.main_content);
+        appbar = (AppBarLayout) findViewById(R.id.appbar);
 
         fragments = new Fragment[3];
         fragments[0] = new FragmentDetailShare();
@@ -55,6 +58,7 @@ public class AddressDetailActivity extends AppCompatActivity {
         fragments[2] = new FragmentTransactions();
         Bundle bundle = new Bundle();
         bundle.putString("ADDRESS", address);
+        bundle.putDouble("BALANCE", getIntent().getDoubleExtra("BALANCE", 0));
         bundle.putByte("TYPE", type);
         fragments[0].setArguments(bundle);
         fragments[1].setArguments(bundle);
@@ -125,4 +129,9 @@ public class AddressDetailActivity extends AppCompatActivity {
             return "";
         }
     }
+
+    public AppBarLayout getAppBar(){
+        return appbar;
+    }
+
 }

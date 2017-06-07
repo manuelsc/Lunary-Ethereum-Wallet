@@ -10,10 +10,6 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,6 +18,9 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 import rehanced.com.simpleetherwallet.R;
 import rehanced.com.simpleetherwallet.activities.MainActivity;
 import rehanced.com.simpleetherwallet.network.EtherscanAPI;
@@ -45,10 +44,10 @@ public class NotificationService extends IntentService {
         try {
             EtherscanAPI.getInstance().getBalances(WalletStorage.getInstance(this).get(), new Callback() {
                 @Override
-                public void onFailure(Request request, IOException e) {}
+                public void onFailure(Call call, IOException e) {}
 
                 @Override
-                public void onResponse(Response response) throws IOException {
+                public void onResponse(Call call, final Response response) throws IOException {
                     JSONArray data = null;
                     try {
                         data = new JSONObject(response.body().string()).getJSONArray("result");

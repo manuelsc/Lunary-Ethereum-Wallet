@@ -30,14 +30,13 @@
                 android:gravity="center"
                 android:layout_height="match_parent">
             <TextView
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="20dp"
+                android:layout_height="25dp"
                 android:layout_marginTop="2dp"
                 android:layout_marginRight="3dp"
-                android:background="@drawable/tokencircle"
-                android:text="GNT"
-                android:textSize="13sp"
-                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#1f3651"
                 android:gravity="center"
                 android:id="@+id/addressimage" />
 

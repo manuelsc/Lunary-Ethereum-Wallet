@@ -1,10 +1,5 @@
 package rehanced.com.simpleetherwallet.utils;
 
-
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,6 +9,9 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.List;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 import rehanced.com.simpleetherwallet.data.CurrencyEntry;
 import rehanced.com.simpleetherwallet.data.TokenDisplay;
 import rehanced.com.simpleetherwallet.interfaces.NetworkUpdateListener;
@@ -184,10 +182,10 @@ public class ExchangeCalculator {
         //Log.d("updateingn", "Initialize price update");
         EtherscanAPI.getInstance().getEtherPrice(new Callback() {
             @Override
-            public void onFailure(Request request, IOException e) {}
+            public void onFailure(Call call, IOException e) {}
 
             @Override
-            public void onResponse(Response response) throws IOException {
+            public void onResponse(Call call, final Response response) throws IOException {
                 try {
                     JSONObject data = new JSONObject(response.body().string()).getJSONObject("result");
 
@@ -208,10 +206,10 @@ public class ExchangeCalculator {
     private void convert(final String currency, final NetworkUpdateListener update) throws IOException {
         EtherscanAPI.getInstance().getPriceConversionRates("USD"+currency, new Callback() {
             @Override
-            public void onFailure(Request request, IOException e) {}
+            public void onFailure(Call call, IOException e) {}
 
             @Override
-            public void onResponse(Response response) throws IOException {
+            public void onResponse(Call call, final Response response) throws IOException {
 
                 rateForChartDisplay = ResponseParser.parsePriceConversionRate(response.body().string());
                 conversionNames[2].setRate(Math.floor(conversionNames[2].getRate() * rateForChartDisplay * 100) / 100);

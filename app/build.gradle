@@ -8,8 +8,8 @@ android {
         applicationId "com.rehanced.lunary"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 9
-        versionName "1.18"
+        versionCode 10
+        versionName "1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
@@ -92,7 +92,7 @@ dependencies {
     compile 'me.dm7.barcodescanner:zxing:1.8.4'
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
-    compile 'com.squareup.okhttp:okhttp:2.0.0'
+    compile 'com.squareup.okhttp3:okhttp:3.8.0'
     compile 'com.android.support:support-v4:25.3.1'
     testCompile 'junit:junit:4.12'
     compile project(path: ':ratethisapp')

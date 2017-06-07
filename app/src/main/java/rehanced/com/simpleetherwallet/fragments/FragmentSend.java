@@ -24,14 +24,13 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
-
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 import rehanced.com.simpleetherwallet.BuildConfig;
 import rehanced.com.simpleetherwallet.R;
 import rehanced.com.simpleetherwallet.activities.AnalyticsApplication;
@@ -136,7 +135,7 @@ public class FragmentSend extends Fragment {
                 try {
                     EtherscanAPI.getInstance().getBalance(spinner.getSelectedItem().toString(), new Callback() {
                         @Override
-                        public void onFailure(Request request, IOException e) {
+                        public void onFailure(Call call, IOException e) {
                             ac.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -147,7 +146,7 @@ public class FragmentSend extends Fragment {
                         }
 
                         @Override
-                        public void onResponse(final Response response) throws IOException {
+                        public void onResponse(Call call, final Response response) throws IOException {
                             ac.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -233,10 +232,10 @@ public class FragmentSend extends Fragment {
         try {
             EtherscanAPI.getInstance().getGasLimitEstimate(toAddress.getText().toString(), new Callback() {
                 @Override
-                public void onFailure(Request request, IOException e) {}
+                public void onFailure(Call call, IOException e) {}
 
                 @Override
-                public void onResponse(Response response) throws IOException {
+                public void onResponse(Call call, Response response) throws IOException {
                     try {
                         gaslimit = ResponseParser.parseGasPrice(response.body().string());
                     } catch (Exception e) {

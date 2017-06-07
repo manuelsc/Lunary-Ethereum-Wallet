@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -27,15 +28,15 @@ import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 import rehanced.com.simpleetherwallet.R;
 import rehanced.com.simpleetherwallet.activities.AddressDetailActivity;
 import rehanced.com.simpleetherwallet.activities.AnalyticsApplication;
@@ -47,6 +48,7 @@ import rehanced.com.simpleetherwallet.data.WalletDisplay;
 import rehanced.com.simpleetherwallet.interfaces.StorableWallet;
 import rehanced.com.simpleetherwallet.network.EtherscanAPI;
 import rehanced.com.simpleetherwallet.utils.AddressNameConverter;
+import rehanced.com.simpleetherwallet.utils.AppBarStateChangeListener;
 import rehanced.com.simpleetherwallet.utils.Dialogs;
 import rehanced.com.simpleetherwallet.utils.ExchangeCalculator;
 import rehanced.com.simpleetherwallet.utils.ResponseParser;
@@ -161,15 +163,18 @@ public class FragmentWallets extends Fragment implements View.OnClickListener, V
             }
         });
 
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
-                if (dy > 0)
-                    fabmenu.hideMenu(true);
-                else if (dy < 0)
-                    fabmenu.showMenu(true);
-            }
-        });
+        if(ac != null && ac.getAppBar() != null) {
+            ac.getAppBar().addOnOffsetChangedListener(new AppBarStateChangeListener() {
+                @Override
+                public void onStateChanged(AppBarLayout appBarLayout, State state) {
+                    if(state == State.COLLAPSED){
+                        fabmenu.hideMenu(true);
+                    } else {
+                        fabmenu.showMenu(true);
+                    }
+                }
+            });
+        }
 
         try {
             update();
@@ -198,7 +203,7 @@ public class FragmentWallets extends Fragment implements View.OnClickListener, V
             nothingToShow.setVisibility(View.GONE);
             EtherscanAPI.getInstance().getBalances(storedwallets, new Callback() {
                 @Override
-                public void onFailure(Request request, IOException e) {
+                public void onFailure(Call call, IOException e) {
                     if (ac != null)
                         ac.snackError("Can't fetch account balances. Invalid response.");
                     final List<WalletDisplay> w = new ArrayList<WalletDisplay> ();
@@ -216,7 +221,7 @@ public class FragmentWallets extends Fragment implements View.OnClickListener, V
                 }
 
                 @Override
-                public void onResponse(Response response) throws IOException {
+                public void onResponse(Call call, Response response) throws IOException {
                     final List<WalletDisplay> w;
                     try {
                         w = ResponseParser.parseWallets(response.body().string(), storedwallets, ac);
@@ -440,6 +445,7 @@ public class FragmentWallets extends Fragment implements View.OnClickListener, V
         int itemPosition = recyclerView.getChildLayoutPosition(view);
         Intent detail = new Intent(ac, AddressDetailActivity.class);
         detail.putExtra("ADDRESS", wallets.get(itemPosition).getPublicKey());
+        detail.putExtra("BALANCE", wallets.get(itemPosition).getBalance());
         detail.putExtra("TYPE", AddressDetailActivity.OWN_WALLET);
         startActivity(detail);
     }

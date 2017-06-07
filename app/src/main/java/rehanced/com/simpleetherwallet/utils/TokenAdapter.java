@@ -1,6 +1,7 @@
 package rehanced.com.simpleetherwallet.utils;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -84,9 +85,14 @@ public class TokenAdapter extends RecyclerView.Adapter<TokenAdapter.MyViewHolder
                                 ExchangeCalculator.getInstance().getCurrent().getRate()
                         ))+" "+ExchangeCalculator.getInstance().getCurrent().getShorty());
         if(box.getContractAddr() != null && box.getContractAddr().length() > 3) {
-            holder.image.setText(box.getShorty());
+            holder.image.setText("");
+            String iconName = box.getName();
+            if(iconName.indexOf(" ") > 0)
+                iconName = iconName.substring(0, iconName.indexOf(" "));
+            holder.image.setBackground(new BitmapDrawable(context.getResources(), TokenIconCache.getInstance(context).get(iconName)));
         } else {
-            holder.image.setText("ETH");
+            holder.image.setText("Ξ");
+            holder.image.setBackgroundResource(0);
             holder.etherbalance.setText(
                     ExchangeCalculator.getInstance().displayEthNicely(
                     ExchangeCalculator.getInstance().convertRate(tbalance, ExchangeCalculator.getInstance().getCurrent().getRate()))+" "+

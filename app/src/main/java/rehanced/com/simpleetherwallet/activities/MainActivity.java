@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -25,12 +26,12 @@ import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.security.Security;
 
+import okhttp3.Response;
 import rehanced.com.simpleetherwallet.R;
 import rehanced.com.simpleetherwallet.data.WatchWallet;
 import rehanced.com.simpleetherwallet.fragments.FragmentPrice;
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements NetworkUpdateList
     private TabLayout tabLayout;
     private CoordinatorLayout coord;
     private SharedPreferences preferences;
+    private AppBarLayout appbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements NetworkUpdateList
         // ------------------------------------------------------------------------
 
         coord = (CoordinatorLayout) findViewById(R.id.main_content);
+        appbar = (AppBarLayout) findViewById(R.id.appbar);
 
         fragments = new Fragment[3];
         fragments[0] = new FragmentPrice();
@@ -438,5 +441,9 @@ public class MainActivity extends AppCompatActivity implements NetworkUpdateList
         public CharSequence getPageTitle(int position) {
             return "";
         }
+    }
+
+    public AppBarLayout getAppBar(){
+        return appbar;
     }
 }

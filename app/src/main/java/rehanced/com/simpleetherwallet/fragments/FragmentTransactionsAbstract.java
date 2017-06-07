@@ -86,7 +86,7 @@ public abstract class FragmentTransactionsAbstract extends Fragment implements V
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                update();
+                update(true);
             }
         });
 
@@ -118,7 +118,7 @@ public abstract class FragmentTransactionsAbstract extends Fragment implements V
             }
         });
 
-        update();
+        update(false);
         walletAdapter.notifyDataSetChanged();
 
         if(((AnalyticsApplication) ac.getApplication()).isGooglePlayBuild()) {
@@ -152,7 +152,7 @@ public abstract class FragmentTransactionsAbstract extends Fragment implements V
             walletAdapter.notifyDataSetChanged();
     }
 
-    public abstract void update();
+    public abstract void update(boolean force);
 
     public synchronized void addRequestCount(){
         requestCount++;
