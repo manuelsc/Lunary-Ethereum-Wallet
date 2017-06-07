@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">Lunary</string>
+    <string name="translator_name">Spanish translation by Adam S.</string>
 
+    <string name="app_name">Lunary</string>
 
     <string name="action_settings">Ajustes</string>
     <string name="title_activity_main">Lunary</string>
