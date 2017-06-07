@@ -50,9 +50,9 @@ import rehanced.com.simpleetherwallet.utils.AppBarStateChangeListener;
 import rehanced.com.simpleetherwallet.utils.Blockies;
 import rehanced.com.simpleetherwallet.utils.Dialogs;
 import rehanced.com.simpleetherwallet.utils.ExchangeCalculator;
+import rehanced.com.simpleetherwallet.utils.RequestCache;
 import rehanced.com.simpleetherwallet.utils.ResponseParser;
 import rehanced.com.simpleetherwallet.utils.TokenAdapter;
-import rehanced.com.simpleetherwallet.utils.RequestCache;
 import rehanced.com.simpleetherwallet.utils.WalletStorage;
 
 public class FragmentDetailOverview extends Fragment implements View.OnClickListener, View.OnCreateContextMenuListener, LastIconLoaded {
@@ -188,13 +188,15 @@ public class FragmentDetailOverview extends Fragment implements View.OnClickList
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                BigDecimal ethbal;
                 try {
-                    balanceDouble = balanceDouble.add(new BigDecimal(ResponseParser.parseBalance(response.body().string())));
+                    ethbal = new BigDecimal(ResponseParser.parseBalance(response.body().string()));
+                    token.add(0, new TokenDisplay("Ether", "ETH", ethbal.multiply(new BigDecimal(1000d)), 3, 1, "", "", 0));
+                    balanceDouble = balanceDouble.add(ethbal);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 final CurrencyEntry cur = ExchangeCalculator.getInstance().getCurrent();
-                token.add(0, new TokenDisplay("Ether", "ETH", balanceDouble.multiply(new BigDecimal(1000d)), 3, 1, "", "", 0));
                 ac.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

@@ -133,7 +133,8 @@ public class EtherscanAPI {
                 BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
                 final Bitmap bitmap= BitmapFactory.decodeStream(bufferedInputStream);
                 TokenIconCache.getInstance(c).put(c, tokenNamef, new BitmapDrawable(c.getResources(), bitmap).getBitmap());
-                if(lastToken) callback.onLastIconDownloaded();
+                // if(lastToken) // TODO: resolve race condition
+                callback.onLastIconDownloaded();
             }
         });
     }
