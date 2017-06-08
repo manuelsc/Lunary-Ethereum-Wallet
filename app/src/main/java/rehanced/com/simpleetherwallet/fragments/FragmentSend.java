@@ -27,6 +27,9 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -51,13 +54,22 @@ public class FragmentSend extends Fragment {
     private SendActivity ac;
     private Button send;
     private EditText amount;
-    private TextView toAddress, toName, usdPrice, ethAvailable, gasText, txCost, fromName, totalCost;
+    private TextView toAddress, toName, usdPrice, gasText, fromName;
+    private TextView availableEth, availableFiat, availableFiatSymbol;
+    private TextView txCost, txCostFiat, txCostFiatSymbol;
+    private TextView totalCost, totalCostFiat, totalCostFiatSymbol;
     private SeekBar gas;
     private ImageView toicon, fromicon;
     private Spinner spinner;
+    private Spinner currencySpinner;
+    private boolean amountInEther = true;
     private BigInteger gaslimit = new BigInteger("21000");
+    private BigDecimal curAvailable = BigDecimal.ZERO;
+    private BigDecimal curTxCost = new BigDecimal("0.000252");
+    private BigDecimal curAmount = BigDecimal.ZERO;
+    private ExchangeCalculator exchange = ExchangeCalculator.getInstance();
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_send, container, false);
 
@@ -70,43 +82,38 @@ public class FragmentSend extends Fragment {
         toName = (TextView) rootView.findViewById(R.id.toName);
         fromName = (TextView) rootView.findViewById(R.id.fromName);
         usdPrice = (TextView) rootView.findViewById(R.id.usdPrice);
-        ethAvailable = (TextView) rootView.findViewById(R.id.ethAvailable);
+
+        availableEth = (TextView) rootView.findViewById(R.id.ethAvailable);
+        availableFiat = (TextView) rootView.findViewById(R.id.ethAvailableFiat);
+        availableFiatSymbol = (TextView) rootView.findViewById(R.id.ethAvailableFiatSymbol);
+
+        txCost = (TextView) rootView.findViewById(R.id.txCost);
+        txCostFiat = (TextView) rootView.findViewById(R.id.txCostFiat);
+        txCostFiatSymbol = (TextView) rootView.findViewById(R.id.txCostFiatSymbol);
+
         totalCost = (TextView) rootView.findViewById(R.id.totalCost);
+        totalCostFiat = (TextView) rootView.findViewById(R.id.totalCostFiat);
+        totalCostFiatSymbol = (TextView) rootView.findViewById(R.id.totalCostFiatSymbol);
+
         gasText = (TextView) rootView.findViewById(R.id.gasText);
         toicon = (ImageView) rootView.findViewById(R.id.toicon);
         fromicon = (ImageView) rootView.findViewById(R.id.fromicon);
 
-        txCost = (TextView) rootView.findViewById(R.id.txCost);
-
-        if(getArguments().containsKey("TO_ADDRESS")){
+        if (getArguments().containsKey("TO_ADDRESS")){
             setToAddress(getArguments().getString("TO_ADDRESS"), ac);
         }
-        if(getArguments().containsKey("AMOUNT")){
-            amount.setText(getArguments().getString("AMOUNT"));
-            if(amount.getText().toString().length() != 0) {
-                try {
-                    double amountd = Double.parseDouble(amount.getText().toString());
-                    usdPrice.setText(ExchangeCalculator.getInstance().displayUsdNicely(ExchangeCalculator.getInstance().convertToUsd(amountd))+" "+ExchangeCalculator.getInstance().getMainCurreny().getName());
 
-                    totalCost.setText(new BigDecimal(txCost.getText().toString()).add(new BigDecimal(amount.getText().toString())).toPlainString());
-                } catch(Exception e){
-                    e.printStackTrace();
-                }
-            }
+        if (getArguments().containsKey("AMOUNT")){
+            curAmount = new BigDecimal(getArguments().getString("AMOUNT"));
         }
 
         gas.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 gasText.setText(i+1+"");
-                BigDecimal gasPrice = (new BigDecimal(gaslimit).multiply(new BigDecimal((i+1)+""))).divide(new BigDecimal("1000000000"), 6, BigDecimal.ROUND_DOWN);
-                String cost =  gasPrice.toPlainString();
+                curTxCost = (new BigDecimal(gaslimit).multiply(new BigDecimal((i+1)+""))).divide(new BigDecimal("1000000000"), 6, BigDecimal.ROUND_DOWN);
 
-                txCost.setText(cost);
-                if(amount.getText().length() > 0)
-                    totalCost.setText(gasPrice.add(new BigDecimal(amount.getText().toString())).toPlainString());
-                else
-                    totalCost.setText(cost);
+                updateDisplays();
             }
 
             @Override
@@ -125,7 +132,6 @@ public class FragmentSend extends Fragment {
                 return view;
             }
         };
-
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinnerArrayAdapter);
 
@@ -151,7 +157,7 @@ public class FragmentSend extends Fragment {
                                 @Override
                                 public void run() {
                                     try {
-                                        ethAvailable.setText(ResponseParser.parseBalance(response.body().string(), 6));
+                                        curAvailable = new BigDecimal(ResponseParser.parseBalance(response.body().string(), 6));
                                     } catch (Exception e) {
                                         ac.snackError("Cant fetch your account balance");
                                         e.printStackTrace();
@@ -179,16 +185,29 @@ public class FragmentSend extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s.length() != 0) {
-                    try {
-                        double amountd = Double.parseDouble(amount.getText().toString());
-                        usdPrice.setText(ExchangeCalculator.getInstance().convertToUsd(amountd)+" "+ExchangeCalculator.getInstance().getMainCurreny().getName());
-                        totalCost.setText(new BigDecimal(txCost.getText().toString()).add(new BigDecimal(amount.getText().toString())).toPlainString());
-                    } catch(Exception e){
-                        e.printStackTrace();
-                    }
-                }
+                updateAmount(s.toString());
+                updateDisplays();
             }
+        });
+
+        currencySpinner = (Spinner) rootView.findViewById(R.id.currency_spinner);
+        List<String> currencyList = new ArrayList<>();
+        currencyList.add("ETH");
+        currencyList.add(ExchangeCalculator.getInstance().getMainCurreny().getName());
+        ArrayAdapter<String> curAdapter = new ArrayAdapter<>(ac, android.R.layout.simple_spinner_item, currencyList);
+        curAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        currencySpinner.setAdapter(curAdapter);
+        currencySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                amountInEther = i == 0;
+
+                updateAmount(amount.getText().toString());
+                updateDisplays();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {}
         });
 
         send.setOnClickListener(new View.OnClickListener() {
@@ -203,11 +222,8 @@ public class FragmentSend extends Fragment {
                     return;
                 }
                 if(spinner == null || spinner.getSelectedItem() == null) return;
-                try{
-                    BigDecimal enteredAmount = new BigDecimal(totalCost.getText().toString());
-                    BigDecimal available = new BigDecimal(ethAvailable.getText().toString());
-
-                    if(enteredAmount.compareTo(available) < 0 || BuildConfig.DEBUG){
+                try {
+                    if (getCurTotalCost().compareTo(curAvailable) > 0 || BuildConfig.DEBUG){
                         askForPasswordAndDecode(spinner.getSelectedItem().toString());
                     } else {
                         ac.snackError(getString(R.string.err_send_not_enough_ether));
@@ -221,11 +237,77 @@ public class FragmentSend extends Fragment {
 
         spinner.setSelection(0);
 
+        updateDisplays();
+
         if(((AnalyticsApplication) ac.getApplication()).isGooglePlayBuild()) {
             ((AnalyticsApplication) ac.getApplication()).track("Send Fragment");
         }
 
         return rootView;
+    }
+
+    private void updateDisplays() {
+        updateAvailableDisplay();
+        updateAmountDisplay();
+        updateTxCostDisplay();
+        updateTotalCostDisplay();
+    }
+
+    private void updateAvailableDisplay() {
+        exchange.setIndex(2);
+
+        availableEth.setText(curAvailable.toString());
+        availableFiat.setText(exchange.convertRateExact(curAvailable, exchange.getUSDPrice()));
+        availableFiatSymbol.setText(exchange.getCurrent().getShorty());
+    }
+
+    private void updateAmount(String str) {
+        try {
+            final BigDecimal origA = new BigDecimal(str);
+
+            if (amountInEther) {
+                curAmount = origA;
+            } else {
+                curAmount = origA.divide(new BigDecimal(exchange.getUSDPrice()), 7, RoundingMode.FLOOR);
+            }
+        } catch (NumberFormatException e) {
+            curAmount = BigDecimal.ZERO;
+        }
+    }
+
+    private void updateAmountDisplay() {
+        String price;
+        if (amountInEther) {
+            price = exchange.convertRateExact(curAmount, exchange.getUSDPrice()) +
+                    " " + exchange.getMainCurreny().getName();
+        } else {
+            exchange.setIndex(0);
+            price = curAmount.toPlainString() + " " + exchange.getCurrent().getShorty();
+        }
+
+        usdPrice.setText(price);
+    }
+
+    private void updateTxCostDisplay() {
+        exchange.setIndex(2);
+
+        txCost.setText(curTxCost.toString());
+        txCostFiat.setText(exchange.convertRateExact(curTxCost, exchange.getUSDPrice()));
+        txCostFiatSymbol.setText(exchange.getCurrent().getShorty());
+    }
+
+    private BigDecimal getCurTotalCost() {
+        return curAmount.add(curTxCost);
+    }
+
+    private void updateTotalCostDisplay() {
+        exchange.setIndex(2);
+
+        final BigDecimal curTotalCost = getCurTotalCost();
+
+        totalCost.setText(curTotalCost.toString());
+        totalCostFiat.setText(exchange.convertRateExact(curTotalCost, exchange.getUSDPrice()));
+        totalCostFiatSymbol.setText(exchange.getCurrent().getShorty());
     }
 
     private void getEstimatedGasPriceLimit(){
@@ -301,7 +383,7 @@ public class FragmentSend extends Fragment {
         Intent txService = new Intent(ac, TransactionService.class);
         txService.putExtra("FROM_ADDRESS", fromAddress);
         txService.putExtra("TO_ADDRESS", toAddress.getText().toString());
-        txService.putExtra("AMOUNT", amount.getText().toString()); // In ether, gets converted by the service itself
+        txService.putExtra("AMOUNT", curAmount.toPlainString()); // In ether, gets converted by the service itself
         txService.putExtra("GAS_PRICE", new BigDecimal((gas.getProgress()+1)+"").multiply(new BigDecimal("1000000000")).toPlainString());// "21000000000");
         txService.putExtra("GAS_LIMIT", gaslimit.toString());
         txService.putExtra("PASSWORD", password);
@@ -315,11 +397,10 @@ public class FragmentSend extends Fragment {
         Intent data = new Intent();
         data.putExtra("FROM_ADDRESS", fromAddress);
         data.putExtra("TO_ADDRESS", toAddress.getText().toString());
-        data.putExtra("AMOUNT", amount.getText().toString());
+        data.putExtra("AMOUNT", curAmount.toPlainString());
         ac.setResult(RESULT_OK, data);
         ac.finish();
     }
-
 
     public void setToAddress(String to, Context c){
         if(toAddress == null) return;
@@ -329,8 +410,4 @@ public class FragmentSend extends Fragment {
         toicon.setImageBitmap(Blockies.createIcon(to.toLowerCase()));
         getEstimatedGasPriceLimit();
     }
-
-
-
-
 }

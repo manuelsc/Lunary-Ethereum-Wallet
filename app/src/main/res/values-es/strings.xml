@@ -124,7 +124,7 @@
     <string name="app_intro_title">Lunary Wallet</string>
     <string name="app_intro_please_agree">Antes de seguir por favor, lea y acepta los términos de servicio</string>
     <string name="app_intro_iagree">Acepto los términos de servicio</string>
-    <string name="fragment_send_ether_amount">Cantidad de Ether</string>
+    <string name="fragment_send_ether_amount">Cantidad</string>
     <string name="fragment_send_cheaper">Más barato</string>
     <string name="fragment_send_faster">Más Rápido</string>
     <string name="fragment_send_total">Total</string>
