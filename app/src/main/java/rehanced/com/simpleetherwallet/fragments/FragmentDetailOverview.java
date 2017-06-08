@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -68,6 +69,7 @@ public class FragmentDetailOverview extends Fragment implements View.OnClickList
     private RecyclerView recyclerView;
     private TokenAdapter walletAdapter;
     private List<TokenDisplay> token = new ArrayList<>();
+    private SwipeRefreshLayout swipeLayout;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -99,6 +101,20 @@ public class FragmentDetailOverview extends Fragment implements View.OnClickList
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),mgr.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
 
+        swipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout2);
+        swipeLayout.setColorSchemeColors(ac.getResources().getColor(R.color.colorPrimary));
+        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                try {
+                    update(true);
+                } catch (IOException e) {
+                    if(ac != null)
+                        ac.snackError("Connection problem");
+                    e.printStackTrace();
+                }
+            }
+        });
 
         header.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,7 +184,7 @@ public class FragmentDetailOverview extends Fragment implements View.OnClickList
             });
         }
         try {
-            update();
+            update(false);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -177,13 +193,19 @@ public class FragmentDetailOverview extends Fragment implements View.OnClickList
     }
 
 
-    public void update() throws IOException {
+    public void update(boolean force) throws IOException {
         token.clear();
         balanceDouble = new BigDecimal("0");
         EtherscanAPI.getInstance().getBalance(ethaddress, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                ac.snackError("Can't connect to network");
+                ac.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ac.snackError("Can't connect to network");
+                        onItemsLoadComplete();
+                    }
+                });
             }
 
             @Override
@@ -194,6 +216,12 @@ public class FragmentDetailOverview extends Fragment implements View.OnClickList
                     token.add(0, new TokenDisplay("Ether", "ETH", ethbal.multiply(new BigDecimal(1000d)), 3, 1, "", "", 0));
                     balanceDouble = balanceDouble.add(ethbal);
                 } catch (JSONException e) {
+                    ac.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            onItemsLoadComplete();
+                        }
+                    });
                     e.printStackTrace();
                 }
                 final CurrencyEntry cur = ExchangeCalculator.getInstance().getCurrent();
@@ -212,7 +240,13 @@ public class FragmentDetailOverview extends Fragment implements View.OnClickList
         EtherscanAPI.getInstance().getTokenBalances(ethaddress, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                ac.snackError("Can't connect to network");
+                ac.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ac.snackError("Can't connect to network");
+                        onItemsLoadComplete();
+                    }
+                });
             }
 
             @Override
@@ -232,13 +266,20 @@ public class FragmentDetailOverview extends Fragment implements View.OnClickList
                             balance.setText(ExchangeCalculator.getInstance().convertRateExact(balanceDouble, cur.getRate()) + "");
                             currency.setText(cur.getName());
                             walletAdapter.notifyDataSetChanged();
+                            onItemsLoadComplete();
                         }
                     });
                 } catch (Exception e) {
+                    ac.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            onItemsLoadComplete();
+                        }
+                    });
                     //ac.snackError("Invalid server response");
                 }
             }
-        }, false);
+        }, force);
     }
 
     public void setName(){
@@ -295,6 +336,11 @@ public class FragmentDetailOverview extends Fragment implements View.OnClickList
         });
 
         builder.show();
+    }
+
+    void onItemsLoadComplete() {
+        if(swipeLayout == null) return;
+        swipeLayout.setRefreshing(false);
     }
 
     @Override
