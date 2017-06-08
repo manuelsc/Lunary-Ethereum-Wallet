@@ -19,6 +19,8 @@ import rehanced.com.simpleetherwallet.network.EtherscanAPI;
 
 public class ExchangeCalculator {
 
+    public static final BigDecimal ONE_ETHER = new BigDecimal("1000000000000000000");
+
     private static ExchangeCalculator instance;
     private long lastUpdateTimestamp = 0;
     private double rateForChartDisplay = 1;

@@ -24,6 +24,7 @@ import okhttp3.Response;
 import rehanced.com.simpleetherwallet.R;
 import rehanced.com.simpleetherwallet.activities.MainActivity;
 import rehanced.com.simpleetherwallet.network.EtherscanAPI;
+import rehanced.com.simpleetherwallet.utils.ExchangeCalculator;
 import rehanced.com.simpleetherwallet.utils.WalletStorage;
 
 public class TransactionService extends IntentService {
@@ -65,7 +66,7 @@ public class TransactionService extends IntentService {
                                 new BigInteger(gas_price),
                                 new BigInteger(gas_limit),
                                 toAddress,
-                                new BigDecimal(amount).multiply(new BigDecimal("100000000000000000")).toBigInteger()
+                                new BigDecimal(amount).multiply(ExchangeCalculator.ONE_ETHER).toBigInteger()
                         );
 
                         Log.d("txx",

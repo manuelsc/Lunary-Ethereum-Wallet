@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import rehanced.com.simpleetherwallet.utils.ExchangeCalculator;
+
 public class WalletDisplay implements Comparable{
 
     public static final byte NORMAL = 0;
@@ -47,7 +49,7 @@ public class WalletDisplay implements Comparable{
     }
 
     public double getBalance() {
-        return new BigDecimal(balance).divide(new BigDecimal(1000000000000000000d), 8, BigDecimal.ROUND_UP).doubleValue();
+        return new BigDecimal(balance).divide(ExchangeCalculator.ONE_ETHER, 8, BigDecimal.ROUND_UP).doubleValue();
     }
 
     public String getName() {

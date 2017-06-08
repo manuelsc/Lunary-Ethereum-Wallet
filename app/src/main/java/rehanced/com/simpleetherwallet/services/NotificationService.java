@@ -25,6 +25,7 @@ import rehanced.com.simpleetherwallet.R;
 import rehanced.com.simpleetherwallet.activities.MainActivity;
 import rehanced.com.simpleetherwallet.network.EtherscanAPI;
 import rehanced.com.simpleetherwallet.utils.Blockies;
+import rehanced.com.simpleetherwallet.utils.ExchangeCalculator;
 import rehanced.com.simpleetherwallet.utils.WalletStorage;
 
 public class NotificationService extends IntentService {
@@ -70,7 +71,7 @@ public class NotificationService extends IntentService {
                         editor.commit();
                         if(notify) {
                             try {
-                                String amountS = new BigDecimal(amount).divide(new BigDecimal("10000000000000000000"), 4, BigDecimal.ROUND_DOWN).toPlainString();
+                                String amountS = new BigDecimal(amount).divide(ExchangeCalculator.ONE_ETHER, 4, BigDecimal.ROUND_DOWN).toPlainString();
                                 sendNotification(address, amountS);
                             } catch(Exception e){
 
