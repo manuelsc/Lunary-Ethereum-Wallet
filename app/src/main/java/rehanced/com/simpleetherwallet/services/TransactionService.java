@@ -65,7 +65,7 @@ public class TransactionService extends IntentService {
                                 new BigInteger(gas_price),
                                 new BigInteger(gas_limit),
                                 toAddress,
-                                new BigDecimal(amount).multiply(new BigDecimal("1000000000000000000")).toBigInteger()
+                                new BigDecimal(amount).multiply(new BigDecimal("100000000000000000")).toBigInteger()
                         );
 
                         Log.d("txx",
