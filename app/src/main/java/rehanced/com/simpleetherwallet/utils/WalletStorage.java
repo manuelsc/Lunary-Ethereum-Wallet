@@ -29,10 +29,6 @@ import rehanced.com.simpleetherwallet.data.FullWallet;
 import rehanced.com.simpleetherwallet.data.WatchWallet;
 import rehanced.com.simpleetherwallet.interfaces.StorableWallet;
 
-/**
- * Created by Manuel on 24.05.2017.
- */
-
 public class WalletStorage {
 
     private ArrayList<StorableWallet> mapdb;
@@ -92,6 +88,10 @@ public class WalletStorage {
                 new File(context.getFilesDir(), address.substring(2, address.length())).delete();
             mapdb.remove(position);
         }
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.remove(address);
+        editor.apply();
         save(context);
     }
 
@@ -113,7 +113,7 @@ public class WalletStorage {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(c);
         Map<String, ?> allEntries = preferences.getAll();
         for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
-            if(entry.getKey().length() == 42)
+            if(entry.getKey().length() == 42 && !mapdb.contains(entry.getKey()))
                 add(new WatchWallet(entry.getKey()), c);
         }
         if(mapdb.size() > 0)
@@ -134,9 +134,14 @@ public class WalletStorage {
        for(int i=0; i < wallets.length; i++){
            if(wallets[i].isFile()){
                if(wallets[i].getName().startsWith("UTC") && wallets[i].getName().length() >= 40){
-                   foundImports.add(wallets[i]);
+                   foundImports.add(wallets[i]); // Mist naming
+               } else if(wallets[i].getName().length() >= 40 ){
+                   int position = wallets[i].getName().indexOf(".json");
+                   String addr = wallets[i].getName().substring(0, position);
+                   if(addr.length() == 40  && !mapdb.contains("0x"+wallets[i].getName())) {
+                       foundImports.add(wallets[i]); // Exported with Lunary
+                   }
                }
-
            }
        }
        if(foundImports.size() == 0) {
@@ -174,11 +179,10 @@ public class WalletStorage {
     }
 
     public static String stripWalletName(String s){
-        if(s.lastIndexOf("--") > 0){
+        if(s.lastIndexOf("--") > 0)
             s = s.substring(s.lastIndexOf("--")+2);
-            if(s.endsWith(".json"))
-                s = s.substring(0, s.indexOf(".json"));
-        }
+        if(s.endsWith(".json"))
+            s = s.substring(0, s.indexOf(".json"));
         return s;
     }
 
