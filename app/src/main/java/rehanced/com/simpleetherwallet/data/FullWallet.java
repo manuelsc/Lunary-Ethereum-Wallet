@@ -6,6 +6,7 @@ import rehanced.com.simpleetherwallet.interfaces.StorableWallet;
 
 public class FullWallet implements StorableWallet, Serializable {
 
+    private static final long serialVersionUID = 5932636519670184719L;
     private String pubKey;
     private String path;
     private long dateAdded;

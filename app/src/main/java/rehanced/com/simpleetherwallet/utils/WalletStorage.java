@@ -3,8 +3,10 @@ package rehanced.com.simpleetherwallet.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 
 import org.json.JSONException;
 import org.web3j.crypto.CipherException;
@@ -20,9 +22,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+import java.util.Map;
 
 import rehanced.com.simpleetherwallet.activities.MainActivity;
 import rehanced.com.simpleetherwallet.data.FullWallet;
+import rehanced.com.simpleetherwallet.data.WatchWallet;
 import rehanced.com.simpleetherwallet.interfaces.StorableWallet;
 
 /**
@@ -45,8 +49,11 @@ public class WalletStorage {
         try {
             load(context);
         } catch (Exception e) {
+            e.printStackTrace();
             mapdb = new ArrayList<StorableWallet>();
         }
+        if(mapdb.size() == 0) // Try to find local wallets
+            checkForWallets(context);
     }
 
     public synchronized boolean add(StorableWallet addresse, Context context){
@@ -86,6 +93,31 @@ public class WalletStorage {
             mapdb.remove(position);
         }
         save(context);
+    }
+
+    public void checkForWallets(Context c){
+        // Full wallets
+        File [] wallets = c.getFilesDir().listFiles();
+        if(wallets == null){
+            return;
+        }
+        for(int i=0; i < wallets.length; i++){
+            if(wallets[i].isFile()){
+                if(wallets[i].getName().length() == 40){
+                    add(new FullWallet("0x"+wallets[i].getName(), wallets[i].getName()), c);
+                }
+            }
+        }
+
+        // Watch only
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(c);
+        Map<String, ?> allEntries = preferences.getAll();
+        for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
+            if(entry.getKey().length() == 42)
+                add(new WatchWallet(entry.getKey()), c);
+        }
+        if(mapdb.size() > 0)
+            save(c);
     }
 
    public void importingWalletsDetector(MainActivity c){
