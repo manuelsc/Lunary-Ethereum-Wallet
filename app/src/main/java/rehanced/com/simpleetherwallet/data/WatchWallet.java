@@ -6,7 +6,7 @@ import rehanced.com.simpleetherwallet.interfaces.StorableWallet;
 
 public class WatchWallet implements StorableWallet, Serializable {
 
-    private static final long serialVersionUID = -2135261251991036979L;
+    private static final long serialVersionUID = -146500951598835658L;
     private String pubKey;
     private long dateAdded;
 
