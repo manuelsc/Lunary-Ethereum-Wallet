@@ -260,9 +260,7 @@ public class FragmentSend extends Fragment {
         for(int i=0; i < fullwallets.size(); i++){
             if(fullwallets.get(i).equalsIgnoreCase(from)) {
                 spinner.setSelection(i);
-                Log.d("ssaasdaa","settings");
             }
-            Log.d("ssaasdaa",fullwallets.get(i) +" | "+from);
         }
     }
 

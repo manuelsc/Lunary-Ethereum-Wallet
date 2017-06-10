@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,7 +34,7 @@ import rehanced.com.simpleetherwallet.utils.qr.QREncoder;
 
 import static rehanced.com.simpleetherwallet.R.id.qrcode;
 
-public class RequestEtherActivity extends AppCompatActivity implements View.OnClickListener{
+public class RequestEtherActivity extends SecureAppCompatActivity implements View.OnClickListener{
 
     private CoordinatorLayout coord;
     private ImageView qr;

@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
@@ -19,7 +18,7 @@ import rehanced.com.simpleetherwallet.fragments.FragmentDetailShare;
 import rehanced.com.simpleetherwallet.fragments.FragmentTransactions;
 import rehanced.com.simpleetherwallet.utils.AddressNameConverter;
 
-public class AddressDetailActivity extends AppCompatActivity {
+public class AddressDetailActivity extends SecureAppCompatActivity {
 
     public static final byte OWN_WALLET = 0;
     public static final byte SCANNED_WALLET = 1;

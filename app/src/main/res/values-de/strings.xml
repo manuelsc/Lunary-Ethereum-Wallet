@@ -204,11 +204,11 @@
     <string name="ether_and_token">Ether und Token</string>
     <string name="prefs_lock_with_pw">Passwort aktivieren</string>
     <string name="prefs_lock_with_pw_sum">Legt fest ob der Start von Lunary mit einem Passwort geschützt werden soll</string>
-    <string name="prefs_set_pw">Set Password</string>
-    <string name="prefs_set_pw_sum">Specify your login pattern</string>
-    <string name="prefs_cat_security">Security</string>
-    <string name="fab_sendether_from">Send Ether From</string>
-    <string name="fab_sendether_to">Send Ether To</string>
+    <string name="prefs_set_pw">Setze Password</string>
+    <string name="prefs_set_pw_sum">Lege dein Anmeldemuster fest</string>
+    <string name="prefs_cat_security">Sicherheit</string>
+    <string name="fab_sendether_from">Sende Ether von</string>
+    <string name="fab_sendether_to">Sende Ether zu</string>
 
 
     <string name="tos"><![CDATA[

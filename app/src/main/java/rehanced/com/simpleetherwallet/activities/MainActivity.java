@@ -15,7 +15,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -48,7 +47,7 @@ import rehanced.com.simpleetherwallet.utils.OwnWalletUtils;
 import rehanced.com.simpleetherwallet.utils.Settings;
 import rehanced.com.simpleetherwallet.utils.WalletStorage;
 
-public class MainActivity extends AppCompatActivity implements NetworkUpdateListener{
+public class MainActivity extends SecureAppCompatActivity implements NetworkUpdateListener{
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
@@ -223,7 +222,19 @@ public class MainActivity extends AppCompatActivity implements NetworkUpdateList
         broadCastDataSetChanged();
     }
 
+    @Override
+    public void onPause(){
+        super.onPause();
+       /* if(preferences == null)
+            preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("APP_PAUSED", true);
+        editor.apply();*/
+    }
+
     public void onActivityResult(int requestCode, int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == rehanced.com.simpleetherwallet.activities.QRScanActivity.REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 byte type = data.getByteExtra("TYPE", rehanced.com.simpleetherwallet.activities.QRScanActivity.SCAN_ONLY);
@@ -377,6 +388,7 @@ public class MainActivity extends AppCompatActivity implements NetworkUpdateList
                                 "AppIntro by Maximilian Narr\n"+
                                 "Poloniex for price data\n"+
                                 "Web3j by Conor Svensson\n" +
+                                "PatternLock by Zhang Hai\n"+
                                 "Ethereum Foundation for usage of the icon according to (CC A 3.0)\n"+
                                 "Powered by Etherscan.io APIs\n" +
                                 "Token balances powered by Ethplorer.io\n\n" +

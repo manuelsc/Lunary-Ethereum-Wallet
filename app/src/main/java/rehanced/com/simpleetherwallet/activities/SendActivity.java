@@ -7,7 +7,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
@@ -16,7 +15,7 @@ import rehanced.com.simpleetherwallet.fragments.FragmentChooseRecipient;
 import rehanced.com.simpleetherwallet.fragments.FragmentSend;
 import rehanced.com.simpleetherwallet.views.NonSwipeViewPager;
 
-public class SendActivity extends AppCompatActivity {
+public class SendActivity extends SecureAppCompatActivity {
 
     public static final int REQUEST_CODE = 200;
 
@@ -66,6 +65,7 @@ public class SendActivity extends AppCompatActivity {
 
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == QRScanActivity.REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 if(fragments == null || fragments[0] == null) return;

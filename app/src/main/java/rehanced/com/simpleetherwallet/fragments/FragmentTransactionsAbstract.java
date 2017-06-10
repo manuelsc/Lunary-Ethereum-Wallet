@@ -97,6 +97,7 @@ public abstract class FragmentTransactionsAbstract extends Fragment implements V
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy){
+                if(address != null) return;
                 if (dy > 0)
                     fabmenu.hideMenu(true);
                 else if (dy < 0)

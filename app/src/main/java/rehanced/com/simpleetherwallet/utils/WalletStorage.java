@@ -76,7 +76,6 @@ public class WalletStorage {
     }
 
     public synchronized boolean isFullWallet(String addr){
-        ArrayList<String> erg = new ArrayList<String>();
         if(mapdb.size() == 0) return false;
         for(int i=0; i < mapdb.size(); i++){
             StorableWallet cur = mapdb.get(i);

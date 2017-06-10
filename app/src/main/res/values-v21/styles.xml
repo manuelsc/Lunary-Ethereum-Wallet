@@ -12,6 +12,7 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+        <item name="patternViewStyle">@style/PatternView</item>
 
     </style>
 

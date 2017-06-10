@@ -211,9 +211,10 @@ public class FragmentPrice extends Fragment {
                         public void run() {
                             priceChart.setVisibility(View.VISIBLE);
                             onItemsLoadComplete();
-                            setupChart(priceChart, getData(yVals), getResources().getColor(R.color.colorPrimaryLittleDarker));
-
-                            update();
+                            if(isAdded()) {
+                                setupChart(priceChart, getData(yVals), getResources().getColor(R.color.colorPrimaryLittleDarker));
+                                update();
+                            }
                         }
                     });
 

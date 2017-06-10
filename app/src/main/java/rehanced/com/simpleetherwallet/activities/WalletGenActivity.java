@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -14,7 +13,7 @@ import android.widget.TextView;
 import rehanced.com.simpleetherwallet.R;
 import rehanced.com.simpleetherwallet.utils.Settings;
 
-public class WalletGenActivity extends AppCompatActivity {
+public class WalletGenActivity extends SecureAppCompatActivity {
 
     public static final int REQUEST_CODE = 401;
 
