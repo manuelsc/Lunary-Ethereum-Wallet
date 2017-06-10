@@ -97,11 +97,15 @@
         <activity
             android:name=".activities.AppLockActivity"
             android:theme="@style/AppTheme.NoActionBar2"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_main" />
 
         <activity
             android:name=".activities.SetAppLockActivity"
             android:theme="@style/AppTheme.NoActionBar2"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="rehanced.com.simpleetherwallet.activities.SetAppLockActivity" />
