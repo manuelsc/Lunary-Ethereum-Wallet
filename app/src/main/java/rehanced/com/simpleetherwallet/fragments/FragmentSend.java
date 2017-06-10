@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -158,6 +159,7 @@ public class FragmentSend extends Fragment {
                                 public void run() {
                                     try {
                                         curAvailable = new BigDecimal(ResponseParser.parseBalance(response.body().string(), 6));
+                                        updateDisplays();
                                     } catch (Exception e) {
                                         ac.snackError("Cant fetch your account balance");
                                         e.printStackTrace();
@@ -169,6 +171,7 @@ public class FragmentSend extends Fragment {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
                 fromicon.setImageBitmap(Blockies.createIcon(spinner.getSelectedItem().toString().toLowerCase()));
                 fromName.setText(AddressNameConverter.getInstance(ac).get(spinner.getSelectedItem().toString().toLowerCase()));
             }
@@ -223,7 +226,9 @@ public class FragmentSend extends Fragment {
                 }
                 if(spinner == null || spinner.getSelectedItem() == null) return;
                 try {
-                    if (getCurTotalCost().compareTo(curAvailable) > 0 || BuildConfig.DEBUG){
+                    if(BuildConfig.DEBUG)
+                        Log.d("etherbalance", (getCurTotalCost().compareTo(curAvailable) < 0)+" | "+getCurTotalCost()+" | "+curAvailable);
+                    if (getCurTotalCost().compareTo(curAvailable) < 0 || BuildConfig.DEBUG){
                         askForPasswordAndDecode(spinner.getSelectedItem().toString());
                     } else {
                         ac.snackError(getString(R.string.err_send_not_enough_ether));
