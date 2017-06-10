@@ -10,14 +10,17 @@ Lunary is a beautiful designed, easy to use, secure and Open Source Ethereum Wal
 * Mutli wallet support  
 * Support for Watch only wallets  
 * Send / Request payments  
+* Token Balances  
 * Notification on incoming transactions  
 * Combined transaction history  
 * Addressbook and address naming  
 * Importing / Exporting wallets  
-* Display amounts in ETH, USD or BTC  
+* Display amounts and token in ETH, USD or BTC  
 * No registration or sign up required  
 * Price history charts  
-* Supporting 8 Currencies: USD, EUR, GBP, CHF, AUD, CAD, JPY, RUB
+* Fingerprint / Password protection
+* Supporting 8 Currencies: USD, EUR, GBP, CHF, AUD, CAD, JPY, RUB  
+* Available in English, German and Spanish
 
 ## Build:
 Google Play flavor requires own API key:
@@ -37,8 +40,9 @@ public class APIKey {
 * [AppIntro](https://github.com/apl-devs/AppIntro)
 
 ## Web APIs:
-* [Etherscan.io](https://etherscan.io/)
-* [Poloniex.com](https://poloniex.com/)
+* [Etherscan.io](https://etherscan.io/)  
+* [Poloniex.com](https://poloniex.com/)  
+* [Ethplorer.io](https://ethplorer.io)
 
 ## Donations / Support Lunary
 Ethereum: 0xa9981a33f6b1A18da5Db58148B2357f22B44e1e0
