@@ -49,6 +49,8 @@ public class SendActivity extends AppCompatActivity {
             bundle.putString("TO_ADDRESS", getIntent().getStringExtra("TO_ADDRESS"));
         if(getIntent().hasExtra("AMOUNT"))
             bundle.putString("AMOUNT", getIntent().getStringExtra("AMOUNT"));
+        if(getIntent().hasExtra("FROM_ADDRESS"))
+            bundle.putString("FROM_ADDRESS", getIntent().getStringExtra("FROM_ADDRESS"));
 
         fragments[1].setArguments(bundle);
 

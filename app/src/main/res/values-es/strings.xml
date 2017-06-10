@@ -204,7 +204,13 @@
     <string name="notification_wallimp_finished">Importación de Cartera completo!</string>
     <string name="notification_click_to_view">Toca para ver más</string>
     <string name="ether_and_token">Ether and Token</string>
-
+    <string name="prefs_lock_with_pw">Lock with Password</string>
+    <string name="prefs_lock_with_pw_sum">If enabled Lunary will ask you for a password before launching the app</string>
+    <string name="prefs_set_pw">Set Password</string>
+    <string name="prefs_set_pw_sum">Specify your login pattern</string>
+    <string name="prefs_cat_security">Security</string>
+    <string name="fab_sendether_from">Send Ether From</string>
+    <string name="fab_sendether_to">Send Ether To</string>
 
     <string name="tos"><![CDATA[
 <p><h2>Terms and Conditions ("Terms")</h2></p>

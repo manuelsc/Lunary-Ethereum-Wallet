@@ -201,7 +201,15 @@
     <string name="notification_wallgen_finished">Konto erstellung abgeschlossen!</string>
     <string name="notification_wallimp_finished">Konto importierung abgeschlossen!</string>
     <string name="notification_click_to_view">Klicken zum öffnen</string>
-    <string name="ether_and_token">Ether and Token</string>
+    <string name="ether_and_token">Ether und Token</string>
+    <string name="prefs_lock_with_pw">Passwort aktivieren</string>
+    <string name="prefs_lock_with_pw_sum">Legt fest ob der Start von Lunary mit einem Passwort geschützt werden soll</string>
+    <string name="prefs_set_pw">Set Password</string>
+    <string name="prefs_set_pw_sum">Specify your login pattern</string>
+    <string name="prefs_cat_security">Security</string>
+    <string name="fab_sendether_from">Send Ether From</string>
+    <string name="fab_sendether_to">Send Ether To</string>
+
 
     <string name="tos"><![CDATA[
 <p><h2>Terms and Conditions ("Terms")</h2></p>
@@ -293,7 +301,6 @@ More details about this topic can be found in Google\'s Privacy Policies:
 
 ]]>
     </string>
-
 
 
 </resources>

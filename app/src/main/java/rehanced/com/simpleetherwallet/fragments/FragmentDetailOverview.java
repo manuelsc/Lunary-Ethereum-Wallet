@@ -139,7 +139,7 @@ public class FragmentDetailOverview extends Fragment implements View.OnClickList
             }
         });
 
-        FloatingActionButton send_ether = (FloatingActionButton) rootView.findViewById(R.id.send_ether);
+        FloatingActionButton send_ether = (FloatingActionButton) rootView.findViewById(R.id.send_ether); // Send Ether to
         send_ether.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -148,6 +148,20 @@ public class FragmentDetailOverview extends Fragment implements View.OnClickList
                 } else {
                     Intent tx = new Intent(ac, SendActivity.class);
                     tx.putExtra("TO_ADDRESS", ethaddress);
+                    ac.startActivityForResult(tx, SendActivity.REQUEST_CODE);
+                }
+            }
+        });
+
+        FloatingActionButton send_ether_from = (FloatingActionButton) rootView.findViewById(R.id.send_ether_from);
+        send_ether_from.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(WalletStorage.getInstance(ac).getFullOnly().size() == 0){
+                    Dialogs.noFullWallet(ac);
+                } else {
+                    Intent tx = new Intent(ac, SendActivity.class);
+                    tx.putExtra("FROM_ADDRESS", ethaddress);
                     ac.startActivityForResult(tx, SendActivity.REQUEST_CODE);
                 }
             }
@@ -169,6 +183,9 @@ public class FragmentDetailOverview extends Fragment implements View.OnClickList
 
         if(type == AddressDetailActivity.OWN_WALLET){
             fab_add.setVisibility(View.GONE);
+        }
+        if(!WalletStorage.getInstance(ac).isFullWallet(ethaddress)) {
+            send_ether_from.setVisibility(View.GONE);
         }
 
         if(ac.getAppBar() != null) {

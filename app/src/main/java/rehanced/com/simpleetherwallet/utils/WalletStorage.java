@@ -75,6 +75,17 @@ public class WalletStorage {
         return erg;
     }
 
+    public synchronized boolean isFullWallet(String addr){
+        ArrayList<String> erg = new ArrayList<String>();
+        if(mapdb.size() == 0) return false;
+        for(int i=0; i < mapdb.size(); i++){
+            StorableWallet cur = mapdb.get(i);
+            if(cur instanceof FullWallet && cur.getPubKey().equalsIgnoreCase(addr))
+                return true;
+        }
+        return false;
+    }
+
     public void removeWallet(String address, Context context){
         int position = -1;
         for(int i=0; i < mapdb.size(); i++) {

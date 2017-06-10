@@ -240,7 +240,11 @@ public class FragmentSend extends Fragment {
             }
         });
 
-        spinner.setSelection(0);
+        if (getArguments().containsKey("FROM_ADDRESS")){
+            setFromAddress(getArguments().getString("FROM_ADDRESS"));
+        } else {
+            spinner.setSelection(0);
+        }
 
         updateDisplays();
 
@@ -249,6 +253,17 @@ public class FragmentSend extends Fragment {
         }
 
         return rootView;
+    }
+
+    private void setFromAddress(String from){
+        ArrayList<String> fullwallets = WalletStorage.getInstance(ac).getFullOnly();
+        for(int i=0; i < fullwallets.size(); i++){
+            if(fullwallets.get(i).equalsIgnoreCase(from)) {
+                spinner.setSelection(i);
+                Log.d("ssaasdaa","settings");
+            }
+            Log.d("ssaasdaa",fullwallets.get(i) +" | "+from);
+        }
     }
 
     private void updateDisplays() {

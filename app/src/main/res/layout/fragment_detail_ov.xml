@@ -166,6 +166,16 @@
                 fab:fab_label="@string/fab_setwalletname" />
 
             <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/send_ether_from"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_new_tr"
+                fab:menu_colorNormal="@color/colorPrimary"
+                fab:menu_colorPressed="@color/colorAccent2"
+                fab:menu_colorRipple="@color/colorAccent"
+                fab:fab_label="@string/fab_sendether_from" />
+
+            <com.github.clans.fab.FloatingActionButton
                 android:id="@+id/send_ether"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -173,7 +183,7 @@
                 fab:menu_colorNormal="@color/colorPrimary"
                 fab:menu_colorPressed="@color/colorAccent2"
                 fab:menu_colorRipple="@color/colorAccent"
-                fab:fab_label="@string/fab_sendether" />
+                fab:fab_label="@string/fab_sendether_to" />
 
             <com.github.clans.fab.FloatingActionButton
                 android:id="@+id/add_as_watch"
