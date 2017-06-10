@@ -137,6 +137,7 @@ public class WalletStorage {
                    foundImports.add(wallets[i]); // Mist naming
                } else if(wallets[i].getName().length() >= 40 ){
                    int position = wallets[i].getName().indexOf(".json");
+                   if(position < 0) continue;
                    String addr = wallets[i].getName().substring(0, position);
                    if(addr.length() == 40  && !mapdb.contains("0x"+wallets[i].getName())) {
                        foundImports.add(wallets[i]); // Exported with Lunary
