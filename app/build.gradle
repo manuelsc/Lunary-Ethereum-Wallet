@@ -8,8 +8,8 @@ android {
         applicationId "com.rehanced.lunary"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 13
-        versionName "1.23"
+        versionCode 14
+        versionName "1.24"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
@@ -103,4 +103,5 @@ dependencies {
     googleplayCompile 'com.google.android.gms:play-services-analytics:10.2.6'
     compile project(':appintro')
     compile project(path: ':appintro')
+    compile 'me.zhanghai.android.patternlock:library:2.1.2'
 }
