@@ -50,3 +50,6 @@ Ethereum: 0xa9981a33f6b1A18da5Db58148B2357f22B44e1e0
 
 ## Licence
 GPL3
+
+## Community
+Visit us on [/r/Lunary](https://www.reddit.com/r/lunary/)
