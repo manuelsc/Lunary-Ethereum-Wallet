@@ -7,7 +7,7 @@
     <color name="colorAccent2">#9cacbf</color>
     <color name="tabIndicator">#d2d7de</color>
 
-    <color name="etherReceived">#d237993f</color>
+    <color name="etherReceived">#d22a8031</color>
     <color name="etherSpent">#d2a63f40</color>
     <color name="normalBlack">#222222</color>
     <color name="unconfirmed">#b6b6b6</color>

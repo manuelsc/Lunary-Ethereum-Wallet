@@ -17,8 +17,11 @@ public class TransactionDisplay implements Comparable {
     private byte type;
     private String txHash;
     private String nounce;
+    private long block;
+    private int gasUsed;
+    private long gasprice;
 
-    public TransactionDisplay(String fromAddress, String toAddress, BigInteger amount, int confirmationStatus, long date, String walletName, byte type, String txHash, String nounce) {
+    public TransactionDisplay(String fromAddress, String toAddress, BigInteger amount, int confirmationStatus, long date, String walletName, byte type, String txHash, String nounce, long block, int gasUsed, long gasprice) {
         this.fromAddress = fromAddress;
         this.toAddress = toAddress;
         this.amount = amount;
@@ -28,6 +31,33 @@ public class TransactionDisplay implements Comparable {
         this.type = type;
         this.txHash = txHash;
         this.nounce = nounce;
+        this.block = block;
+        this.gasUsed = gasUsed;
+        this.gasprice = gasprice;
+    }
+
+    public long getBlock() {
+        return block;
+    }
+
+    public void setBlock(long block) {
+        this.block = block;
+    }
+
+    public int getGasUsed() {
+        return gasUsed;
+    }
+
+    public void setGasUsed(int gasUsed) {
+        this.gasUsed = gasUsed;
+    }
+
+    public long getGasprice() {
+        return gasprice;
+    }
+
+    public void setGasprice(long gasprice) {
+        this.gasprice = gasprice;
     }
 
     public String getTxHash() {

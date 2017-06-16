@@ -104,4 +104,5 @@ dependencies {
     compile project(':appintro')
     compile project(path: ':appintro')
     compile 'me.zhanghai.android.patternlock:library:2.1.2'
+    compile 'com.afollestad.material-dialogs:core:0.9.4.5'
 }

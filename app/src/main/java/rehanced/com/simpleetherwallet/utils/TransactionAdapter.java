@@ -24,8 +24,9 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     private Context context;
     private List<TransactionDisplay> boxlist;
     private int lastPosition = -1;
-    private SimpleDateFormat dateformat = new SimpleDateFormat("dd. MMMM yyyy");
+    private SimpleDateFormat dateformat = new SimpleDateFormat("dd. MMMM yyyy, HH:mm");
     private View.OnCreateContextMenuListener contextMenuListener;
+    private View.OnClickListener clickListener;
     private int position;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -52,10 +53,11 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         }
     }
 
-    public TransactionAdapter(List<TransactionDisplay> boxlist, Context context, View.OnCreateContextMenuListener listener) {
+    public TransactionAdapter(List<TransactionDisplay> boxlist, Context context, View.OnClickListener clickListener, View.OnCreateContextMenuListener listener) {
         this.boxlist = boxlist;
         this.context = context;
         this.contextMenuListener = listener;
+        this.clickListener = clickListener;
     }
 
     @Override
@@ -63,6 +65,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.view_w_transaction, parent, false);
         itemView.setOnCreateContextMenuListener(contextMenuListener);
+        itemView.setOnClickListener(clickListener);
         return new MyViewHolder(itemView);
     }
 

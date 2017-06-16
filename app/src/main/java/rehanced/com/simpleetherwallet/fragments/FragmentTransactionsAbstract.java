@@ -45,7 +45,7 @@ import rehanced.com.simpleetherwallet.utils.TransactionAdapter;
 import rehanced.com.simpleetherwallet.utils.WalletStorage;
 
 
-public abstract class FragmentTransactionsAbstract extends Fragment implements View.OnCreateContextMenuListener{
+public abstract class FragmentTransactionsAbstract extends Fragment implements View.OnClickListener, View.OnCreateContextMenuListener{
 
     protected RecyclerView recyclerView;
     protected TransactionAdapter walletAdapter;
@@ -72,7 +72,7 @@ public abstract class FragmentTransactionsAbstract extends Fragment implements V
 
         nothingToShow = (FrameLayout) rootView.findViewById(R.id.nothing_found);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
-        walletAdapter = new TransactionAdapter(wallets, ac, this);
+        walletAdapter = new TransactionAdapter(wallets, ac, this, this);
         LinearLayoutManager mgr  = new LinearLayoutManager(ac.getApplicationContext());
         RecyclerView.LayoutManager mLayoutManager = mgr;
         recyclerView.setLayoutManager(mLayoutManager);
@@ -279,5 +279,12 @@ public abstract class FragmentTransactionsAbstract extends Fragment implements V
 
     public synchronized void setWallets(List<TransactionDisplay> wal){
         wallets = wal;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(ac == null) return;
+        int itemPosition = recyclerView.getChildLayoutPosition(view);
+        Dialogs.showTXDetails(ac, wallets.get(itemPosition));
     }
 }

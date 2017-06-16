@@ -209,7 +209,13 @@
     <string name="prefs_cat_security">Sicherheit</string>
     <string name="fab_sendether_from">Sende Ether von</string>
     <string name="fab_sendether_to">Sende Ether zu</string>
-
+    <string name="open_in_browser">Öffne in Browser</string>
+    <string name="tx_cost">TX Gebühr</string>
+    <string name="gas_used">Benutztes Gas</string>
+    <string name="gas_price">Gas Preis</string>
+    <string name="nonce">Nonce</string>
+    <string name="block_height">Block Höhe</string>
+    <string name="timestamp">Zeitpunkt</string>
 
     <string name="tos"><![CDATA[
 <p><h2>Terms and Conditions ("Terms")</h2></p>

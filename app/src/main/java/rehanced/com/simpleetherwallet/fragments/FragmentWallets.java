@@ -440,6 +440,10 @@ public class FragmentWallets extends Fragment implements View.OnClickListener, V
             balanceView.setText(ExchangeCalculator.getInstance().displayBalanceNicely(ExchangeCalculator.getInstance().convertRate(balance, ExchangeCalculator.getInstance().getCurrent().getRate())) + " " + ExchangeCalculator.getInstance().getCurrent().getName());
     }
 
+    public int getDisplayedWalletCount(){
+        return wallets.size();
+    }
+
     @Override
     public void onClick(View view) {
         int itemPosition = recyclerView.getChildLayoutPosition(view);

@@ -48,7 +48,10 @@ public class ResponseParser {
                         walletname,
                         type,
                         data.getJSONObject(i).getString("hash"),
-                        data.getJSONObject(i).has("nonce") ? data.getJSONObject(i).getString("nonce") : "0"
+                        data.getJSONObject(i).has("nonce") ? data.getJSONObject(i).getString("nonce") : "0",
+                        data.getJSONObject(i).getLong("blockNumber"),
+                        data.getJSONObject(i).getInt("gasUsed"),
+                        data.getJSONObject(i).getLong("gasPrice")
                 ));
             }
 

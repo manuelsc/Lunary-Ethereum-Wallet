@@ -220,6 +220,15 @@ public class MainActivity extends SecureAppCompatActivity implements NetworkUpda
     public void onResume(){
         super.onResume();
         broadCastDataSetChanged();
+
+        // Update wallets if activity resumed and a new wallet was found (finished generation or added as watch only address)
+        if(fragments != null && fragments[1] != null && WalletStorage.getInstance(this).get().size() != ((FragmentWallets)fragments[1]).getDisplayedWalletCount()){
+            try {
+                ((FragmentWallets)fragments[1]).update();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override

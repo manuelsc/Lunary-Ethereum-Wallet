@@ -1,7 +1,10 @@
 package rehanced.com.simpleetherwallet.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
@@ -9,20 +12,121 @@ import android.text.InputType;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import me.grantland.widget.AutofitTextView;
 import rehanced.com.simpleetherwallet.R;
+import rehanced.com.simpleetherwallet.activities.AddressDetailActivity;
 import rehanced.com.simpleetherwallet.activities.MainActivity;
+import rehanced.com.simpleetherwallet.data.TransactionDisplay;
 import rehanced.com.simpleetherwallet.data.WatchWallet;
 import rehanced.com.simpleetherwallet.fragments.FragmentWallets;
 
 public class Dialogs {
 
+    public static void showTXDetails(final Activity c, final TransactionDisplay tx){
+        MaterialDialog dialog = new MaterialDialog.Builder(c)
+                .customView(R.layout.dialog_tx_detail, true)
+                .show();
+        View view = dialog.getCustomView();
+        ImageView myicon = (ImageView) view.findViewById(R.id.my_addressicon);
+        ImageView othericon = (ImageView) view.findViewById(R.id.other_addressicon);
+        TextView myAddressname = (TextView) view.findViewById(R.id.walletname);
+        TextView otherAddressname = (TextView) view.findViewById(R.id.other_address);
+        AutofitTextView myAddressaddr = (AutofitTextView) view.findViewById(R.id.walletaddr);
+        AutofitTextView otherAddressaddr = (AutofitTextView) view.findViewById(R.id.other_addressaddr);
+        TextView amount = (TextView) view.findViewById(R.id.amount);
+
+        TextView month = (TextView) view.findViewById(R.id.month);
+        TextView gasUsed = (TextView) view.findViewById(R.id.gasused);
+        TextView blocknr = (TextView) view.findViewById(R.id.blocknr);
+        TextView gasPrice = (TextView) view.findViewById(R.id.gasPrice);
+        TextView nonce = (TextView) view.findViewById(R.id.nonce);
+        TextView txcost = (TextView) view.findViewById(R.id.txcost);
+        TextView txcost2 = (TextView) view.findViewById(R.id.txcost2);
+        Button openInBrowser = (Button) view.findViewById(R.id.openinbrowser);
+        LinearLayout from = (LinearLayout) view.findViewById(R.id.from);
+        LinearLayout to = (LinearLayout) view.findViewById(R.id.to);
+        TextView amountfiat = (TextView) view.findViewById(R.id.amountfiat);
+
+        from.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(c, AddressDetailActivity.class);
+                i.putExtra("ADDRESS", tx.getFromAddress());
+                c.startActivity(i);
+            }
+        });
+
+        to.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(c, AddressDetailActivity.class);
+                i.putExtra("ADDRESS", tx.getToAddress());
+                c.startActivity(i);
+            }
+        });
+
+        openInBrowser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = "https://etherscan.io/tx/" + tx.getTxHash();
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                c.startActivity(i);
+            }
+        });
+
+        myicon.setImageBitmap(Blockies.createIcon(tx.getFromAddress().toLowerCase()));
+        othericon.setImageBitmap(Blockies.createIcon(tx.getToAddress().toLowerCase()));
+
+        String myName = AddressNameConverter.getInstance(c).get(tx.getFromAddress().toLowerCase());
+        if(myName == null) myName = shortName(tx.getFromAddress().toLowerCase());
+        String otherName = AddressNameConverter.getInstance(c).get(tx.getToAddress().toLowerCase());
+        if(otherName == null) otherName = shortName(tx.getToAddress().toLowerCase());
+        myAddressname.setText(myName);
+        otherAddressname.setText(otherName);
+
+        myAddressaddr.setText(tx.getFromAddress());
+        otherAddressaddr.setText(tx.getToAddress());
+        SimpleDateFormat dateformat = new SimpleDateFormat("dd. MMMM yyyy, HH:mm:ss");
+        month.setText(dateformat.format(tx.getDate())+"");
+        blocknr.setText(tx.getBlock()+"");
+        gasUsed.setText(tx.getGasUsed()+"");
+        gasPrice.setText(tx.getGasprice()/1000000000+" Gwei");
+        nonce.setText(tx.getNounce()+"");
+        txcost.setText(
+                ExchangeCalculator.getInstance().displayEthNicelyExact(
+                        ExchangeCalculator.getInstance().weiToEther(tx.getGasUsed() * tx.getGasprice())
+                )
+                +" Ξ"
+        );
+        txcost2.setText(
+                ExchangeCalculator.getInstance().convertToUsd(ExchangeCalculator.getInstance().weiToEther(tx.getGasUsed() * tx.getGasprice()))
+                        + " "+ ExchangeCalculator.getInstance().getMainCurreny().getShorty()
+        );
+        amount.setText((tx.getAmount() > 0 ? "+ " : "- " )+Math.abs(tx.getAmount())+" Ξ");
+        amount.setTextColor(c.getResources().getColor(tx.getAmount() > 0 ? R.color.etherReceived : R.color.etherSpent));
+        amountfiat.setText(
+                ExchangeCalculator.getInstance().convertToUsd(tx.getAmount())
+                + " "+ ExchangeCalculator.getInstance().getMainCurreny().getShorty());
+    }
+
+    private static String shortName(String addr){
+        return "0x"+addr.substring(2, 8);
+    }
 
     public static void addWatchOnly(final MainActivity c){
         AlertDialog.Builder builder;

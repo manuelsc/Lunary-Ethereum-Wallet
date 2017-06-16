@@ -121,6 +121,10 @@ public class ExchangeCalculator {
         }
     }
 
+    public double weiToEther(long weis){
+        return new BigDecimal(weis).divide(ONE_ETHER, 8, BigDecimal.ROUND_DOWN).doubleValue();
+    }
+
     public String convertRateExact(BigDecimal balance, double rate){
         if(index == 2) {
             return displayUsdNicely(Math.floor(balance.doubleValue() * rate * 100) / 100) + "";
