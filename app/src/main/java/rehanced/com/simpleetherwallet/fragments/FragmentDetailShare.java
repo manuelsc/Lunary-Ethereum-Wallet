@@ -1,5 +1,8 @@
 package rehanced.com.simpleetherwallet.fragments;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -9,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -42,6 +46,16 @@ public class FragmentDetailShare extends Fragment {
         int qrCodeDimention = (int) (310 * scale + 0.5f);
 
         ImageView qrcode = (ImageView) rootView.findViewById(R.id.qrcode);
+
+        qrcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("", ethaddress);
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(getActivity(), R.string.wallet_menu_action_copied_to_clipboard, Toast.LENGTH_SHORT).show();
+            }
+        });
 
         QREncoder qrCodeEncoder = new QREncoder(ethaddress, null,
                 Contents.Type.TEXT, BarcodeFormat.QR_CODE.toString(), qrCodeDimention);

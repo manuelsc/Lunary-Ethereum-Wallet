@@ -1,5 +1,7 @@
 package rehanced.com.simpleetherwallet.fragments;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,6 +27,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -254,8 +257,9 @@ public class FragmentWallets extends Fragment implements View.OnClickListener, V
         menu.setHeaderTitle(R.string.wallet_menu_title);
         menu.add(0, 200, 0, R.string.wallet_menu_changename);
         menu.add(0, 201, 0, R.string.wallet_menu_copyadd);
-        menu.add(0, 202, 0, R.string.wallet_menu_export);
-        menu.add(0, 203, 0, R.string.wallet_menu_delete);
+        menu.add(0, 202, 0, R.string.wallet_menu_share);
+        menu.add(0, 203, 0, R.string.wallet_menu_export);
+        menu.add(0, 204, 0, R.string.wallet_menu_delete);
     }
 
     @Override
@@ -273,12 +277,19 @@ public class FragmentWallets extends Fragment implements View.OnClickListener, V
                 setName(wallets.get(position).getPublicKey());
                 break;
             case 201:
+                if(ac == null) return true;
+                ClipboardManager clipboard = (ClipboardManager) ac.getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("", wallets.get(position).getPublicKey());
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(ac, R.string.wallet_menu_action_copied_to_clipboard, Toast.LENGTH_SHORT).show();
+                break;
+            case 202:
                 Intent i=new Intent(android.content.Intent.ACTION_SEND);
                 i.setType("text/plain");
                 i.putExtra(Intent.EXTRA_TEXT, wallets.get(position).getPublicKey());
                 startActivity(Intent.createChooser(i,"Share via"));
                 break;
-            case 202:
+            case 203:
                 final int finalPosition = position;
                 if(wallets.get(finalPosition).getType() == WalletDisplay.NORMAL) {
                     Dialogs.exportWallet(ac, new DialogInterface.OnClickListener() {
@@ -293,7 +304,7 @@ public class FragmentWallets extends Fragment implements View.OnClickListener, V
                     Dialogs.cantExportNonWallet(ac);
                 }
                 break;
-            case 203:
+            case 204:
                 confirmDelete(wallets.get(position).getPublicKey(), wallets.get(position).getType());
                 break;
         }
