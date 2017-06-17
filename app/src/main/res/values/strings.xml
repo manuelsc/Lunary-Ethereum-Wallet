@@ -221,6 +221,13 @@
     <string name="timestamp">Timestamp</string>
     <string name="wallet_menu_share">Share Address</string>
     <string name="wallet_menu_action_copied_to_clipboard">Copied to Clipboard</string>
+    <string name="created">Created</string>
+    <string name="digits">Digits</string>
+    <string name="holders">Holders</string>
+    <string name="market_cap">Market Cap</string>
+    <string name="price">Price</string>
+    <string name="total_supply">Total Supply</string>
+    <string name="token">Token</string>
 
     <string name="tos"><![CDATA[
 <p><h2>Terms and Conditions ("Terms")</h2></p>

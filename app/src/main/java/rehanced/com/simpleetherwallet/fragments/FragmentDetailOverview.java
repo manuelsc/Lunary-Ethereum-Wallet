@@ -230,7 +230,7 @@ public class FragmentDetailOverview extends Fragment implements View.OnClickList
                 BigDecimal ethbal;
                 try {
                     ethbal = new BigDecimal(ResponseParser.parseBalance(response.body().string()));
-                    token.add(0, new TokenDisplay("Ether", "ETH", ethbal.multiply(new BigDecimal(1000d)), 3, 1, "", "", 0));
+                    token.add(0, new TokenDisplay("Ether", "ETH", ethbal.multiply(new BigDecimal(1000d)), 3, 1, "", "", 0, 0));
                     balanceDouble = balanceDouble.add(ethbal);
                 } catch (JSONException e) {
                     ac.runOnUiThread(new Runnable() {
@@ -362,7 +362,10 @@ public class FragmentDetailOverview extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        
+        if(ac == null) return;
+        int itemPosition = recyclerView.getChildLayoutPosition(view);
+        if(itemPosition == 0) return;  // if clicked on Ether
+        Dialogs.showTokenetails(ac, token.get(itemPosition));
     }
 
     @Override

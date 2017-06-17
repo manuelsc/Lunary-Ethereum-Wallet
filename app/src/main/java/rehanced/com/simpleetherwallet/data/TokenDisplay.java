@@ -3,6 +3,7 @@ package rehanced.com.simpleetherwallet.data;
 import android.support.annotation.NonNull;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 public class TokenDisplay implements Comparable{
 
@@ -14,8 +15,9 @@ public class TokenDisplay implements Comparable{
     private String contractAddr;
     private String totalSupply;
     private long holderCount;
+    private long createdAt;
 
-    public TokenDisplay(String name, String shorty, BigDecimal balance, int digits, double usdprice, String contractAddr, String totalSupply, long holderCount) {
+    public TokenDisplay(String name, String shorty, BigDecimal balance, int digits, double usdprice, String contractAddr, String totalSupply, long holderCount, long createdAt) {
         this.name = name;
         this.shorty = shorty;
         this.balance = balance;
@@ -24,6 +26,15 @@ public class TokenDisplay implements Comparable{
         this.contractAddr = contractAddr;
         this.totalSupply = totalSupply;
         this.holderCount = holderCount;
+        this.createdAt = createdAt;
+    }
+
+    public long getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(long createdAt) {
+        this.createdAt = createdAt;
     }
 
     public String getName() {
@@ -52,6 +63,14 @@ public class TokenDisplay implements Comparable{
      */
     public double getBalanceDouble(){
         return balance.divide((new BigDecimal("10").pow(digits))).doubleValue();
+    }
+
+    /**
+     * Uses digits and total supply to create a long value
+     * @return Token supply in long
+     */
+    public long getTotalSupplyLong(){
+        return new BigInteger(totalSupply).divide((new BigInteger("10").pow(digits))).longValue();
     }
 
     public void setBalance(BigDecimal balance) {

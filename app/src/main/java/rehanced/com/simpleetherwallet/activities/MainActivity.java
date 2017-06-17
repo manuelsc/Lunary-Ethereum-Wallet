@@ -395,6 +395,7 @@ public class MainActivity extends SecureAppCompatActivity implements NetworkUpda
                                 "FloatingActionButton by Dmytro Tarianyk\n" +
                                 "RateThisApp by Keisuke Kobayashi\n" +
                                 "AppIntro by Maximilian Narr\n"+
+                                "Material Dialogs by Aidan Michael Follestad\n"+
                                 "Poloniex for price data\n"+
                                 "Web3j by Conor Svensson\n" +
                                 "PatternLock by Zhang Hai\n"+

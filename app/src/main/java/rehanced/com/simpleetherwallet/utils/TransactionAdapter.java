@@ -14,6 +14,7 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import rehanced.com.simpleetherwallet.R;
 import rehanced.com.simpleetherwallet.data.TransactionDisplay;
@@ -24,7 +25,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     private Context context;
     private List<TransactionDisplay> boxlist;
     private int lastPosition = -1;
-    private SimpleDateFormat dateformat = new SimpleDateFormat("dd. MMMM yyyy, HH:mm");
+    private SimpleDateFormat dateformat = new SimpleDateFormat("dd. MMMM yyyy, HH:mm", Locale.getDefault());
     private View.OnCreateContextMenuListener contextMenuListener;
     private View.OnClickListener clickListener;
     private int position;

@@ -216,8 +216,15 @@
     <string name="nonce">Nonce</string>
     <string name="block_height">Block Höhe</string>
     <string name="timestamp">Zeitpunkt</string>
-    <string name="wallet_menu_share">Share Address</string>
-    <string name="wallet_menu_action_copied_to_clipboard">Copied to Clipboard</string>
+    <string name="wallet_menu_share">Adresse teilen</string>
+    <string name="wallet_menu_action_copied_to_clipboard">In Zwischenablage kopiert</string>
+    <string name="created">Erstellt</string>
+    <string name="digits">Stellen</string>
+    <string name="holders">Besitzer</string>
+    <string name="market_cap">Markt Kap</string>
+    <string name="price">Preis</string>
+    <string name="total_supply">Gesamtanzahl</string>
+    <string name="token">Token</string>
 
     <string name="tos"><![CDATA[
 <p><h2>Terms and Conditions ("Terms")</h2></p>

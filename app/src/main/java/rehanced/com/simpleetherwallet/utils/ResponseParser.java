@@ -97,7 +97,8 @@ public class ResponseParser {
                     currentToken.getJSONObject("tokenInfo").getJSONObject("price").getDouble("rate"),
                     currentToken.getJSONObject("tokenInfo").getString("address"),
                     currentToken.getJSONObject("tokenInfo").getString("totalSupply"),
-                    currentToken.getJSONObject("tokenInfo").getLong("holdersCount")
+                    currentToken.getJSONObject("tokenInfo").getLong("holdersCount"),
+                    currentToken.getJSONObject("tokenInfo").getLong("createdAt")
             ));
 
             // Download icon and cache it

@@ -74,6 +74,10 @@ public class ExchangeCalculator {
         return conversionNames[2];
     }
 
+    public CurrencyEntry getEtherCurrency(){
+        return conversionNames[0];
+    }
+
     public String getCurrencyShort(){
         return conversionNames[index].getShorty();
     }
@@ -104,7 +108,7 @@ public class ExchangeCalculator {
      * @return Ether worth of given tokens
      */
     public double convertTokenToEther(double tokenbalance, double tokenusd){
-        return Math.floor((( (tokenbalance * tokenusd) / conversionNames[2].getRate()) * 100 )) / 100;
+        return Math.floor((( (tokenbalance * tokenusd) / conversionNames[2].getRate()) * 10000 )) / 10000;
     }
 
     public double convertRate(double balance, double rate){

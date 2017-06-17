@@ -25,16 +25,67 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import me.grantland.widget.AutofitTextView;
 import rehanced.com.simpleetherwallet.R;
 import rehanced.com.simpleetherwallet.activities.AddressDetailActivity;
 import rehanced.com.simpleetherwallet.activities.MainActivity;
+import rehanced.com.simpleetherwallet.data.TokenDisplay;
 import rehanced.com.simpleetherwallet.data.TransactionDisplay;
 import rehanced.com.simpleetherwallet.data.WatchWallet;
 import rehanced.com.simpleetherwallet.fragments.FragmentWallets;
 
 public class Dialogs {
+
+    public static void showTokenetails(final Activity c, final TokenDisplay tok){
+        MaterialDialog dialog = new MaterialDialog.Builder(c)
+                .customView(R.layout.dialog_token_detail, true)
+                .show();
+        View view = dialog.getCustomView();
+        ImageView contractIcon = (ImageView) view.findViewById(R.id.my_addressicon);
+        TextView tokenname = (TextView) view.findViewById(R.id.walletname);
+        AutofitTextView contractAddr = (AutofitTextView) view.findViewById(R.id.walletaddr);
+
+        TextView supply = (TextView) view.findViewById(R.id.supply);
+        TextView priceUSD = (TextView) view.findViewById(R.id.price);
+        TextView priceETH = (TextView) view.findViewById(R.id.price2);
+        TextView capUSD = (TextView) view.findViewById(R.id.cap);
+        TextView capETH = (TextView) view.findViewById(R.id.cap2);
+        TextView holders = (TextView) view.findViewById(R.id.holders);
+        TextView digits = (TextView) view.findViewById(R.id.digits);
+        TextView created = (TextView) view.findViewById(R.id.timestamp);
+
+        LinearLayout from = (LinearLayout) view.findViewById(R.id.from);
+
+        from.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(c, AddressDetailActivity.class);
+                i.putExtra("ADDRESS", tok.getContractAddr());
+                c.startActivity(i);
+            }
+        });
+
+        ExchangeCalculator ex = ExchangeCalculator.getInstance();
+        contractIcon.setImageBitmap(Blockies.createIcon(tok.getContractAddr().toLowerCase()));
+        tokenname.setText(tok.getName());
+        contractAddr.setText(tok.getContractAddr().toLowerCase());
+        supply.setText(ex.displayUsdNicely(tok.getTotalSupplyLong())+" "+tok.getShorty());
+        priceUSD.setText(tok.getUsdprice()+" $");
+
+        priceETH.setText(ex.displayEthNicelyExact(
+                        ex.convertTokenToEther(1, tok.getUsdprice())
+                )+" "+ex.getEtherCurrency().getShorty());
+        capETH.setText(ex.displayUsdNicely(
+                        ex.convertTokenToEther(tok.getTotalSupplyLong(), tok.getUsdprice())
+                )+" "+ex.getEtherCurrency().getShorty());
+        capUSD.setText(ex.displayUsdNicely(tok.getUsdprice()*tok.getTotalSupplyLong()) +" $");
+        holders.setText(ex.displayUsdNicely(tok.getHolderCount())+"");
+        digits.setText(tok.getDigits()+"");
+        SimpleDateFormat dateformat = new SimpleDateFormat("dd. MMMM yyyy", Locale.getDefault());
+        created.setText(dateformat.format(tok.getCreatedAt()*1000)+"");
+    }
 
     public static void showTXDetails(final Activity c, final TransactionDisplay tx){
         MaterialDialog dialog = new MaterialDialog.Builder(c)
@@ -101,7 +152,7 @@ public class Dialogs {
 
         myAddressaddr.setText(tx.getFromAddress());
         otherAddressaddr.setText(tx.getToAddress());
-        SimpleDateFormat dateformat = new SimpleDateFormat("dd. MMMM yyyy, HH:mm:ss");
+        SimpleDateFormat dateformat = new SimpleDateFormat("dd. MMMM yyyy, HH:mm:ss", Locale.getDefault());
         month.setText(dateformat.format(tx.getDate())+"");
         blocknr.setText(tx.getBlock()+"");
         gasUsed.setText(tx.getGasUsed()+"");
