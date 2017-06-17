@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -43,6 +44,7 @@ import rehanced.com.simpleetherwallet.network.EtherscanAPI;
 import rehanced.com.simpleetherwallet.services.TransactionService;
 import rehanced.com.simpleetherwallet.utils.AddressNameConverter;
 import rehanced.com.simpleetherwallet.utils.Blockies;
+import rehanced.com.simpleetherwallet.utils.CollapseAnimator;
 import rehanced.com.simpleetherwallet.utils.ExchangeCalculator;
 import rehanced.com.simpleetherwallet.utils.ResponseParser;
 import rehanced.com.simpleetherwallet.utils.WalletStorage;
@@ -69,6 +71,8 @@ public class FragmentSend extends Fragment {
     private BigDecimal curTxCost = new BigDecimal("0.000252");
     private BigDecimal curAmount = BigDecimal.ZERO;
     private ExchangeCalculator exchange = ExchangeCalculator.getInstance();
+    private LinearLayout expertMode;
+    private EditText data, userGasLimit;
 
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
@@ -99,6 +103,20 @@ public class FragmentSend extends Fragment {
         gasText = (TextView) rootView.findViewById(R.id.gasText);
         toicon = (ImageView) rootView.findViewById(R.id.toicon);
         fromicon = (ImageView) rootView.findViewById(R.id.fromicon);
+        expertMode = (LinearLayout) rootView.findViewById(R.id.expertmode);
+        data = (EditText) rootView.findViewById(R.id.data);
+        userGasLimit = (EditText) rootView.findViewById(R.id.gaslimit);
+
+        ((LinearLayout) rootView.findViewById(R.id.expertmodetrigger)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(expertMode.getVisibility()==View.GONE) {
+                    CollapseAnimator.expand(expertMode);
+                } else {
+                    CollapseAnimator.collapse(expertMode);
+                }
+            }
+        });
 
         if (getArguments().containsKey("TO_ADDRESS")){
             setToAddress(getArguments().getString("TO_ADDRESS"), ac);
@@ -125,7 +143,7 @@ public class FragmentSend extends Fragment {
         });
 
         spinner = (Spinner) rootView.findViewById(R.id.spinner);
-        final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(ac, android.R.layout.simple_spinner_item, WalletStorage.getInstance(ac).getFullOnly()){
+        final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(ac, R.layout.address_spinner, WalletStorage.getInstance(ac).getFullOnly()){
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
@@ -216,7 +234,7 @@ public class FragmentSend extends Fragment {
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(amount.getText().length() <= 0 || new BigDecimal(amount.getText().toString()).compareTo(new BigDecimal("0")) <= 0) {
+                if((amount.getText().length() <= 0 || new BigDecimal(amount.getText().toString()).compareTo(new BigDecimal("0")) <= 0) && data.getText().length() <= 0) {
                     ac.snackError(getString(R.string.err_send_noamount));
                     return;
                 }
@@ -227,8 +245,8 @@ public class FragmentSend extends Fragment {
                 if(spinner == null || spinner.getSelectedItem() == null) return;
                 try {
                     if(BuildConfig.DEBUG)
-                        Log.d("etherbalance", (getCurTotalCost().compareTo(curAvailable) < 0)+" | "+getCurTotalCost()+" | "+curAvailable);
-                    if (getCurTotalCost().compareTo(curAvailable) < 0 || BuildConfig.DEBUG){
+                        Log.d("etherbalance", (getCurTotalCost().compareTo(curAvailable) < 0)+" | "+getCurTotalCost()+" | "+curAvailable+ " | "+data.getText()+" | "+curAmount);
+                    if (getCurTotalCost().compareTo(curAvailable) < 0 || BuildConfig.DEBUG || data.getText().length() > 0){
                         askForPasswordAndDecode(spinner.getSelectedItem().toString());
                     } else {
                         ac.snackError(getString(R.string.err_send_not_enough_ether));
@@ -338,6 +356,12 @@ public class FragmentSend extends Fragment {
                 public void onResponse(Call call, Response response) throws IOException {
                     try {
                         gaslimit = ResponseParser.parseGasPrice(response.body().string());
+                        ac.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                userGasLimit.setText(gaslimit+"");
+                            }
+                        });
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -403,8 +427,9 @@ public class FragmentSend extends Fragment {
         txService.putExtra("TO_ADDRESS", toAddress.getText().toString());
         txService.putExtra("AMOUNT", curAmount.toPlainString()); // In ether, gets converted by the service itself
         txService.putExtra("GAS_PRICE", new BigDecimal((gas.getProgress()+1)+"").multiply(new BigDecimal("1000000000")).toPlainString());// "21000000000");
-        txService.putExtra("GAS_LIMIT", gaslimit.toString());
+        txService.putExtra("GAS_LIMIT", userGasLimit.getText().length() <= 0 ? gaslimit.toString() : userGasLimit.getText().toString());
         txService.putExtra("PASSWORD", password);
+        txService.putExtra("DATA", data.getText().toString());
         ac.startService(txService);
 
         // For statistics

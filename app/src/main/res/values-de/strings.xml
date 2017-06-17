@@ -225,6 +225,11 @@
     <string name="price">Preis</string>
     <string name="total_supply">Gesamtanzahl</string>
     <string name="token">Token</string>
+    <string name="gas_limit">Gas Limit:</string>
+    <string name="optional_data_as_hex">Optionale Daten in Hex</string>
+    <string name="data">Daten:</string>
+    <string name="send_expert_warning">Du kannst zusätzliche Daten an deine Transaktion anhängen. Fülle diese Informationen nur aus wenn du wirklich weißt was du tust, andernfalls könnte das womöglich schlimme Folgen haben!</string>
+    <string name="expert_mode_optional">Experten Modus (Optional)</string>
 
     <string name="tos"><![CDATA[
 <p><h2>Terms and Conditions ("Terms")</h2></p>

@@ -228,6 +228,11 @@
     <string name="price">Price</string>
     <string name="total_supply">Total Supply</string>
     <string name="token">Token</string>
+    <string name="gas_limit">Gas Limit:</string>
+    <string name="optional_data_as_hex">Optional data as hex</string>
+    <string name="data">Data:</string>
+    <string name="send_expert_warning">You can add extra data to send along with your transaction. If you don\'t know what this is then don\'t touch it or bad things may happen!</string>
+    <string name="expert_mode_optional">Expert Mode (Optional)</string>
 
     <string name="tos"><![CDATA[
 <p><h2>Terms and Conditions ("Terms")</h2></p>

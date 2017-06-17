@@ -45,6 +45,7 @@ public class TransactionService extends IntentService {
             final String amount = intent.getStringExtra("AMOUNT");
             final String gas_price = intent.getStringExtra("GAS_PRICE");
             final String gas_limit = intent.getStringExtra("GAS_LIMIT");
+            final String data = intent.getStringExtra("DATA");
             String password = intent.getStringExtra("PASSWORD");
 
             final Credentials keys = WalletStorage.getInstance(getApplicationContext()).getFullWallet(getApplicationContext(), password, fromAddress);
@@ -61,12 +62,13 @@ public class TransactionService extends IntentService {
                         JSONObject o = new JSONObject(response.body().string());
                         BigInteger nonce = new BigInteger(o.getString("result").substring(2), 16);
 
-                        RawTransaction tx = RawTransaction.createEtherTransaction(
+                        RawTransaction tx = RawTransaction.createTransaction(
                                 nonce,
                                 new BigInteger(gas_price),
                                 new BigInteger(gas_limit),
                                 toAddress,
-                                new BigDecimal(amount).multiply(ExchangeCalculator.ONE_ETHER).toBigInteger()
+                                new BigDecimal(amount).multiply(ExchangeCalculator.ONE_ETHER).toBigInteger(),
+                                data
                         );
 
                         Log.d("txx",
@@ -74,7 +76,8 @@ public class TransactionService extends IntentService {
                                         "gasPrice: "+tx.getGasPrice()+"\n"+
                                         "gasLimit: "+tx.getGasLimit()+"\n"+
                                         "To: "+tx.getTo()+"\n"+
-                                        "Amount: "+tx.getValue()
+                                        "Amount: "+tx.getValue()+"\n"+
+                                        "Data: "+tx.getData()
                         );
 
                         byte [] signed = TransactionEncoder.signMessage(tx, (byte) 1, keys);
