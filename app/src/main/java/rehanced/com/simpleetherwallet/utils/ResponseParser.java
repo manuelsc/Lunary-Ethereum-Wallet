@@ -1,6 +1,7 @@
 package rehanced.com.simpleetherwallet.utils;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,7 +52,7 @@ public class ResponseParser {
                         data.getJSONObject(i).has("nonce") ? data.getJSONObject(i).getString("nonce") : "0",
                         data.getJSONObject(i).getLong("blockNumber"),
                         data.getJSONObject(i).getInt("gasUsed"),
-                        data.getJSONObject(i).getLong("gasPrice")
+                        (data.getJSONObject(i).has("gasPrice") ? data.getJSONObject(i).getLong("gasPrice") : 0)
                 ));
             }
 
