@@ -166,7 +166,7 @@ public class FragmentTransactionsAll extends FragmentTransactionsAbstract  {
 
 
     public void addUnconfirmedTransaction(String from, String to, BigInteger amount){
-        unconfirmed = new TransactionDisplay(from, to, amount, 0, System.currentTimeMillis(), "", TransactionDisplay.NORMAL, "", "0", 0, 1,1);
+        unconfirmed = new TransactionDisplay(from, to, amount, 0, System.currentTimeMillis(), "", TransactionDisplay.NORMAL, "", "0", 0, 1,1, false);
         unconfirmed_addedTime = System.currentTimeMillis();
         wallets.add(0, unconfirmed);
         notifyDataSetChanged();

@@ -60,6 +60,14 @@
                         android:layout_height="14dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="2dp"
+                        android:id="@+id/error"
+                        android:src="@drawable/ic_tx_failed"/>
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="2dp"
                         android:id="@+id/type"
                         android:src="@drawable/ic_contract"/>
                 </LinearLayout>

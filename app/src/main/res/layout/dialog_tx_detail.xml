@@ -173,6 +173,14 @@
                 android:layout_height="1dp"
                 android:background="#7aa1a1a1"/>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="11dp"
+                android:text="@string/transaction_failed"
+                android:id="@+id/errormsg"
+                android:textColor="#BBA80A00"/>
 
             <LinearLayout
                 android:layout_marginTop="14dp"

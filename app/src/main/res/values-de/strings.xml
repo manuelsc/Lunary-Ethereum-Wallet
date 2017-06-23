@@ -230,6 +230,7 @@
     <string name="data">Daten:</string>
     <string name="send_expert_warning">Du kannst zusätzliche Daten an deine Transaktion anhängen. Fülle diese Informationen nur aus wenn du wirklich weißt was du tust, andernfalls könnte das womöglich schlimme Folgen haben!</string>
     <string name="expert_mode_optional">Experten Modus (Optional)</string>
+    <string name="transaction_failed">Überweisung gescheitert</string>
 
     <string name="tos"><![CDATA[
 <p><h2>Terms and Conditions ("Terms")</h2></p>

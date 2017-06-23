@@ -32,7 +32,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView  month, walletbalance, walletname, other_address, plusminus;
-        public ImageView my_addressicon, other_addressicon, type;
+        public ImageView my_addressicon, other_addressicon, type, error;
         private LinearLayout container;
 
         public MyViewHolder(View view) {
@@ -46,6 +46,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             my_addressicon= (ImageView) view.findViewById(R.id.my_addressicon);
             other_addressicon= (ImageView) view.findViewById(R.id.other_addressicon);
             type = (ImageView) view.findViewById(R.id.type);
+            error = (ImageView) view.findViewById(R.id.error);
             container = (LinearLayout) view.findViewById(R.id.container);
         }
 
@@ -107,6 +108,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         }
 
         holder.type.setVisibility(box.getType() == TransactionDisplay.NORMAL ? View.INVISIBLE : View.VISIBLE);
+        holder.error.setVisibility(box.isError() ? View.VISIBLE : View.GONE);
         holder.my_addressicon.setImageBitmap(Blockies.createIcon(box.getFromAddress().toLowerCase()));
         holder.other_addressicon.setImageBitmap(Blockies.createIcon(box.getToAddress().toLowerCase()));
 

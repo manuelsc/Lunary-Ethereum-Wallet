@@ -111,6 +111,7 @@ public class Dialogs {
         LinearLayout from = (LinearLayout) view.findViewById(R.id.from);
         LinearLayout to = (LinearLayout) view.findViewById(R.id.to);
         TextView amountfiat = (TextView) view.findViewById(R.id.amountfiat);
+        TextView errormsg = (TextView) view.findViewById(R.id.errormsg);
 
         from.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,6 +151,7 @@ public class Dialogs {
         myAddressname.setText(myName);
         otherAddressname.setText(otherName);
 
+        errormsg.setVisibility(tx.isError() ? View.VISIBLE : View.GONE);
         myAddressaddr.setText(tx.getFromAddress());
         otherAddressaddr.setText(tx.getToAddress());
         SimpleDateFormat dateformat = new SimpleDateFormat("dd. MMMM yyyy, HH:mm:ss", Locale.getDefault());

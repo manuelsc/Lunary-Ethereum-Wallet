@@ -20,8 +20,9 @@ public class TransactionDisplay implements Comparable {
     private long block;
     private int gasUsed;
     private long gasprice;
+    private boolean error;
 
-    public TransactionDisplay(String fromAddress, String toAddress, BigInteger amount, int confirmationStatus, long date, String walletName, byte type, String txHash, String nounce, long block, int gasUsed, long gasprice) {
+    public TransactionDisplay(String fromAddress, String toAddress, BigInteger amount, int confirmationStatus, long date, String walletName, byte type, String txHash, String nounce, long block, int gasUsed, long gasprice, boolean error) {
         this.fromAddress = fromAddress;
         this.toAddress = toAddress;
         this.amount = amount;
@@ -34,6 +35,15 @@ public class TransactionDisplay implements Comparable {
         this.block = block;
         this.gasUsed = gasUsed;
         this.gasprice = gasprice;
+        this.error = error;
+    }
+
+    public boolean isError() {
+        return error;
+    }
+
+    public void setError(boolean error) {
+        this.error = error;
     }
 
     public long getBlock() {
