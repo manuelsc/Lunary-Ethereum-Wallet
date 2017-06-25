@@ -210,7 +210,7 @@ public class Dialogs {
                 }
             }
         });
-        builder.setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.add, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
@@ -240,7 +240,22 @@ public class Dialogs {
                 dialog.dismiss();
             }
         });
-        builder.setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.show, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                InputMethodManager inputMgr = (InputMethodManager)input.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMgr.hideSoftInputFromWindow(input.getWindowToken(), 0);
+                if(input.getText().toString().length() == 42 && input.getText().toString().startsWith("0x")) {
+                    Intent detail = new Intent(c, AddressDetailActivity.class);
+                    detail.putExtra("ADDRESS", input.getText().toString().toLowerCase());
+                    c.startActivity(detail);
+                } else {
+                    c.snackError("Invalid Ethereum address!");
+                }
+                dialog.cancel();
+            }
+        });
+        builder.setNeutralButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 InputMethodManager inputMgr = (InputMethodManager)input.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);

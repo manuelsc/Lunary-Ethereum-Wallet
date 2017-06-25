@@ -8,8 +8,8 @@ android {
         applicationId "com.rehanced.lunary"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 17
-        versionName "1.27"
+        versionCode 18
+        versionName "1.28"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true

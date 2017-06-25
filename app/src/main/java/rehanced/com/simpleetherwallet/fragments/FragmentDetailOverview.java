@@ -364,7 +364,7 @@ public class FragmentDetailOverview extends Fragment implements View.OnClickList
     public void onClick(View view) {
         if(ac == null) return;
         int itemPosition = recyclerView.getChildLayoutPosition(view);
-        if(itemPosition == 0) return;  // if clicked on Ether
+        if(itemPosition == 0 || itemPosition >= token.size()) return;  // if clicked on Ether
         Dialogs.showTokenetails(ac, token.get(itemPosition));
     }
 

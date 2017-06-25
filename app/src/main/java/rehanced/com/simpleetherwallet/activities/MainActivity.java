@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -88,7 +89,8 @@ public class MainActivity extends SecureAppCompatActivity implements NetworkUpda
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(getResources().getString(R.string.drawer_import)).withIcon(R.drawable.ic_action_wallet3),
                         new PrimaryDrawerItem().withName(getResources().getString(R.string.action_settings)).withIcon(R.drawable.ic_setting),
-                        new PrimaryDrawerItem().withName(getResources().getString(R.string.drawer_about)).withIcon(R.drawable.ic_about)
+                        new PrimaryDrawerItem().withName(getResources().getString(R.string.drawer_about)).withIcon(R.drawable.ic_about),
+                        new PrimaryDrawerItem().withName(getResources().getString(R.string.reddit)).withIcon(R.drawable.ic_reddit)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -409,6 +411,12 @@ public class MainActivity extends SecureAppCompatActivity implements NetworkUpda
                 break;
             }
             case 4: {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse("https://www.reddit.com/r/lunary"));
+                startActivity(i);
+                break;
+            }
+            case 5: {
                 if(WalletStorage.getInstance(this).getFullOnly().size() == 0){
                     Dialogs.noFullWallet(this);
                 } else {
@@ -416,6 +424,7 @@ public class MainActivity extends SecureAppCompatActivity implements NetworkUpda
                     donate.putExtra("TO_ADDRESS", "0xa9981a33f6b1A18da5Db58148B2357f22B44e1e0");
                     startActivity(donate);
                 }
+                break;
             }
             default: {
                 return;

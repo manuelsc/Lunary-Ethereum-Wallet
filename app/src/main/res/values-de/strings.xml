@@ -6,7 +6,7 @@
     <string name="title_activity_main">Lunary</string>
 
     <string name="fab_scan">Scanne Adresse / Schlüssel</string>
-    <string name="fab_add_watch">Beobachter Adresse hinzufügen</string>
+    <string name="fab_add_watch">Adresse Suchen</string>
     <string name="fab_add_aswatch">Als Beobachter Adresse hinzufügen</string>
     <string name="fab_gen_new">Erstelle neues Konto</string>
     <string name="fab_request">Anfordern</string>
@@ -176,7 +176,7 @@
     <string name="import_button">Importieren</string>
     <string name="main_grant_permission_export">Bitte gestatte Lunary Schreibrechte zum exportieren</string>
     <string name="main_grant_permission_import">Bitte gestatte Lunary Leserechte zum importieren</string>
-    <string name="dialog_watch_only_title">Beobachter Adresse</string>
+    <string name="dialog_watch_only_title">Adresse Suchen</string>
     <string name="dialog_importing_wallets_title">Importiere Konten?</string>
     <string name="dialog_importing_wallets_text">Wir haben %1$d neue(s) Konto/en gefunden. Möchtest du die folgenden Importieren: %3$s</string>
     <string name="dialog_ex_nofull_title">Kein vollständiges Konto</string>
@@ -231,6 +231,9 @@
     <string name="send_expert_warning">Du kannst zusätzliche Daten an deine Transaktion anhängen. Fülle diese Informationen nur aus wenn du wirklich weißt was du tust, andernfalls könnte das womöglich schlimme Folgen haben!</string>
     <string name="expert_mode_optional">Experten Modus (Optional)</string>
     <string name="transaction_failed">Überweisung gescheitert</string>
+    <string name="reddit">Lunary Subreddit</string>
+    <string name="add">+</string>
+    <string name="show">Suche</string>
 
     <string name="tos"><![CDATA[
 <p><h2>Terms and Conditions ("Terms")</h2></p>

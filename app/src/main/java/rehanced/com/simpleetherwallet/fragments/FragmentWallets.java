@@ -458,6 +458,7 @@ public class FragmentWallets extends Fragment implements View.OnClickListener, V
     @Override
     public void onClick(View view) {
         int itemPosition = recyclerView.getChildLayoutPosition(view);
+        if(itemPosition >= wallets.size()) return;
         Intent detail = new Intent(ac, AddressDetailActivity.class);
         detail.putExtra("ADDRESS", wallets.get(itemPosition).getPublicKey());
         detail.putExtra("BALANCE", wallets.get(itemPosition).getBalance());

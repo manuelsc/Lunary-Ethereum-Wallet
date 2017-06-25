@@ -7,7 +7,7 @@
     <string name="title_activity_main">Lunary</string>
 
     <string name="fab_scan">Scan Address / Key</string>
-    <string name="fab_add_watch">Add Watch Only Wallet</string>
+    <string name="fab_add_watch">Lookup Address</string>
     <string name="fab_add_aswatch">Add as Watch Only Wallet</string>
     <string name="fab_gen_new">Generate New Wallet</string>
     <string name="fab_request">Request</string>
@@ -179,7 +179,7 @@
     <string name="import_button">Import</string>
     <string name="main_grant_permission_export">Please grant write permission to export Wallets</string>
     <string name="main_grant_permission_import">Please grant read permission to import Wallets</string>
-    <string name="dialog_watch_only_title">Watch Only Address</string>
+    <string name="dialog_watch_only_title">Lookup Address</string>
     <string name="dialog_importing_wallets_title">Importing Wallets?</string>
     <string name="dialog_importing_wallets_text">We have detected %1$d new wallet%2$s in our Lunary folder. Would you like to import: %3$s</string>
     <string name="dialog_ex_nofull_title">No Full Wallet</string>
@@ -234,6 +234,9 @@
     <string name="send_expert_warning">You can add extra data to send along with your transaction. If you don\'t know what this is then don\'t touch it or bad things may happen!</string>
     <string name="expert_mode_optional">Expert Mode (Optional)</string>
     <string name="transaction_failed">Transaction failed</string>
+    <string name="reddit">Lunary Subreddit</string>
+    <string name="add">Add</string>
+    <string name="show">Show</string>
 
     <string name="tos"><![CDATA[
 <p><h2>Terms and Conditions ("Terms")</h2></p>

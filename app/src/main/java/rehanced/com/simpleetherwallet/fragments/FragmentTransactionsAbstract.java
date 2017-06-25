@@ -285,6 +285,7 @@ public abstract class FragmentTransactionsAbstract extends Fragment implements V
     public void onClick(View view) {
         if(ac == null) return;
         int itemPosition = recyclerView.getChildLayoutPosition(view);
+        if(itemPosition >= wallets.size()) return;
         Dialogs.showTXDetails(ac, wallets.get(itemPosition));
     }
 }

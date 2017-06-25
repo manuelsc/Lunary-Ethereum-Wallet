@@ -90,17 +90,19 @@ public class ResponseParser {
         JSONArray data = new JSONObject(response).getJSONArray("tokens");
         for(int i=0; i < data.length(); i++){
             JSONObject currentToken = data.getJSONObject(i);
-            display.add(new TokenDisplay(
-                    currentToken.getJSONObject("tokenInfo").getString("name"),
-                    currentToken.getJSONObject("tokenInfo").getString("symbol"),
-                    new BigDecimal(currentToken.getString("balance")),
-                    currentToken.getJSONObject("tokenInfo").getInt("decimals"),
-                    currentToken.getJSONObject("tokenInfo").getJSONObject("price").getDouble("rate"),
-                    currentToken.getJSONObject("tokenInfo").getString("address"),
-                    currentToken.getJSONObject("tokenInfo").getString("totalSupply"),
-                    currentToken.getJSONObject("tokenInfo").getLong("holdersCount"),
-                    currentToken.getJSONObject("tokenInfo").getLong("createdAt")
-            ));
+            try {
+                display.add(new TokenDisplay(
+                        currentToken.getJSONObject("tokenInfo").getString("name"),
+                        currentToken.getJSONObject("tokenInfo").getString("symbol"),
+                        new BigDecimal(currentToken.getString("balance")),
+                        currentToken.getJSONObject("tokenInfo").getInt("decimals"),
+                        currentToken.getJSONObject("tokenInfo").getJSONObject("price").getDouble("rate"),
+                        currentToken.getJSONObject("tokenInfo").getString("address"),
+                        currentToken.getJSONObject("tokenInfo").getString("totalSupply"),
+                        currentToken.getJSONObject("tokenInfo").getLong("holdersCount"),
+                        currentToken.getJSONObject("tokenInfo").getLong("createdAt")
+                ));
+            }catch(JSONException e){}
 
             // Download icon and cache it
             EtherscanAPI.getInstance().loadTokenIcon(c, currentToken.getJSONObject("tokenInfo").getString("name"), i == data.length() -1, callback);
