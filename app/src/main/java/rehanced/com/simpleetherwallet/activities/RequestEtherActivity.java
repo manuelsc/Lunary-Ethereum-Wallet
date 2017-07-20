@@ -1,7 +1,9 @@
 package rehanced.com.simpleetherwallet.activities;
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -29,6 +31,7 @@ import rehanced.com.simpleetherwallet.utils.AddressNameConverter;
 import rehanced.com.simpleetherwallet.utils.ExchangeCalculator;
 import rehanced.com.simpleetherwallet.utils.WalletAdapter;
 import rehanced.com.simpleetherwallet.utils.WalletStorage;
+import rehanced.com.simpleetherwallet.utils.qr.AddressEncoder;
 import rehanced.com.simpleetherwallet.utils.qr.Contents;
 import rehanced.com.simpleetherwallet.utils.qr.QREncoder;
 
@@ -128,8 +131,18 @@ public class RequestEtherActivity extends SecureAppCompatActivity implements Vie
             iban += "?amount="+amount.getText().toString();
         }
 
-        QREncoder qrCodeEncoder = new QREncoder(iban, null,
-                Contents.Type.TEXT, BarcodeFormat.QR_CODE.toString(), qrCodeDimention);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        QREncoder qrCodeEncoder;
+        if(prefs.getBoolean("qr_encoding_erc", false)){
+            AddressEncoder temp = new AddressEncoder(selectedEtherAddress);
+            if(amount.getText().toString().length() > 0 && new BigDecimal(amount.getText().toString()).compareTo(new BigDecimal("0")) > 0)
+                temp.setAmount(amount.getText().toString());
+            qrCodeEncoder = new QREncoder(AddressEncoder.encodeERC(temp), null,
+                    Contents.Type.TEXT, BarcodeFormat.QR_CODE.toString(), qrCodeDimention);
+        } else {
+            qrCodeEncoder = new QREncoder(iban, null,
+                    Contents.Type.TEXT, BarcodeFormat.QR_CODE.toString(), qrCodeDimention);
+        }
 
         try {
             Bitmap bitmap = qrCodeEncoder.encodeAsBitmap();

@@ -237,6 +237,9 @@
     <string name="reddit">Lunary Subreddit</string>
     <string name="add">Add</string>
     <string name="show">Show</string>
+    <string name="setting_erc_qr_encoding">Use ERC-67 QR Encoding</string>
+    <string name="setting_cat_advanced">Advanced</string>
+    <string name="password_in_clear_text">Show Password in clear text</string>
 
     <string name="tos"><![CDATA[
 <p><h2>Terms and Conditions ("Terms")</h2></p>

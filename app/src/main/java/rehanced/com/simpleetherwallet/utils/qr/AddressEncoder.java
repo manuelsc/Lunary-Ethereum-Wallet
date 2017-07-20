@@ -11,12 +11,12 @@ public class AddressEncoder {
     private String data;
     private byte type;
 
-    public AddressEncoder(String address, String amount) throws IOException {
+    public AddressEncoder(String address, String amount){
         this(address);
         this.amount = amount;
     }
 
-    public AddressEncoder(String address) throws IOException {
+    public AddressEncoder(String address) {
         this.address = address;
     }
 
@@ -43,8 +43,7 @@ public class AddressEncoder {
         return re;
     }
 
-    public static String encodeERC(AddressEncoder a) throws IOException {
-        if(a.address == null) throw new IOException("No address specified");
+    public static String encodeERC(AddressEncoder a) {
         String re = "ethereum:" + a.address;
         if(a.amount != null) re += "?value="+a.amount;
         if(a.gas != null) re += "?gas="+a.gas;

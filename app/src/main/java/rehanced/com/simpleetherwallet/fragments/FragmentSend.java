@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,8 +19,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -378,18 +380,37 @@ public class FragmentSend extends Fragment {
         builder.setTitle("Wallet Password");
 
         final EditText input = new EditText(ac);
+        final CheckBox showpw = new CheckBox(ac);
+        showpw.setText(R.string.password_in_clear_text);
         input.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
-        FrameLayout container = new FrameLayout(ac);
-        FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LinearLayout container = new LinearLayout(ac);
+        container.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout.LayoutParams params = new  LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
         params.topMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
         params.bottomMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
         params.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+
+        LinearLayout.LayoutParams params2 = new  LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params2.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+        params2.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
         input.setLayoutParams(params);
+        showpw.setLayoutParams(params2);
 
         container.addView(input);
+        container.addView(showpw);
         builder.setView(container);
+
+        showpw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!isChecked)
+                    input.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                else
+                    input.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                input.setSelection(input.getText().length());
+            }
+        });
 
         builder.setView(container);
         input.setOnFocusChangeListener(new View.OnFocusChangeListener()  {

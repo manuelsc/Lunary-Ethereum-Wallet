@@ -56,4 +56,12 @@
         <intent android:action="rehanced.com.simpleetherwallet.activities.SetAppLockActivity"/>
     </PreferenceScreen>
     </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/setting_cat_advanced">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="qr_encoding_erc"
+            android:title="@string/setting_erc_qr_encoding" />
+    </PreferenceCategory>
 </PreferenceScreen>

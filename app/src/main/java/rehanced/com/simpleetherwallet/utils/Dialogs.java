@@ -172,8 +172,8 @@ public class Dialogs {
         );
         amount.setText((tx.getAmount() > 0 ? "+ " : "- " )+Math.abs(tx.getAmount())+" Ξ");
         amount.setTextColor(c.getResources().getColor(tx.getAmount() > 0 ? R.color.etherReceived : R.color.etherSpent));
-        amountfiat.setText(
-                ExchangeCalculator.getInstance().convertToUsd(tx.getAmount())
+        amountfiat.setText(ExchangeCalculator.getInstance().displayUsdNicely(
+                ExchangeCalculator.getInstance().convertToUsd(tx.getAmount()))
                 + " "+ ExchangeCalculator.getInstance().getMainCurreny().getShorty());
     }
 
