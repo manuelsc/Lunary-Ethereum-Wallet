@@ -124,6 +124,7 @@ public class FragmentSend extends Fragment {
 
         if (getArguments().containsKey("AMOUNT")){
             curAmount = new BigDecimal(getArguments().getString("AMOUNT"));
+            amount.setText(getArguments().getString("AMOUNT"));
         }
 
         gas.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {

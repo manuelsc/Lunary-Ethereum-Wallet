@@ -17,10 +17,12 @@ import android.widget.Toast;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 import rehanced.com.simpleetherwallet.R;
+import rehanced.com.simpleetherwallet.utils.qr.AddressEncoder;
 
 
 public class QRScanActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
@@ -121,32 +123,25 @@ public class QRScanActivity extends AppCompatActivity implements ZXingScannerVie
     public void handleResult(Result result) {
         if(result == null) return;
         String address = result.getText();
-        String amount = "";
-        if(address.startsWith("iban:")){
-            String temp = address.substring(5);
-            if(temp.indexOf("?") > 0) {
-                if(temp.indexOf("amount=") > 0 && temp.indexOf("amount=") < temp.length()){
-                    amount = temp.substring(temp.indexOf("amount=")+7);
-                }
-                temp = temp.substring(0, temp.indexOf("?"));
+        try {
+            AddressEncoder scanned = AddressEncoder.decode(address);
+            Intent data = new Intent();
+            data.putExtra("ADDRESS", scanned.getAddress().toLowerCase());
+
+            if(address.length() > 42 && !address.startsWith("0x") && scanned.getAmount() == null)
+                type = PRIVATE_KEY;
+
+            if(scanned.getAmount() != null) {
+                data.putExtra("AMOUNT", scanned.getAmount());
+                type = REQUEST_PAYMENT;
             }
-            address = temp;
-        }
 
-        Intent data = new Intent();
-        data.putExtra("ADDRESS", address.toLowerCase());
-        if(address.length() > 42 && !address.startsWith("0x") && amount.length() <= 0){
-            type = PRIVATE_KEY;
+            data.putExtra("TYPE", type);
+            setResult(RESULT_OK, data);
+            finish();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        if(amount.length() > 0) {
-            data.putExtra("AMOUNT", amount);
-            type = REQUEST_PAYMENT;
-        }
-        data.putExtra("TYPE", type);
-
-        setResult(RESULT_OK, data);
-        finish();
     }
 
 }

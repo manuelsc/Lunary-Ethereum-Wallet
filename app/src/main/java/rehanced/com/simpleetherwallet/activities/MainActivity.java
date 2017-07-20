@@ -250,10 +250,18 @@ public class MainActivity extends SecureAppCompatActivity implements NetworkUpda
             if (resultCode == RESULT_OK) {
                 byte type = data.getByteExtra("TYPE", rehanced.com.simpleetherwallet.activities.QRScanActivity.SCAN_ONLY);
                 if (type == rehanced.com.simpleetherwallet.activities.QRScanActivity.SCAN_ONLY) {
+                    if(data.getStringExtra("ADDRESS").length() != 42 || ! data.getStringExtra("ADDRESS").startsWith("0x")) {
+                        snackError("Invalid Ethereum address!");
+                        return;
+                    }
                     Intent watch = new Intent(this, rehanced.com.simpleetherwallet.activities.AddressDetailActivity.class);
                     watch.putExtra("ADDRESS", data.getStringExtra("ADDRESS"));
                     startActivity(watch);
                 } else if (type == rehanced.com.simpleetherwallet.activities.QRScanActivity.ADD_TO_WALLETS) {
+                    if(data.getStringExtra("ADDRESS").length() != 42 || ! data.getStringExtra("ADDRESS").startsWith("0x")) {
+                        snackError("Invalid Ethereum address!");
+                        return;
+                    }
                     final boolean suc = WalletStorage.getInstance(this).add(new WatchWallet(data.getStringExtra("ADDRESS")), this);
                     new Handler().postDelayed(
                             new Runnable() {
