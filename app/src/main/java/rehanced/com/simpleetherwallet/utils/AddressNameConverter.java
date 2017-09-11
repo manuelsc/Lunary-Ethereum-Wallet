@@ -18,7 +18,8 @@ import rehanced.com.simpleetherwallet.data.WalletDisplay;
 
 public class AddressNameConverter {
 
-    private HashMap<String, String> mapdb;
+    private HashMap<String, String> addressbook;
+    private HashMap<String, String> wellknown_addresses;
     private static AddressNameConverter instance;
 
     public static AddressNameConverter getInstance(Context context){
@@ -34,28 +35,29 @@ public class AddressNameConverter {
                 put("0xa9981a33f6b1a18da5db58148b2357f22b44e1e0", "Lunary Development ✓", context);
             }
         } catch (Exception e) {
-            mapdb = new HashMap<String, String>();
+            addressbook = new HashMap<String, String>();
             put("0xa9981a33f6b1a18da5db58148b2357f22b44e1e0", "Lunary Development ✓", context);
         }
+        wellknown_addresses = new WellKnownAddresses();
     }
 
     public synchronized void put(String addresse, String name, Context context){
         if(name == null || name.length() == 0)
-            mapdb.remove(addresse);
+            addressbook.remove(addresse);
         else
-            mapdb.put(addresse, name.length() > 22 ? name.substring(0, 22) : name);
+            addressbook.put(addresse, name.length() > 22 ? name.substring(0, 22) : name);
         save(context);
     }
 
     public String get(String addresse){
-        return mapdb.get(addresse);
+        return addressbook.get(addresse);
     }
 
-    public boolean contains(String addresse){ return mapdb.containsKey(addresse); }
+    public boolean contains(String addresse){ return addressbook.containsKey(addresse); }
 
     public ArrayList<WalletDisplay> getAsAddressbook(){
         ArrayList<WalletDisplay> erg = new ArrayList<WalletDisplay>();
-        for(Map.Entry<String, String> entry : mapdb.entrySet()){
+        for(Map.Entry<String, String> entry : addressbook.entrySet()){
             erg.add(new WalletDisplay(entry.getValue().toString(), entry.getKey().toString()));
         }
         Collections.sort(erg);
@@ -67,7 +69,7 @@ public class AddressNameConverter {
         try {
             fout = new FileOutputStream(new File(context.getFilesDir(), "namedb.dat"));
             ObjectOutputStream oos = new ObjectOutputStream(fout);
-            oos.writeObject(mapdb);
+            oos.writeObject(addressbook);
             oos.close();
             fout.close();
         } catch (Exception e) {
@@ -78,7 +80,7 @@ public class AddressNameConverter {
     public synchronized void load(Context context) throws IOException, ClassNotFoundException{
         FileInputStream fout = new FileInputStream(new File(context.getFilesDir(), "namedb.dat"));
         ObjectInputStream oos = new ObjectInputStream(new BufferedInputStream(fout));
-        mapdb = (HashMap<String, String>) oos.readObject();
+        addressbook = (HashMap<String, String>) oos.readObject();
         oos.close();
         fout.close();
     }

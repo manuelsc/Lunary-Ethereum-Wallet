@@ -54,7 +54,6 @@ public class Dialogs {
         TextView capETH = (TextView) view.findViewById(R.id.cap2);
         TextView holders = (TextView) view.findViewById(R.id.holders);
         TextView digits = (TextView) view.findViewById(R.id.digits);
-        TextView created = (TextView) view.findViewById(R.id.timestamp);
 
         LinearLayout from = (LinearLayout) view.findViewById(R.id.from);
 
@@ -83,8 +82,6 @@ public class Dialogs {
         capUSD.setText(ex.displayUsdNicely(tok.getUsdprice()*tok.getTotalSupplyLong()) +" $");
         holders.setText(ex.displayUsdNicely(tok.getHolderCount())+"");
         digits.setText(tok.getDigits()+"");
-        SimpleDateFormat dateformat = new SimpleDateFormat("dd. MMMM yyyy", Locale.getDefault());
-        created.setText(dateformat.format(tok.getCreatedAt()*1000)+"");
     }
 
     public static void showTXDetails(final Activity c, final TransactionDisplay tx){

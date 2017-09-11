@@ -1,6 +1,7 @@
 package rehanced.com.simpleetherwallet.utils;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -86,6 +87,7 @@ public class ResponseParser {
     }
 
     public static ArrayList<TokenDisplay> parseTokens(Context c, String response, LastIconLoaded callback) throws Exception{
+        Log.d("tokentest", response);
         ArrayList<TokenDisplay> display = new ArrayList<TokenDisplay>();
         JSONArray data = new JSONObject(response).getJSONArray("tokens");
         for(int i=0; i < data.length(); i++){
@@ -100,9 +102,11 @@ public class ResponseParser {
                         currentToken.getJSONObject("tokenInfo").getString("address"),
                         currentToken.getJSONObject("tokenInfo").getString("totalSupply"),
                         currentToken.getJSONObject("tokenInfo").getLong("holdersCount"),
-                        currentToken.getJSONObject("tokenInfo").getLong("createdAt")
+                        0
                 ));
-            }catch(JSONException e){}
+            }catch(JSONException e){
+                e.printStackTrace();
+            }
 
             // Download icon and cache it
             EtherscanAPI.getInstance().loadTokenIcon(c, currentToken.getJSONObject("tokenInfo").getString("name"), i == data.length() -1, callback);
