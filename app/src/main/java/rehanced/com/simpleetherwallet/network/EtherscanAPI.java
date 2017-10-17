@@ -85,7 +85,7 @@ public class EtherscanAPI {
 
 
     public void getGasPrice(Callback b) throws IOException{
-        get("https://api.etherscan.io/api?module=proxy&action=eth_gasPrice&apikey="+token, b);
+        get("http://api.etherscan.io/api?module=proxy&action=eth_gasPrice&apikey="+token, b);
     }
 
 
@@ -103,7 +103,7 @@ public class EtherscanAPI {
                     .build()).protocol(Protocol.HTTP_1_0).body(ResponseBody.create(MediaType.parse("JSON"), RequestCache.getInstance().get(RequestCache.TYPE_TOKEN, address))).build());
             return;
         }
-        get("https://api.ethplorer.io/getAddressInfo/"+address+"?apiKey=freekey", b);
+        get("http://api.ethplorer.io/getAddressInfo/"+address+"?apiKey=freekey", b);
     }
 
 
@@ -121,7 +121,7 @@ public class EtherscanAPI {
         if(TokenIconCache.getInstance(c).contains(tokenName)) return;
 
         final String tokenNamef = tokenName;
-        get("https://etherscan.io//token/images/" + tokenNamef + ".PNG", new Callback() {
+        get("http://etherscan.io//token/images/" + tokenNamef + ".PNG", new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {}
 
@@ -141,7 +141,7 @@ public class EtherscanAPI {
 
 
     public void getGasLimitEstimate(String to, Callback b) throws IOException{
-        get("https://api.etherscan.io/api?module=proxy&action=eth_estimateGas&to="+to+"&value=0xff22&gasPrice=0x051da038cc&gas=0xffffff&apikey="+token, b);
+        get("http://api.etherscan.io/api?module=proxy&action=eth_estimateGas&to="+to+"&value=0xff22&gasPrice=0x051da038cc&gas=0xffffff&apikey="+token, b);
     }
 
 
@@ -161,7 +161,7 @@ public class EtherscanAPI {
 
 
     public void getBalances(ArrayList<StorableWallet> addresses, Callback b) throws IOException {
-        String url = "https://api.etherscan.io/api?module=account&action=balancemulti&address=";
+        String url = "http://api.etherscan.io/api?module=account&action=balancemulti&address=";
         for(StorableWallet address : addresses)
             url += address.getPubKey() + ",";
         url = url.substring(0, url.length()-1) + "&tag=latest&apikey="+token; // remove last , AND add token

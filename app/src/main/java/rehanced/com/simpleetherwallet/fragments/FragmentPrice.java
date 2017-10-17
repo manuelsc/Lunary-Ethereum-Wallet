@@ -68,7 +68,7 @@ public class FragmentPrice extends Fragment {
     private static final int [] PERIOD = new int[]{
             300,
             1800,
-            7200,
+            14400,
             86400
     };
 
@@ -135,9 +135,7 @@ public class FragmentPrice extends Fragment {
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
                 updateExchangeRates();
-                general();
             }
         });
 

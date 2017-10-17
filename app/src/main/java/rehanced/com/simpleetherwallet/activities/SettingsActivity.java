@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import rehanced.com.simpleetherwallet.R;
+import rehanced.com.simpleetherwallet.interfaces.AdDialogResponseHandler;
+import rehanced.com.simpleetherwallet.utils.Dialogs;
 import rehanced.com.simpleetherwallet.utils.Settings;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -68,6 +70,25 @@ public class SettingsActivity extends AppCompatActivity {
                     return true;
                 }
             });
+            if(((AnalyticsApplication)getActivity().getApplication()).isGooglePlayBuild()){
+                final SwitchPreference adSwitch = (SwitchPreference) findPreference("showAd");
+                adSwitch.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                    @Override
+                    public boolean onPreferenceChange(Preference preference, Object o) {
+                        if(adSwitch.isChecked()){
+                            Dialogs.adDisable(getActivity(), new AdDialogResponseHandler() {
+                                @Override
+                                public void continueSettingChange(boolean mContinue) {
+                                    if(mContinue)
+                                        adSwitch.setChecked(false);
+                                }
+                            });
+                            return false;
+                        } else
+                            return true;
+                    }
+                });
+            }
         }
     }
 

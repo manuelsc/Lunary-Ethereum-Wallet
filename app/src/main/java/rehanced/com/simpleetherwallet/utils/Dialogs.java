@@ -31,10 +31,12 @@ import me.grantland.widget.AutofitTextView;
 import rehanced.com.simpleetherwallet.R;
 import rehanced.com.simpleetherwallet.activities.AddressDetailActivity;
 import rehanced.com.simpleetherwallet.activities.MainActivity;
+import rehanced.com.simpleetherwallet.activities.WalletGenActivity;
 import rehanced.com.simpleetherwallet.data.TokenDisplay;
 import rehanced.com.simpleetherwallet.data.TransactionDisplay;
 import rehanced.com.simpleetherwallet.data.WatchWallet;
 import rehanced.com.simpleetherwallet.fragments.FragmentWallets;
+import rehanced.com.simpleetherwallet.interfaces.AdDialogResponseHandler;
 
 public class Dialogs {
 
@@ -265,6 +267,30 @@ public class Dialogs {
 
     }
 
+    public static void writeDownPassword(final WalletGenActivity c){
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= 24) // Otherwise buttons on 7.0+ are nearly invisible
+            builder = new AlertDialog.Builder(c, R.style.AlertDialogTheme);
+        else
+            builder = new AlertDialog.Builder(c);
+        builder.setTitle(R.string.dialog_write_down_pw_title);
+        builder.setMessage(c.getString(R.string.dialog_write_down_pw_text));
+        builder.setPositiveButton(R.string.action_sign_in, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                c.gen();
+                dialog.cancel();
+            }
+        });
+        builder.setNegativeButton(R.string.dialog_back_button, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
+    }
+
     public static void importWallets(final MainActivity c, final ArrayList<File> files){
         String addresses = "";
         for(int i=0; i < files.size() && i < 3; i++)
@@ -296,6 +322,31 @@ public class Dialogs {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
+    public static void adDisable(Context c, final AdDialogResponseHandler res){
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= 24) // Otherwise buttons on 7.0+ are nearly invisible
+            builder = new AlertDialog.Builder(c, R.style.AlertDialogTheme);
+        else
+            builder = new AlertDialog.Builder(c);
+        builder.setTitle(R.string.dialog_disable_ad_title);
+        builder.setMessage(R.string.dialog_disable_ad_text);
+        builder.setCancelable(false);
+        builder.setPositiveButton(R.string.fragment_recipient_continue, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                res.continueSettingChange(true);
+            }
+        });
+        builder.setNegativeButton(R.string.dialog_back_button, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                res.continueSettingChange(false);
             }
         });
 

@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import rehanced.com.simpleetherwallet.R;
+import rehanced.com.simpleetherwallet.utils.Dialogs;
 import rehanced.com.simpleetherwallet.utils.Settings;
 
 public class WalletGenActivity extends SecureAppCompatActivity {
@@ -40,7 +41,7 @@ public class WalletGenActivity extends SecureAppCompatActivity {
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                gen();
+                genCheck();
             }
         });
 
@@ -56,7 +57,7 @@ public class WalletGenActivity extends SecureAppCompatActivity {
         }
     }
 
-    private void gen() {
+    private void genCheck() {
         if(! passwordConfirm.getText().toString().equals(password.getText().toString())){
             snackError(getResources().getString(R.string.error_incorrect_password));
             return;
@@ -65,6 +66,10 @@ public class WalletGenActivity extends SecureAppCompatActivity {
             snackError(getResources().getString(R.string.error_invalid_password));
             return;
         }
+        Dialogs.writeDownPassword(this);
+    }
+
+    public void gen(){
         Settings.walletBeingGenerated = true; // Lock so a user can only generate one wallet at a time
 
         // For statistics only
