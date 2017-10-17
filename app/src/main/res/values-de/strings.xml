@@ -238,6 +238,17 @@
     <string name="setting_cat_advanced">Fortgeschritten</string>
     <string name="password_in_clear_text">Passwort in Klartext anzeigen</string>
 
+    <string name="dialog_write_down_pw_title">Wichtig!</string>
+    <string name="dialog_write_down_pw_text">Lunary verschlüsselt dein Konto mit dem angegebenen Passwort um deine Ether sicher aufbewahren zu können.
+        Dieses passwort ist der einzige Weg um dein Konto zu entsperren und dein Ether überweisen zu können, vergiss es daher auf keinen Fall! Wir empfehlen das Passwort auf ein Stück Papier niederzuschreiben und sicher aufzubewahren.</string>
+    <string name="dialog_back_button">Abbrechen</string>
+    <string name="setting_show_ad">Werbung</string>
+
+    <string name="dialog_disable_ad_title">:(</string>
+    <string name="dialog_disable_ad_text">Wir sind auf Spenden und Werbeeinahmen zutiefst angewiesen um Lunary weiter verbessern zu können. Wenn dich die Werbung wirklich sehr stört können wir das verstehen und lassen sie dich auch deaktivieren. Aber wenn es nicht zuviel gefragt ist würden wir dich bitten nochmal darüber nachzudenken um Lunary auch in Zukunft noch besser machen zu können.
+        Dieser kleine Banner hilft uns wirklich sehr, genauso wie jede Spende. Bitte lass den Banner aktiviert oder ziehe zumindest eine kleine Spende in betracht. Im Falle einer Änderung dieser Einstellung musst du die App neu starten damit diese Effekt zeigt. Fortfahren?</string>
+
+
     <string name="tos"><![CDATA[
 <p><h2>Terms and Conditions ("Terms")</h2></p>
 
