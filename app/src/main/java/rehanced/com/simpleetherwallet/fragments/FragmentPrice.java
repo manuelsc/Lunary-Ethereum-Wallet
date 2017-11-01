@@ -56,16 +56,16 @@ public class FragmentPrice extends Fragment {
     private LinearLayout colorPadding;
     private LinearLayout priceSwitch;
 
-    private static final int [] TIMESTAMPS = new int[]{
+    private static final int[] TIMESTAMPS = new int[]{
             86400, // 24 hours
             604800, // Week
             2678400, // Month
             31536000 // Year
     };
 
-    private static String [] TITLE_TEXTS;
+    private static String[] TITLE_TEXTS;
 
-    private static final int [] PERIOD = new int[]{
+    private static final int[] PERIOD = new int[]{
             300,
             1800,
             14400,
@@ -79,7 +79,7 @@ public class FragmentPrice extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_price, container, false);
 
-        ac =(MainActivity) getActivity();
+        ac = (MainActivity) getActivity();
         TITLE_TEXTS = new String[]{
                 getString(R.string.last_24_hours),
                 getString(R.string.last_7_days),
@@ -101,7 +101,7 @@ public class FragmentPrice extends Fragment {
                 update();
                 general();
 
-                if(ac != null && ac.getPreferences() != null){
+                if (ac != null && ac.getPreferences() != null) {
                     SharedPreferences.Editor editor = ac.getPreferences().edit();
                     editor.putBoolean("price_displayInUsd", displayInUsd);
                     editor.apply();
@@ -109,10 +109,10 @@ public class FragmentPrice extends Fragment {
             }
         });
 
-        if(ac != null && ac.getPreferences() != null)
+        if (ac != null && ac.getPreferences() != null)
             displayInUsd = ac.getPreferences().getBoolean("price_displayInUsd", true);
 
-        if(ac != null && ac.getPreferences() != null)
+        if (ac != null && ac.getPreferences() != null)
             displayType = ac.getPreferences().getInt("displaytype_chart", 1);
 
         left.setOnClickListener(new View.OnClickListener() {
@@ -139,32 +139,32 @@ public class FragmentPrice extends Fragment {
             }
         });
 
-        if(((AnalyticsApplication) ac.getApplication()).isGooglePlayBuild()) {
+        if (((AnalyticsApplication) ac.getApplication()).isGooglePlayBuild()) {
             ((AnalyticsApplication) ac.getApplication()).track("Price Fragment");
         }
 
+        swipeLayout.setRefreshing(true);
         general();
         update();
         priceChart.setVisibility(View.INVISIBLE);
-        swipeLayout.setRefreshing(true);
         return rootView;
     }
 
-    private void next(){
+    private void next() {
         displayType = (displayType + 1) % PERIOD.length;
         general();
     }
 
-    private void previous(){
-        displayType = displayType > 0 ? displayType - 1 : PERIOD.length-1;
+    private void previous() {
+        displayType = displayType > 0 ? displayType - 1 : PERIOD.length - 1;
         general();
     }
 
-    private void general(){
+    private void general() {
         priceChart.setVisibility(View.INVISIBLE);
         chartTitle.setText(TITLE_TEXTS[displayType]);
         colorPadding.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLittleDarker));
-        if(ac != null && ac.getPreferences() != null){
+        if (ac != null && ac.getPreferences() != null) {
             SharedPreferences.Editor editor = ac.getPreferences().edit();
             editor.putInt("displaytype_chart", displayType);
             editor.apply();
@@ -180,7 +180,7 @@ public class FragmentPrice extends Fragment {
 
     private void loadPriceData(final long time, int period) throws IOException {
 
-        EtherscanAPI.getInstance().getPriceChart((System.currentTimeMillis()/1000)-time, period, displayInUsd, new Callback() { // 1467321600,
+        EtherscanAPI.getInstance().getPriceChart((System.currentTimeMillis() / 1000) - time, period, displayInUsd, new Callback() { // 1467321600,
             @Override
             public void onFailure(Call call, IOException e) {
                 ac.runOnUiThread(new Runnable() {
@@ -201,7 +201,7 @@ public class FragmentPrice extends Fragment {
                     float commas = displayInUsd ? 100 : 10000;
                     for (int i = 0; i < data.length(); i++) {
                         JSONObject o = data.getJSONObject(i);
-                        yVals.add(new Entry(o.getLong("date"), (float) Math.floor(o.getDouble("high")*exchangeRate * commas) / commas));
+                        yVals.add(new Entry(o.getLong("date"), (float) Math.floor(o.getDouble("high") * exchangeRate * commas) / commas));
                     }
 
                     ac.runOnUiThread(new Runnable() {
@@ -209,7 +209,7 @@ public class FragmentPrice extends Fragment {
                         public void run() {
                             priceChart.setVisibility(View.VISIBLE);
                             onItemsLoadComplete();
-                            if(isAdded()) {
+                            if (isAdded()) {
                                 setupChart(priceChart, getData(yVals), getResources().getColor(R.color.colorPrimaryLittleDarker));
                                 update();
                             }
@@ -263,11 +263,11 @@ public class FragmentPrice extends Fragment {
 
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM_INSIDE);
 
-        xAxis.setTextColor(Color.argb(150, 255,255,255));
+        xAxis.setTextColor(Color.argb(150, 255, 255, 255));
 
-        if(displayType == 1 || displayType == 2) // Week and Month
+        if (displayType == 1 || displayType == 2) // Week and Month
             xAxis.setValueFormatter(new WeekXFormatter());
-        else if(displayType == 0) //  Day
+        else if (displayType == 0) //  Day
             xAxis.setValueFormatter(new HourXFormatter());
         else
             xAxis.setValueFormatter(new YearXFormatter()); // Year
@@ -277,7 +277,7 @@ public class FragmentPrice extends Fragment {
         leftAxis.removeAllLimitLines();
         leftAxis.setTypeface(tf);
         leftAxis.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART);
-        leftAxis.setTextColor(Color.argb(150, 255,255,255));
+        leftAxis.setTextColor(Color.argb(150, 255, 255, 255));
         leftAxis.setValueFormatter(new DontShowNegativeFormatter(displayInUsd));
         chart.getAxisRight().setEnabled(false); // Deactivates horizontal lines
 
@@ -288,7 +288,7 @@ public class FragmentPrice extends Fragment {
     private LineData getData(ArrayList<Entry> yVals) {
         LineDataSet set1 = new LineDataSet(yVals, "");
         set1.setLineWidth(1.45f);
-        set1.setColor(Color.argb(240, 255,255,255));
+        set1.setColor(Color.argb(240, 255, 255, 255));
         set1.setCircleColor(Color.WHITE);
         set1.setHighLightColor(Color.WHITE);
         set1.setFillColor(getResources().getColor(R.color.chartFilled));
@@ -306,7 +306,7 @@ public class FragmentPrice extends Fragment {
         return data;
     }
 
-    public void updateExchangeRates(){
+    public void updateExchangeRates() {
         try {
             ExchangeCalculator.getInstance().updateExchangeRates(ac != null ? ac.getPreferences().getString("maincurrency", "USD") : "USD", ac);
             update();
@@ -316,19 +316,19 @@ public class FragmentPrice extends Fragment {
         }
     }
 
-    public void update(){
-        if(price != null)
+    public void update() {
+        if (price != null)
             price.setText(displayInUsd ?
-                    ExchangeCalculator.getInstance().displayUsdNicely(ExchangeCalculator.getInstance().getUSDPrice())+" "+ExchangeCalculator.getInstance().getMainCurreny().getName() :
-                    ExchangeCalculator.getInstance().displayEthNicely(ExchangeCalculator.getInstance().getBTCPrice())+" BTC"
+                    ExchangeCalculator.getInstance().displayUsdNicely(ExchangeCalculator.getInstance().getUSDPrice()) + " " + ExchangeCalculator.getInstance().getMainCurreny().getName() :
+                    ExchangeCalculator.getInstance().displayEthNicely(ExchangeCalculator.getInstance().getBTCPrice()) + " BTC"
             );
         onItemsLoadComplete();
     }
 
     void onItemsLoadComplete() {
-        if(swipeLayout == null) return;
+        if (swipeLayout == null) return;
         swipeLayout.setRefreshing(false);
-        if(colorPadding == null) return;
+        if (colorPadding == null) return;
         colorPadding.setBackgroundColor(0xF05a7899);
     }
 }

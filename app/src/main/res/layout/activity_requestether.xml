@@ -45,97 +45,97 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_height="match_parent">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-
-    <ImageView
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_marginTop="15dp"
-        android:layout_gravity="center"
-        android:id="@+id/qrcode"/>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="10dp">
-
-        <TextView
-            android:text="@string/request_activity_ether"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp" />
+            android:orientation="vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="#7aa1a1a1"/>
-
-        <EditText
-            android:id="@+id/amount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Ether Amount"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:inputType="numberDecimal"
-            android:maxLines="1" />
-
-        <TextView
-            android:id="@+id/usdPrice"
-            android:text="0.00 USD"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:textSize="13sp"
-            android:gravity="left"
-            android:layout_marginLeft="14dp"
-            android:layout_marginRight="14dp" />
-
-    </LinearLayout>
-
-    <TextView
-        android:text="@string/request_activity_to"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="5dp"
-        android:background="#7aa1a1a1"/>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:layout_marginTop="15dp"
+                android:layout_gravity="center"
+                android:id="@+id/qrcode" />
 
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:showIn="@layout/activity_main"
-            android:scrollbars="vertical" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp">
 
-    </RelativeLayout>
+                <TextView
+                    android:text="@string/request_activity_ether"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp" />
 
-</LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="#7aa1a1a1" />
 
-</ScrollView>
-    </android.support.design.widget.CoordinatorLayout>
+                <EditText
+                    android:id="@+id/amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Ether Amount"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:inputType="numberDecimal"
+                    android:maxLines="1" />
+
+                <TextView
+                    android:id="@+id/usdPrice"
+                    android:text="0.00 USD"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:textSize="13sp"
+                    android:gravity="left"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginRight="14dp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:text="@string/request_activity_to"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="#7aa1a1a1" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:showIn="@layout/activity_main"
+                    android:scrollbars="vertical" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+</android.support.design.widget.CoordinatorLayout>
 
 
 

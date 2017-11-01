@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-public class TokenDisplay implements Comparable{
+public class TokenDisplay implements Comparable {
 
     private String name;
     private String shorty;
@@ -59,17 +59,19 @@ public class TokenDisplay implements Comparable{
 
     /**
      * Uses digits and balance to create a double value
+     *
      * @return Token balance in double
      */
-    public double getBalanceDouble(){
+    public double getBalanceDouble() {
         return balance.divide((new BigDecimal("10").pow(digits))).doubleValue();
     }
 
     /**
      * Uses digits and total supply to create a long value
+     *
      * @return Token supply in long
      */
-    public long getTotalSupplyLong(){
+    public long getTotalSupplyLong() {
         return new BigInteger(totalSupply).divide((new BigInteger("10").pow(digits))).longValue();
     }
 
@@ -119,7 +121,7 @@ public class TokenDisplay implements Comparable{
 
     @Override
     public int compareTo(@NonNull Object o) {
-        return ((TokenDisplay)o).getShorty().compareTo(shorty);
+        return ((TokenDisplay) o).getShorty().compareTo(shorty);
     }
 
     @Override

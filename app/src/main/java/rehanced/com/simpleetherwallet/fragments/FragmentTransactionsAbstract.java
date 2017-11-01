@@ -45,7 +45,7 @@ import rehanced.com.simpleetherwallet.utils.TransactionAdapter;
 import rehanced.com.simpleetherwallet.utils.WalletStorage;
 
 
-public abstract class FragmentTransactionsAbstract extends Fragment implements View.OnClickListener, View.OnCreateContextMenuListener{
+public abstract class FragmentTransactionsAbstract extends Fragment implements View.OnClickListener, View.OnCreateContextMenuListener {
 
     protected RecyclerView recyclerView;
     protected TransactionAdapter walletAdapter;
@@ -65,7 +65,7 @@ public abstract class FragmentTransactionsAbstract extends Fragment implements V
         View rootView = inflater.inflate(R.layout.fragment_transaction, container, false);
 
         ac = this.getActivity();
-        if(getArguments() != null) {
+        if (getArguments() != null) {
             address = getArguments().getString("ADDRESS");
             ((TextView) rootView.findViewById(R.id.infoText)).setText(R.string.trans_no_trans_found);
         }
@@ -73,7 +73,7 @@ public abstract class FragmentTransactionsAbstract extends Fragment implements V
         nothingToShow = (FrameLayout) rootView.findViewById(R.id.nothing_found);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         walletAdapter = new TransactionAdapter(wallets, ac, this, this);
-        LinearLayoutManager mgr  = new LinearLayoutManager(ac.getApplicationContext());
+        LinearLayoutManager mgr = new LinearLayoutManager(ac.getApplicationContext());
         RecyclerView.LayoutManager mLayoutManager = mgr;
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -94,10 +94,10 @@ public abstract class FragmentTransactionsAbstract extends Fragment implements V
         requestTx = (FloatingActionButton) rootView.findViewById(R.id.requestTx);
         fabmenu = (FloatingActionMenu) rootView.findViewById(R.id.fabmenu);
 
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
-                if(address != null) return;
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (address != null) return;
                 if (dy > 0)
                     fabmenu.hideMenu(true);
                 else if (dy < 0)
@@ -122,25 +122,25 @@ public abstract class FragmentTransactionsAbstract extends Fragment implements V
         update(false);
         walletAdapter.notifyDataSetChanged();
 
-        if(((AnalyticsApplication) ac.getApplication()).isGooglePlayBuild()) {
+        if (((AnalyticsApplication) ac.getApplication()).isGooglePlayBuild()) {
             ((AnalyticsApplication) ac.getApplication()).track("Transaction Fragment");
         }
         return rootView;
     }
 
-    private void openSendActivity(){
-        if(WalletStorage.getInstance(ac).getFullOnly().size() == 0){
+    private void openSendActivity() {
+        if (WalletStorage.getInstance(ac).getFullOnly().size() == 0) {
             Dialogs.noFullWallet(ac);
         } else {
             Intent newTrans = new Intent(ac, SendActivity.class);
-            if(address != null)
+            if (address != null)
                 newTrans.putExtra("FROM_ADDRESS", address);
             ac.startActivityForResult(newTrans, SendActivity.REQUEST_CODE);
         }
     }
 
-    private void openRequestActivity(){
-        if(WalletStorage.getInstance(ac).get().size() == 0){
+    private void openRequestActivity() {
+        if (WalletStorage.getInstance(ac).get().size() == 0) {
             Dialogs.noWallet(ac);
         } else {
             Intent newTrans = new Intent(ac, RequestEtherActivity.class);
@@ -149,34 +149,34 @@ public abstract class FragmentTransactionsAbstract extends Fragment implements V
     }
 
     public void notifyDataSetChanged() {
-        if(walletAdapter != null)
+        if (walletAdapter != null)
             walletAdapter.notifyDataSetChanged();
     }
 
     public abstract void update(boolean force);
 
-    public synchronized void addRequestCount(){
+    public synchronized void addRequestCount() {
         requestCount++;
     }
 
-    public synchronized int getRequestCount(){
+    public synchronized int getRequestCount() {
         return requestCount;
     }
 
-    public synchronized void resetRequestCount(){
+    public synchronized void resetRequestCount() {
         requestCount = 0;
     }
 
     void onItemsLoadComplete() {
-        if(swipeLayout == null) return;
+        if (swipeLayout == null) return;
         swipeLayout.setRefreshing(false);
     }
 
-    public synchronized List<TransactionDisplay> getWallets(){
+    public synchronized List<TransactionDisplay> getWallets() {
         return wallets;
     }
 
-    public synchronized void addToWallets(List<TransactionDisplay> w){
+    public synchronized void addToWallets(List<TransactionDisplay> w) {
         wallets.addAll(w);
         Collections.sort(getWallets(), new Comparator<TransactionDisplay>() {
             @Override
@@ -204,28 +204,30 @@ public abstract class FragmentTransactionsAbstract extends Fragment implements V
             return super.onContextItemSelected(item);
         }
         //Log.d("wubalabadubdub","Wuuu: "+item.getItemId());
-       switch (item.getItemId()) {
+        switch (item.getItemId()) {
             case 100: { // Change Address Name
                 setName(wallets.get(position).getToAddress());
                 break;
-            } case 101: { // Open in AddressDetailActivity
-               Intent i = new Intent(ac, AddressDetailActivity.class);
-               i.putExtra("ADDRESS", wallets.get(position).getToAddress());
-               startActivity(i);
-               break;
-           } case 102: { // Open in Browser
-               String url = "https://etherscan.io/tx/" + wallets.get(position).getTxHash();
-               Intent i = new Intent(Intent.ACTION_VIEW);
-               i.setData(Uri.parse(url));
-               startActivity(i);
-               break;
-           }
+            }
+            case 101: { // Open in AddressDetailActivity
+                Intent i = new Intent(ac, AddressDetailActivity.class);
+                i.putExtra("ADDRESS", wallets.get(position).getToAddress());
+                startActivity(i);
+                break;
+            }
+            case 102: { // Open in Browser
+                String url = "https://etherscan.io/tx/" + wallets.get(position).getTxHash();
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+                break;
+            }
         }
         return super.onContextItemSelected(item);
     }
 
 
-    public void setName(final String address){
+    public void setName(final String address) {
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= 24) // Otherwise buttons on 7.0+ are nearly invisible
             builder = new AlertDialog.Builder(ac, R.style.AlertDialogTheme);
@@ -238,7 +240,7 @@ public abstract class FragmentTransactionsAbstract extends Fragment implements V
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         input.setSingleLine();
         FrameLayout container = new FrameLayout(ac);
-        FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
         params.topMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
         params.bottomMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
@@ -249,11 +251,11 @@ public abstract class FragmentTransactionsAbstract extends Fragment implements V
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         container.addView(input);
         builder.setView(container);
-        input.setOnFocusChangeListener(new View.OnFocusChangeListener()  {
+        input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus) {
-                    InputMethodManager inputMgr = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    inputMgr.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY);
+                if (hasFocus) {
+                    InputMethodManager inputMgr = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMgr.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
                 }
             }
         });
@@ -261,7 +263,7 @@ public abstract class FragmentTransactionsAbstract extends Fragment implements V
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 AddressNameConverter.getInstance(ac).put(address, input.getText().toString(), ac);
-                InputMethodManager inputMgr = (InputMethodManager)input.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager inputMgr = (InputMethodManager) input.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputMgr.hideSoftInputFromWindow(input.getWindowToken(), 0);
                 notifyDataSetChanged();
                 dialog.dismiss();
@@ -277,15 +279,15 @@ public abstract class FragmentTransactionsAbstract extends Fragment implements V
         builder.show();
     }
 
-    public synchronized void setWallets(List<TransactionDisplay> wal){
+    public synchronized void setWallets(List<TransactionDisplay> wal) {
         wallets = wal;
     }
 
     @Override
     public void onClick(View view) {
-        if(ac == null) return;
+        if (ac == null) return;
         int itemPosition = recyclerView.getChildLayoutPosition(view);
-        if(itemPosition >= wallets.size()) return;
+        if (itemPosition >= wallets.size()) return;
         Dialogs.showTXDetails(ac, wallets.get(itemPosition));
     }
 }

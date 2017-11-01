@@ -1,44 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
     android:background="@drawable/ripple"
     android:clickable="true"
-        android:id="@+id/container">
+    android:id="@+id/container">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:paddingBottom="3dp"
-            android:paddingTop="2dp"
-            android:id="@+id/mainpanel">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:paddingBottom="3dp"
+        android:paddingTop="2dp"
+        android:id="@+id/mainpanel">
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="60dp"
             android:gravity="center"
             android:layout_height="match_parent">
+
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:gravity="center"
                 android:layout_height="match_parent">
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginRight="3dp"
-                android:id="@+id/addressimage" />
 
-                </LinearLayout>
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginRight="3dp"
+                    android:id="@+id/addressimage" />
+
+            </LinearLayout>
 
         </LinearLayout>
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -56,23 +57,24 @@
                     android:layout_weight="2"
                     android:layout_gravity="bottom"
                     android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:id="@+id/walletname"
-                    android:singleLine="true"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:text=""/> <!--android:textColor="@color/colorPrimaryDark" -->
 
-                <ImageView
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="2dp"
-                    android:id="@+id/type"
-                    android:src="@drawable/ic_watchonly"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:id="@+id/walletname"
+                        android:singleLine="true"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:text="" /> <!--android:textColor="@color/colorPrimaryDark" -->
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="2dp"
+                        android:id="@+id/type"
+                        android:src="@drawable/ic_watchonly" />
                 </LinearLayout>
 
                 <TextView
@@ -85,7 +87,7 @@
                     android:textColor="@color/colorPrimary"
                     android:singleLine="true"
                     android:layout_weight="1.3"
-                    android:text=""/> <!--@color/colorPrimary -->
+                    android:text="" /> <!--@color/colorPrimary -->
 
             </LinearLayout>
 
@@ -102,10 +104,10 @@
                     android:textSize="11sp"
                     android:layout_gravity="center"
                     android:id="@+id/walletaddress"
-                    android:text=""/>
+                    android:text="" />
 
             </LinearLayout>
-            </LinearLayout>
         </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

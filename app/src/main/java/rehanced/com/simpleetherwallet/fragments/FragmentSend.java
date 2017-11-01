@@ -52,9 +52,11 @@ import rehanced.com.simpleetherwallet.utils.ResponseParser;
 import rehanced.com.simpleetherwallet.utils.WalletStorage;
 
 import static android.app.Activity.RESULT_OK;
+import static rehanced.com.simpleetherwallet.R.id.seekBar;
 
 public class FragmentSend extends Fragment {
 
+    private final int DEFAULT_GAS_PRICE = 12;
 
     private SendActivity ac;
     private Button send;
@@ -84,7 +86,7 @@ public class FragmentSend extends Fragment {
 
         send = (Button) rootView.findViewById(R.id.send);
         amount = (EditText) rootView.findViewById(R.id.amount);
-        gas = (SeekBar) rootView.findViewById(R.id.seekBar);
+        gas = (SeekBar) rootView.findViewById(seekBar);
         toAddress = (TextView) rootView.findViewById(R.id.toAddress);
         toName = (TextView) rootView.findViewById(R.id.toName);
         fromName = (TextView) rootView.findViewById(R.id.fromName);
@@ -112,7 +114,7 @@ public class FragmentSend extends Fragment {
         ((LinearLayout) rootView.findViewById(R.id.expertmodetrigger)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(expertMode.getVisibility()==View.GONE) {
+                if (expertMode.getVisibility() == View.GONE) {
                     CollapseAnimator.expand(expertMode);
                 } else {
                     CollapseAnimator.collapse(expertMode);
@@ -120,11 +122,11 @@ public class FragmentSend extends Fragment {
             }
         });
 
-        if (getArguments().containsKey("TO_ADDRESS")){
+        if (getArguments().containsKey("TO_ADDRESS")) {
             setToAddress(getArguments().getString("TO_ADDRESS"), ac);
         }
 
-        if (getArguments().containsKey("AMOUNT")){
+        if (getArguments().containsKey("AMOUNT")) {
             curAmount = new BigDecimal(getArguments().getString("AMOUNT"));
             amount.setText(getArguments().getString("AMOUNT"));
         }
@@ -132,21 +134,27 @@ public class FragmentSend extends Fragment {
         gas.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                gasText.setText(i+1+"");
-                curTxCost = (new BigDecimal(gaslimit).multiply(new BigDecimal((i+1)+""))).divide(new BigDecimal("1000000000"), 6, BigDecimal.ROUND_DOWN);
+                double realGas = (i - 8);
+                if (i < 10)
+                    realGas = (double) (i + 1) / 10d;
 
+                gasText.setText((realGas + "").replaceAll(".0", ""));
+                curTxCost = (new BigDecimal(gaslimit).multiply(new BigDecimal(realGas + ""))).divide(new BigDecimal("1000000000"), 6, BigDecimal.ROUND_DOWN);
                 updateDisplays();
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
         });
+        gas.setProgress(DEFAULT_GAS_PRICE);
 
         spinner = (Spinner) rootView.findViewById(R.id.spinner);
-        final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(ac, R.layout.address_spinner, WalletStorage.getInstance(ac).getFullOnly()){
+        final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(ac, R.layout.address_spinner, WalletStorage.getInstance(ac).getFullOnly()) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
@@ -160,52 +168,22 @@ public class FragmentSend extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                try {
-                    EtherscanAPI.getInstance().getBalance(spinner.getSelectedItem().toString(), new Callback() {
-                        @Override
-                        public void onFailure(Call call, IOException e) {
-                            ac.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    ac.snackError("Cant fetch your account balance", Snackbar.LENGTH_LONG);
-                                }
-                            });
-
-                        }
-
-                        @Override
-                        public void onResponse(Call call, final Response response) throws IOException {
-                            ac.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    try {
-                                        curAvailable = new BigDecimal(ResponseParser.parseBalance(response.body().string(), 6));
-                                        updateDisplays();
-                                    } catch (Exception e) {
-                                        ac.snackError("Cant fetch your account balance");
-                                        e.printStackTrace();
-                                    }
-                                }
-                            });
-                        }
-                    });
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                fromicon.setImageBitmap(Blockies.createIcon(spinner.getSelectedItem().toString().toLowerCase()));
-                fromName.setText(AddressNameConverter.getInstance(ac).get(spinner.getSelectedItem().toString().toLowerCase()));
+                updateAccountBalance();
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
         });
 
         amount.addTextChangedListener(new TextWatcher() {
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
+
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -231,55 +209,93 @@ public class FragmentSend extends Fragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
         });
 
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if((amount.getText().length() <= 0 || new BigDecimal(amount.getText().toString()).compareTo(new BigDecimal("0")) <= 0) && data.getText().length() <= 0) {
+                if ((amount.getText().length() <= 0 || new BigDecimal(amount.getText().toString()).compareTo(new BigDecimal("0")) <= 0) && data.getText().length() <= 0) {
                     ac.snackError(getString(R.string.err_send_noamount));
                     return;
                 }
-                if(toAddress == null || toAddress.getText().length() == 0){
+                if (toAddress == null || toAddress.getText().length() == 0) {
                     ac.snackError(getString(R.string.err_send_noreceiver));
                     return;
                 }
-                if(spinner == null || spinner.getSelectedItem() == null) return;
+                if (spinner == null || spinner.getSelectedItem() == null) return;
                 try {
-                    if(BuildConfig.DEBUG)
-                        Log.d("etherbalance", (getCurTotalCost().compareTo(curAvailable) < 0)+" | "+getCurTotalCost()+" | "+curAvailable+ " | "+data.getText()+" | "+curAmount);
-                    if (getCurTotalCost().compareTo(curAvailable) < 0 || BuildConfig.DEBUG || data.getText().length() > 0){
+                    if (BuildConfig.DEBUG)
+                        Log.d("etherbalance", (getCurTotalCost().compareTo(curAvailable) < 0) + " | " + getCurTotalCost() + " | " + curAvailable + " | " + data.getText() + " | " + curAmount);
+                    if (getCurTotalCost().compareTo(curAvailable) < 0 || BuildConfig.DEBUG || data.getText().length() > 0) {
                         askForPasswordAndDecode(spinner.getSelectedItem().toString());
                     } else {
                         ac.snackError(getString(R.string.err_send_not_enough_ether));
                     }
-                } catch(Exception e){
+                } catch (Exception e) {
                     ac.snackError(getString(R.string.err_send_invalidamount));
                 }
 
             }
         });
 
-        if (getArguments().containsKey("FROM_ADDRESS")){
+        if (getArguments().containsKey("FROM_ADDRESS")) {
             setFromAddress(getArguments().getString("FROM_ADDRESS"));
-        } else {
-            spinner.setSelection(0);
         }
 
+        updateAccountBalance();
         updateDisplays();
 
-        if(((AnalyticsApplication) ac.getApplication()).isGooglePlayBuild()) {
+        if (((AnalyticsApplication) ac.getApplication()).isGooglePlayBuild()) {
             ((AnalyticsApplication) ac.getApplication()).track("Send Fragment");
         }
 
         return rootView;
     }
 
-    private void setFromAddress(String from){
+    private void updateAccountBalance() {
+        try {
+            EtherscanAPI.getInstance().getBalance(spinner.getSelectedItem().toString(), new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    ac.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ac.snackError("Cant fetch your account balance", Snackbar.LENGTH_LONG);
+                        }
+                    });
+
+                }
+
+                @Override
+                public void onResponse(Call call, final Response response) throws IOException {
+                    ac.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                curAvailable = new BigDecimal(ResponseParser.parseBalance(response.body().string(), 6));
+                                updateDisplays();
+                            } catch (Exception e) {
+                                ac.snackError("Cant fetch your account balance");
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        fromicon.setImageBitmap(Blockies.createIcon(spinner.getSelectedItem().toString().toLowerCase()));
+        fromName.setText(AddressNameConverter.getInstance(ac).get(spinner.getSelectedItem().toString().toLowerCase()));
+    }
+
+    private void setFromAddress(String from) {
         ArrayList<String> fullwallets = WalletStorage.getInstance(ac).getFullOnly();
-        for(int i=0; i < fullwallets.size(); i++){
-            if(fullwallets.get(i).equalsIgnoreCase(from)) {
+        for (int i = 0; i < fullwallets.size(); i++) {
+            if (fullwallets.get(i).equalsIgnoreCase(from)) {
                 spinner.setSelection(i);
             }
         }
@@ -349,11 +365,12 @@ public class FragmentSend extends Fragment {
         totalCostFiatSymbol.setText(exchange.getCurrent().getShorty());
     }
 
-    private void getEstimatedGasPriceLimit(){
+    private void getEstimatedGasPriceLimit() {
         try {
             EtherscanAPI.getInstance().getGasLimitEstimate(toAddress.getText().toString(), new Callback() {
                 @Override
-                public void onFailure(Call call, IOException e) {}
+                public void onFailure(Call call, IOException e) {
+                }
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
@@ -362,7 +379,7 @@ public class FragmentSend extends Fragment {
                         ac.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                userGasLimit.setText(gaslimit+"");
+                                userGasLimit.setText(gaslimit + "");
                             }
                         });
                     } catch (Exception e) {
@@ -375,8 +392,8 @@ public class FragmentSend extends Fragment {
         }
     }
 
-    private void askForPasswordAndDecode(final String fromAddress){
-        AlertDialog.Builder builder = new AlertDialog.Builder(ac,  R.style.AlertDialogTheme);
+    private void askForPasswordAndDecode(final String fromAddress) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(ac, R.style.AlertDialogTheme);
         builder.setTitle("Wallet Password");
 
         final EditText input = new EditText(ac);
@@ -386,13 +403,13 @@ public class FragmentSend extends Fragment {
 
         LinearLayout container = new LinearLayout(ac);
         container.setOrientation(LinearLayout.VERTICAL);
-        LinearLayout.LayoutParams params = new  LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
         params.topMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
         params.bottomMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
         params.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
 
-        LinearLayout.LayoutParams params2 = new  LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params2.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
         params2.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
         input.setLayoutParams(params);
@@ -413,18 +430,18 @@ public class FragmentSend extends Fragment {
         });
 
         builder.setView(container);
-        input.setOnFocusChangeListener(new View.OnFocusChangeListener()  {
+        input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus) {
-                    InputMethodManager inputMgr = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    inputMgr.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY);
+                if (hasFocus) {
+                    InputMethodManager inputMgr = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMgr.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
                 }
             }
         });
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                InputMethodManager inputMgr = (InputMethodManager)input.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager inputMgr = (InputMethodManager) input.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputMgr.hideSoftInputFromWindow(input.getWindowToken(), 0);
                 sendEther(input.getText().toString(), fromAddress);
                 dialog.dismiss();
@@ -433,7 +450,7 @@ public class FragmentSend extends Fragment {
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                InputMethodManager inputMgr = (InputMethodManager)input.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager inputMgr = (InputMethodManager) input.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputMgr.hideSoftInputFromWindow(input.getWindowToken(), 0);
                 dialog.cancel();
             }
@@ -448,14 +465,14 @@ public class FragmentSend extends Fragment {
         txService.putExtra("FROM_ADDRESS", fromAddress);
         txService.putExtra("TO_ADDRESS", toAddress.getText().toString());
         txService.putExtra("AMOUNT", curAmount.toPlainString()); // In ether, gets converted by the service itself
-        txService.putExtra("GAS_PRICE", new BigDecimal((gas.getProgress()+1)+"").multiply(new BigDecimal("1000000000")).toPlainString());// "21000000000");
+        txService.putExtra("GAS_PRICE", new BigDecimal((gas.getProgress() + 1) + "").multiply(new BigDecimal("1000000000")).toPlainString());// "21000000000");
         txService.putExtra("GAS_LIMIT", userGasLimit.getText().length() <= 0 ? gaslimit.toString() : userGasLimit.getText().toString());
         txService.putExtra("PASSWORD", password);
         txService.putExtra("DATA", data.getText().toString());
         ac.startService(txService);
 
         // For statistics
-        if(((AnalyticsApplication) ac.getApplication()).isGooglePlayBuild()) {
+        if (((AnalyticsApplication) ac.getApplication()).isGooglePlayBuild()) {
             ((AnalyticsApplication) ac.getApplication()).event("Send Ether");
         }
 
@@ -467,8 +484,8 @@ public class FragmentSend extends Fragment {
         ac.finish();
     }
 
-    public void setToAddress(String to, Context c){
-        if(toAddress == null) return;
+    public void setToAddress(String to, Context c) {
+        if (toAddress == null) return;
         toAddress.setText(to);
         String name = AddressNameConverter.getInstance(c).get(to);
         toName.setText(name == null ? to.substring(0, 10) : name);

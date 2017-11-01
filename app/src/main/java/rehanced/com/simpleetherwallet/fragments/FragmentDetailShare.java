@@ -38,10 +38,10 @@ public class FragmentDetailShare extends Fragment {
         clipboard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(Intent.ACTION_SEND);
+                Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("text/plain");
                 i.putExtra(Intent.EXTRA_TEXT, ethaddress);
-                startActivity(Intent.createChooser(i,"Share via"));
+                startActivity(Intent.createChooser(i, "Share via"));
             }
         });
 
@@ -61,8 +61,8 @@ public class FragmentDetailShare extends Fragment {
         });
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        QREncoder qrCodeEncoder = new QREncoder(prefs.getBoolean("qr_encoding_erc", false) ? AddressEncoder.encodeERC(new AddressEncoder(ethaddress)) : ethaddress, null,
-                    Contents.Type.TEXT, BarcodeFormat.QR_CODE.toString(), qrCodeDimention);
+        QREncoder qrCodeEncoder = new QREncoder(prefs.getBoolean("qr_encoding_erc", true) ? AddressEncoder.encodeERC(new AddressEncoder(ethaddress)) : ethaddress, null,
+                Contents.Type.TEXT, BarcodeFormat.QR_CODE.toString(), qrCodeDimention);
         try {
             Bitmap bitmap = qrCodeEncoder.encodeAsBitmap();
             qrcode.setImageBitmap(bitmap);

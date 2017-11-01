@@ -17,11 +17,10 @@ public class Settings {
     public static boolean walletBeingGenerated = false;
 
 
-
-    public static void initiate(Context c){
+    public static void initiate(Context c) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
         showTransactionsWithZero = prefs.getBoolean("zeroAmountSwitch", false);
-        startWithWalletTab =  prefs.getBoolean("startAtWallet", false);
+        startWithWalletTab = prefs.getBoolean("startAtWallet", true);
     }
 
 }

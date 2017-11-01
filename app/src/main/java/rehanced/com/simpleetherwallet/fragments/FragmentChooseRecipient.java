@@ -27,7 +27,7 @@ import rehanced.com.simpleetherwallet.data.WalletDisplay;
 import rehanced.com.simpleetherwallet.utils.AddressNameConverter;
 import rehanced.com.simpleetherwallet.utils.WalletAdapter;
 
-public class FragmentChooseRecipient extends Fragment implements View.OnClickListener, View.OnCreateContextMenuListener{
+public class FragmentChooseRecipient extends Fragment implements View.OnClickListener, View.OnCreateContextMenuListener {
 
     private RecyclerView recyclerView;
     private WalletAdapter walletAdapter;
@@ -50,7 +50,7 @@ public class FragmentChooseRecipient extends Fragment implements View.OnClickLis
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         walletAdapter = new WalletAdapter(wallets, ac, this, this);
-        LinearLayoutManager mgr  = new LinearLayoutManager(ac.getApplicationContext());
+        LinearLayoutManager mgr = new LinearLayoutManager(ac.getApplicationContext());
         RecyclerView.LayoutManager mLayoutManager = mgr;
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -73,7 +73,7 @@ public class FragmentChooseRecipient extends Fragment implements View.OnClickLis
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(addressBox.getText().toString().length() > 15 && addressBox.getText().toString().startsWith("0x"))
+                if (addressBox.getText().toString().length() > 15 && addressBox.getText().toString().startsWith("0x"))
                     ac.nextStage(addressBox.getText().toString());
                 else
                     ac.snackError("Invalid Recipient");
@@ -82,7 +82,7 @@ public class FragmentChooseRecipient extends Fragment implements View.OnClickLis
 
         update();
 
-        if(((AnalyticsApplication) ac.getApplication()).isGooglePlayBuild()) {
+        if (((AnalyticsApplication) ac.getApplication()).isGooglePlayBuild()) {
             ((AnalyticsApplication) ac.getApplication()).track("Recipient Fragment");
         }
 
@@ -109,7 +109,7 @@ public class FragmentChooseRecipient extends Fragment implements View.OnClickLis
             case 400: // Remove
                 AddressNameConverter.getInstance(ac).put(wallets.get(position).getPublicKey(), null, ac);
                 wallets.remove(position);
-                if(walletAdapter != null)
+                if (walletAdapter != null)
                     walletAdapter.notifyDataSetChanged();
                 break;
         }
@@ -117,13 +117,13 @@ public class FragmentChooseRecipient extends Fragment implements View.OnClickLis
     }
 
 
-    public void setRecipientAddress(String address){
-        if(addressBox == null) return;
+    public void setRecipientAddress(String address) {
+        if (addressBox == null) return;
         addressBox.setText(address);
     }
 
-    public void update(){
-        if(ac == null) return;
+    public void update() {
+        if (ac == null) return;
         wallets.clear();
 
         wallets.addAll(new ArrayList<WalletDisplay>(AddressNameConverter.getInstance(ac).getAsAddressbook()));

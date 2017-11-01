@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Fab/Fab.iml" filepath="$PROJECT_DIR$/Fab/Fab.iml" />
-      <module fileurl="file://$PROJECT_DIR$/MPChartLib/MPChartLib.iml" filepath="$PROJECT_DIR$/MPChartLib/MPChartLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/SimpleEtherWallet.iml" filepath="$PROJECT_DIR$/SimpleEtherWallet.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/appintro/appintro.iml" filepath="$PROJECT_DIR$/appintro/appintro.iml" />
-      <module fileurl="file://$PROJECT_DIR$/autofittextview/autofittextview.iml" filepath="$PROJECT_DIR$/autofittextview/autofittextview.iml" />
-      <module fileurl="file://$PROJECT_DIR$/materialdrawer/materialdrawer.iml" filepath="$PROJECT_DIR$/materialdrawer/materialdrawer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ratethisapp/ratethisapp.iml" filepath="$PROJECT_DIR$/ratethisapp/ratethisapp.iml" />
     </modules>
   </component>
 </project>

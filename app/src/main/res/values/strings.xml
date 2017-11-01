@@ -120,7 +120,6 @@
     <string name="no_wallet_history">You currently do not have any wallets. You can easily create or import one using the button below.</string>
 
 
-
     <string name="app_intro_text">Welcome to Lunary - the free and Open Source Ether Wallet for Android! Before starting, please take some time to read through our terms of service.</string>
     <string name="app_intro_title">Lunary Wallet</string>
     <string name="app_intro_please_agree">Please read and agree to the terms of service before proceeding</string>
@@ -248,6 +247,10 @@
 
     <string name="dialog_disable_ad_title">:(</string>
     <string name="dialog_disable_ad_text">We depend heavily on donations and ad revenue to actively work and improve Lunary. If the ad really bothers you that much thats fine, we understand that and we will let you disable it. But if it isnt too much to ask we would like to change your mind to keep Lunary getting better and better. This small ad banner really helps us, same goes for every donation we receive. Please keep the banner enabled or consider a small donation. You need to restart the app for your new setting to take affect. Continue?</string>
+
+    <string name="showcase_got_it">GOT IT</string>
+    <string name="show_case_wallet_gen_text">To generate a new wallet just press on the + and select "Generate New Wallet"</string>
+    <string name="show_case_backup">To modify existing wallets or create a backup just press and hold down on the wallet.</string>
 
     <string name="tos"><![CDATA[
 <p><h2>Terms and Conditions ("Terms")</h2></p>

@@ -22,24 +22,24 @@ public class TokenIconCache {
     private HashMap<String, byte[]> cache;
     private static TokenIconCache instance;
 
-    public static TokenIconCache getInstance(Context c){
-        if(instance == null)
+    public static TokenIconCache getInstance(Context c) {
+        if (instance == null)
             instance = new TokenIconCache(c);
         return instance;
     }
 
-    private TokenIconCache(Context c){
+    private TokenIconCache(Context c) {
         try {
             load(c);
 
         } catch (Exception e) {
             cache = new HashMap<String, byte[]>();
         }
-        Log.d("iconmap",cache.toString());
+        Log.d("iconmap", cache.toString());
     }
 
-    public Bitmap get(String s){
-        if(cache.get(s) == null) return null;
+    public Bitmap get(String s) {
+        if (cache.get(s) == null) return null;
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = calculateInSampleSize(options, 20, 31);
         return BitmapFactory.decodeByteArray(cache.get(s), 0, cache.get(s).length, options);
@@ -60,8 +60,8 @@ public class TokenIconCache {
         return inSampleSize;
     }
 
-    public boolean put(Context c, String s, Bitmap b){
-        if(b == null || cache.containsKey(s)) return false;
+    public boolean put(Context c, String s, Bitmap b) {
+        if (b == null || cache.containsKey(s)) return false;
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         b.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] byteArray = stream.toByteArray();
@@ -75,21 +75,21 @@ public class TokenIconCache {
         return true;
     }
 
-    public boolean contains(String s){
+    public boolean contains(String s) {
         return cache.containsKey(s);
     }
 
-    public void save(Context activity) throws Exception{
+    public void save(Context activity) throws Exception {
         ObjectOutputStream outputStream = null;
         OutputStream fos = null;
         try {
             fos = new BufferedOutputStream(new FileOutputStream(new File(activity.getFilesDir(), "tokeniconcache.dat")));
             outputStream = new ObjectOutputStream(fos);
             outputStream.writeObject(cache);
-        } finally{
-            if(outputStream != null)
+        } finally {
+            if (outputStream != null)
                 outputStream.close();
-            if(fos != null)
+            if (fos != null)
                 fos.close();
         }
     }
@@ -102,7 +102,7 @@ public class TokenIconCache {
                     new BufferedInputStream(new FileInputStream(new File(activity.getFilesDir(), "tokeniconcache.dat"))));
             cache = (HashMap<String, byte[]>) inputStream.readObject();
         } finally {
-            if(inputStream != null)
+            if (inputStream != null)
                 inputStream.close();
         }
     }

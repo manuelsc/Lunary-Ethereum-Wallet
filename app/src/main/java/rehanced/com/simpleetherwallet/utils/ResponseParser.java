@@ -23,27 +23,28 @@ import rehanced.com.simpleetherwallet.network.EtherscanAPI;
 public class ResponseParser {
 
 
-    public static ArrayList<TransactionDisplay> parseTransactions(String response, String walletname, String address, byte type){
+    public static ArrayList<TransactionDisplay> parseTransactions(String response, String walletname, String address, byte type) {
         try {
             ArrayList<TransactionDisplay> erg = new ArrayList<TransactionDisplay>();
 
             JSONArray data = new JSONObject(response).getJSONArray("result");
-            for(int i=0; i < data.length(); i++){
-                String from =  data.getJSONObject(i).getString("from");
-                String to =  data.getJSONObject(i).getString("to");
+            for (int i = 0; i < data.length(); i++) {
+                String from = data.getJSONObject(i).getString("from");
+                String to = data.getJSONObject(i).getString("to");
                 String vorzeichen = "+";
-                if(address.equalsIgnoreCase(data.getJSONObject(i).getString("from"))){
+                if (address.equalsIgnoreCase(data.getJSONObject(i).getString("from"))) {
                     vorzeichen = "-";
                 } else {
                     String temp = from;
                     from = to;
                     to = temp;
                 }
-                if(data.getJSONObject(i).getString("value").equals("0") && ! Settings.showTransactionsWithZero) continue; // Skip contract calls or empty transactions
+                if (data.getJSONObject(i).getString("value").equals("0") && !Settings.showTransactionsWithZero)
+                    continue; // Skip contract calls or empty transactions
                 erg.add(new TransactionDisplay(
                         from,
                         to,
-                        new BigInteger(vorzeichen+data.getJSONObject(i).getString("value")),
+                        new BigInteger(vorzeichen + data.getJSONObject(i).getString("value")),
                         data.getJSONObject(i).has("confirmations") ? data.getJSONObject(i).getInt("confirmations") : 13,
                         data.getJSONObject(i).getLong("timeStamp") * 1000,
                         walletname,
@@ -64,13 +65,13 @@ public class ResponseParser {
         }
     }
 
-    public static ArrayList<WalletDisplay> parseWallets(String response, ArrayList<StorableWallet> storedwallets, Context context) throws Exception{
+    public static ArrayList<WalletDisplay> parseWallets(String response, ArrayList<StorableWallet> storedwallets, Context context) throws Exception {
         ArrayList<WalletDisplay> display = new ArrayList<WalletDisplay>();
         JSONArray data = new JSONObject(response).getJSONArray("result");
-        for(int i=0; i < storedwallets.size(); i++){
+        for (int i = 0; i < storedwallets.size(); i++) {
             BigInteger balance = new BigInteger("0");
-            for(int j = 0; j < data.length(); j++){
-                if(data.getJSONObject(j).getString("account").equalsIgnoreCase(storedwallets.get(i).getPubKey())) {
+            for (int j = 0; j < data.length(); j++) {
+                if (data.getJSONObject(j).getString("account").equalsIgnoreCase(storedwallets.get(i).getPubKey())) {
                     balance = new BigInteger(data.getJSONObject(i).getString("balance"));
                     break;
                 }
@@ -86,11 +87,11 @@ public class ResponseParser {
         return display;
     }
 
-    public static ArrayList<TokenDisplay> parseTokens(Context c, String response, LastIconLoaded callback) throws Exception{
+    public static ArrayList<TokenDisplay> parseTokens(Context c, String response, LastIconLoaded callback) throws Exception {
         Log.d("tokentest", response);
         ArrayList<TokenDisplay> display = new ArrayList<TokenDisplay>();
         JSONArray data = new JSONObject(response).getJSONArray("tokens");
-        for(int i=0; i < data.length(); i++){
+        for (int i = 0; i < data.length(); i++) {
             JSONObject currentToken = data.getJSONObject(i);
             try {
                 display.add(new TokenDisplay(
@@ -104,12 +105,12 @@ public class ResponseParser {
                         currentToken.getJSONObject("tokenInfo").getLong("holdersCount"),
                         0
                 ));
-            }catch(JSONException e){
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
 
             // Download icon and cache it
-            EtherscanAPI.getInstance().loadTokenIcon(c, currentToken.getJSONObject("tokenInfo").getString("name"), i == data.length() -1, callback);
+            EtherscanAPI.getInstance().loadTokenIcon(c, currentToken.getJSONObject("tokenInfo").getString("name"), i == data.length() - 1, callback);
 
         }
         return display;
@@ -121,7 +122,7 @@ public class ResponseParser {
 
     public static String parseBalance(String response, int comma) throws JSONException {
         String balance = new JSONObject(response).getString("result");
-        if(balance.equals("0")) return "0";
+        if (balance.equals("0")) return "0";
         return new BigDecimal(balance).divide(new BigDecimal(1000000000000000000d), comma, BigDecimal.ROUND_UP).toPlainString();
     }
 
@@ -152,10 +153,10 @@ public class ResponseParser {
         }
     }*/
 
-    public static double parsePriceConversionRate(String response){
-        try{
+    public static double parsePriceConversionRate(String response) {
+        try {
             return Double.parseDouble(response.split(",")[2]);
-        } catch(Exception e){
+        } catch (Exception e) {
             return 1;
         }
     }

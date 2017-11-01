@@ -1,5 +1,4 @@
-<android.support.v4.widget.SwipeRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,195 +7,208 @@
     android:id="@+id/swipeRefreshLayout2"
     android:background="#FFFFFF">
 
-<FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/ripple"
-        android:clickable="true"
-        android:id="@+id/header"
-        android:layout_marginTop="15dp">
-    
-    
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="15dp">
-
-
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginTop="2dp"
-            android:layout_gravity="center"
-            android:id="@+id/addressimage" />
-
-        <TextView
-            android:text="@string/fr_detail_acc_balance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="13sp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:gravity="center"
-        android:layout_marginTop="3dp"
-
         android:layout_height="match_parent">
+
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:background="@drawable/ripple"
+                android:clickable="true"
+                android:id="@+id/header"
+                android:layout_marginTop="15dp">
 
 
-                <TextView
-                    android:text="0.0000"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/balance"
-                    android:textSize="26sp"
+                    android:orientation="vertical"
+                    android:layout_marginTop="15dp">
+
+
+                    <ImageView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_gravity="center"
+                        android:id="@+id/addressimage" />
+
+                    <TextView
+                        android:text="@string/fr_detail_acc_balance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="13sp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
                     android:gravity="center"
                     android:layout_marginTop="3dp"
-                    android:layout_marginRight="7dp"
-                    android:textColor="@color/colorPrimaryDark" />
 
-                <TextView
-                    android:text="ETH"
-                    android:id="@+id/currency"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:gravity="top"
-                    android:textColor="@color/colorPrimaryDark" />
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:text="0.0000"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/balance"
+                                android:textSize="26sp"
+                                android:gravity="center"
+                                android:layout_marginTop="3dp"
+                                android:layout_marginRight="7dp"
+                                android:textColor="@color/colorPrimaryDark" />
+
+                            <TextView
+                                android:text="ETH"
+                                android:id="@+id/currency"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="18sp"
+                                android:gravity="top"
+                                android:textColor="@color/colorPrimaryDark" />
+                        </LinearLayout>
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:textSize="12sp"
+                            android:gravity="center"
+                            android:id="@+id/ethaddress"
+                            android:text="" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
             </LinearLayout>
-
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:id="@+id/ethaddress"
-                android:text="" />
+
+                android:textSize="14sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="18dp"
+                android:text="@string/ether_and_token" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="4dp"
+                android:background="#7aa1a1a1" />
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:showIn="@layout/activity_main"
+                android:scrollbars="vertical" />
+
 
         </LinearLayout>
 
-    </LinearLayout>
-    </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:textSize="14sp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="18dp"
-        android:text="@string/ether_and_token" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="4dp"
-        android:background="#7aa1a1a1"/>
-
-
-     <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:showIn="@layout/activity_main"
-            android:scrollbars="vertical" />
+            android:fitsSystemWindows="true"
+            android:layout_height="match_parent">
 
-
-</LinearLayout>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:fitsSystemWindows="true"
-        android:layout_height="match_parent">
-
-        <com.github.clans.fab.FloatingActionMenu
-            android:id="@+id/fabmenu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="70dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="bottom|right"
-            fab:menu_animationDelayPerItem="1"
-            fab:menu_shadowColor="#444"
-            fab:menu_colorNormal="@color/colorPrimary"
-            fab:menu_colorPressed="@color/colorAccent2"
-            fab:menu_colorRipple="@color/colorAccent">
-
-            <com.github.clans.fab.FloatingActionButton
-                android:id="@+id/set_name"
+            <com.github.clans.fab.FloatingActionMenu
+                android:id="@+id/fabmenu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_changename"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="70dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="bottom|right"
+                fab:menu_animationDelayPerItem="1"
+                fab:menu_shadowColor="#444"
                 fab:menu_colorNormal="@color/colorPrimary"
                 fab:menu_colorPressed="@color/colorAccent2"
-                fab:menu_colorRipple="@color/colorAccent"
-                fab:fab_label="@string/fab_setwalletname" />
+                fab:menu_colorRipple="@color/colorAccent">
 
-            <com.github.clans.fab.FloatingActionButton
-                android:id="@+id/send_ether_from"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_new_tr"
-                fab:menu_colorNormal="@color/colorPrimary"
-                fab:menu_colorPressed="@color/colorAccent2"
-                fab:menu_colorRipple="@color/colorAccent"
-                fab:fab_label="@string/fab_sendether_from" />
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/set_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_changename"
+                    app:fab_colorPressed="@color/colorAccent2"
+                    app:fab_colorRipple="@color/colorAccent"
+                    app:fab_colorNormal="@color/colorPrimary"
+                    fab:menu_colorNormal="@color/colorPrimary"
+                    fab:menu_colorPressed="@color/colorAccent2"
+                    fab:menu_colorRipple="@color/colorAccent"
+                    fab:fab_label="@string/fab_setwalletname" />
 
-            <com.github.clans.fab.FloatingActionButton
-                android:id="@+id/send_ether"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_new_tr"
-                fab:menu_colorNormal="@color/colorPrimary"
-                fab:menu_colorPressed="@color/colorAccent2"
-                fab:menu_colorRipple="@color/colorAccent"
-                fab:fab_label="@string/fab_sendether_to" />
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/send_ether_from"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_new_tr"
+                    app:fab_colorPressed="@color/colorAccent2"
+                    app:fab_colorRipple="@color/colorAccent"
+                    app:fab_colorNormal="@color/colorPrimary"
+                    fab:menu_colorNormal="@color/colorPrimary"
+                    fab:menu_colorPressed="@color/colorAccent2"
+                    fab:menu_colorRipple="@color/colorAccent"
+                    fab:fab_label="@string/fab_sendether_from" />
 
-            <com.github.clans.fab.FloatingActionButton
-                android:id="@+id/add_as_watch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_add_wallet"
-                fab:menu_colorNormal="@color/colorPrimary"
-                fab:menu_colorPressed="@color/colorAccent2"
-                fab:menu_colorRipple="@color/colorAccent"
-                fab:fab_label="@string/fab_add_aswatch" />
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/send_ether"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_new_tr"
+                    app:fab_colorPressed="@color/colorAccent2"
+                    app:fab_colorRipple="@color/colorAccent"
+                    app:fab_colorNormal="@color/colorPrimary"
+                    fab:menu_colorNormal="@color/colorPrimary"
+                    fab:menu_colorPressed="@color/colorAccent2"
+                    fab:menu_colorRipple="@color/colorAccent"
+                    fab:fab_label="@string/fab_sendether_to" />
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/add_as_watch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_add_wallet"
+                    app:fab_colorPressed="@color/colorAccent2"
+                    app:fab_colorRipple="@color/colorAccent"
+                    app:fab_colorNormal="@color/colorPrimary"
+                    fab:menu_colorNormal="@color/colorPrimary"
+                    fab:menu_colorPressed="@color/colorAccent2"
+                    fab:menu_colorRipple="@color/colorAccent"
+                    fab:fab_label="@string/fab_add_aswatch" />
 
 
-        </com.github.clans.fab.FloatingActionMenu>
-    </RelativeLayout>
-</FrameLayout>
+            </com.github.clans.fab.FloatingActionMenu>
+        </RelativeLayout>
+    </FrameLayout>
 </android.support.v4.widget.SwipeRefreshLayout>

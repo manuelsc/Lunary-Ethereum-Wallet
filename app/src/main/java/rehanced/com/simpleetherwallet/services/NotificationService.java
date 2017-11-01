@@ -37,7 +37,7 @@ public class NotificationService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        if(!prefs.getBoolean("notifications_new_message", true) || WalletStorage.getInstance(this).get().size() <= 0) {
+        if (!prefs.getBoolean("notifications_new_message", true) || WalletStorage.getInstance(this).get().size() <= 0) {
             NotificationLauncher.getInstance().stop();
             return;
         }
@@ -45,7 +45,8 @@ public class NotificationService extends IntentService {
         try {
             EtherscanAPI.getInstance().getBalances(WalletStorage.getInstance(this).get(), new Callback() {
                 @Override
-                public void onFailure(Call call, IOException e) {}
+                public void onFailure(Call call, IOException e) {
+                }
 
                 @Override
                 public void onResponse(Call call, final Response response) throws IOException {
@@ -58,9 +59,9 @@ public class NotificationService extends IntentService {
                         BigInteger amount = new BigInteger("0");
                         String address = "";
                         SharedPreferences.Editor editor = preferences.edit();
-                        for(int i = 0; i < data.length(); i++){
-                            if(!preferences.getString(data.getJSONObject(i).getString("account"), data.getJSONObject(i).getString("balance")).equals(data.getJSONObject(i).getString("balance"))) {
-                                if(new BigInteger(preferences.getString(data.getJSONObject(i).getString("account"), data.getJSONObject(i).getString("balance"))).compareTo(new BigInteger(data.getJSONObject(i).getString("balance"))) < 1) { // Nur wenn höhere Balance als vorher
+                        for (int i = 0; i < data.length(); i++) {
+                            if (!preferences.getString(data.getJSONObject(i).getString("account"), data.getJSONObject(i).getString("balance")).equals(data.getJSONObject(i).getString("balance"))) {
+                                if (new BigInteger(preferences.getString(data.getJSONObject(i).getString("account"), data.getJSONObject(i).getString("balance"))).compareTo(new BigInteger(data.getJSONObject(i).getString("balance"))) < 1) { // Nur wenn höhere Balance als vorher
                                     notify = true;
                                     address = data.getJSONObject(i).getString("account");
                                     amount = amount.add((new BigInteger(data.getJSONObject(i).getString("balance")).subtract(new BigInteger(preferences.getString(address, "0")))));
@@ -69,11 +70,11 @@ public class NotificationService extends IntentService {
                             editor.putString(data.getJSONObject(i).getString("account"), data.getJSONObject(i).getString("balance"));
                         }
                         editor.commit();
-                        if(notify) {
+                        if (notify) {
                             try {
                                 String amountS = new BigDecimal(amount).divide(ExchangeCalculator.ONE_ETHER, 4, BigDecimal.ROUND_DOWN).toPlainString();
                                 sendNotification(address, amountS);
-                            } catch(Exception e){
+                            } catch (Exception e) {
 
                             }
                         }
@@ -87,7 +88,7 @@ public class NotificationService extends IntentService {
         }
     }
 
-    private void sendNotification(String address, String amount){
+    private void sendNotification(String address, String amount) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setLargeIcon(Blockies.createIcon(address.toLowerCase()))
@@ -100,7 +101,7 @@ public class NotificationService extends IntentService {
                 .setContentText(amount + " ETH");
 
         if (android.os.Build.VERSION.SDK_INT >= 18) // Android bug in 4.2, just disable it for everyone then...
-            builder.setVibrate(new long[] { 1000, 1000});
+            builder.setVibrate(new long[]{1000, 1000});
 
         final NotificationManager mNotifyMgr =
                 (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -113,7 +114,7 @@ public class NotificationService extends IntentService {
 
         builder.setContentIntent(contentIntent);
 
-        final int mNotificationId = (int)(Math.random()*150);
+        final int mNotificationId = (int) (Math.random() * 150);
         mNotifyMgr.notify(mNotificationId, builder.build());
     }
 

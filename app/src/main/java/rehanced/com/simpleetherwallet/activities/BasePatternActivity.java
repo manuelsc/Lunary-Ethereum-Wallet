@@ -36,11 +36,11 @@ public class BasePatternActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.app_lock_activity);
-        mMessageText = (TextView)findViewById(R.id.pl_message_text);
-        mPatternView = (PatternView)findViewById(R.id.pl_pattern);
-        mButtonContainer = (LinearLayout)findViewById(R.id.pl_button_container);
-        mLeftButton = (Button)findViewById(R.id.pl_left_button);
-        mRightButton = (Button)findViewById(R.id.pl_right_button);
+        mMessageText = (TextView) findViewById(R.id.pl_message_text);
+        mPatternView = (PatternView) findViewById(R.id.pl_pattern);
+        mButtonContainer = (LinearLayout) findViewById(R.id.pl_button_container);
+        mLeftButton = (Button) findViewById(R.id.pl_left_button);
+        mRightButton = (Button) findViewById(R.id.pl_right_button);
     }
 
     protected void removeClearPatternRunnable() {

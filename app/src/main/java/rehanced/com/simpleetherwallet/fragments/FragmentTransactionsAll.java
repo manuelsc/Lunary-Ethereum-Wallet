@@ -25,19 +25,19 @@ import rehanced.com.simpleetherwallet.utils.WalletStorage;
 import static android.view.View.GONE;
 
 
-public class FragmentTransactionsAll extends FragmentTransactionsAbstract  {
+public class FragmentTransactionsAll extends FragmentTransactionsAbstract {
 
     protected TransactionDisplay unconfirmed;
     private long unconfirmed_addedTime;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView  = super.onCreateView(inflater, container, savedInstanceState);
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
         MainActivity ac = (MainActivity) this.ac;
-        if(ac != null && ac.getAppBar() != null) {
+        if (ac != null && ac.getAppBar() != null) {
             ac.getAppBar().addOnOffsetChangedListener(new AppBarStateChangeListener() {
                 @Override
                 public void onStateChanged(AppBarLayout appBarLayout, State state) {
-                    if(state == State.COLLAPSED){
+                    if (state == State.COLLAPSED) {
                         fabmenu.hideMenu(true);
                     } else {
                         fabmenu.showMenu(true);
@@ -49,14 +49,14 @@ public class FragmentTransactionsAll extends FragmentTransactionsAbstract  {
     }
 
 
-    public void update(boolean force){
-        if(ac == null) return;
+    public void update(boolean force) {
+        if (ac == null) return;
         getWallets().clear();
-        if(swipeLayout != null)
+        if (swipeLayout != null)
             swipeLayout.setRefreshing(true);
         resetRequestCount();
         final ArrayList<StorableWallet> storedwallets = new ArrayList<StorableWallet>(WalletStorage.getInstance(ac).get());
-        if(storedwallets.size() == 0){
+        if (storedwallets.size() == 0) {
             nothingToShow.setVisibility(View.VISIBLE);
             onItemsLoadComplete();
         } else {
@@ -68,7 +68,7 @@ public class FragmentTransactionsAll extends FragmentTransactionsAbstract  {
                     EtherscanAPI.getInstance().getNormalTransactions(currentWallet.getPubKey(), new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
-                            if(isAdded()) {
+                            if (isAdded()) {
                                 ac.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -82,10 +82,10 @@ public class FragmentTransactionsAll extends FragmentTransactionsAbstract  {
                         @Override
                         public void onResponse(Call call, Response response) throws IOException {
                             String restring = response.body().string();
-                            if(restring != null && restring.length() > 2)
+                            if (restring != null && restring.length() > 2)
                                 RequestCache.getInstance().put(RequestCache.TYPE_TXS_NORMAL, currentWallet.getPubKey(), restring);
                             final ArrayList<TransactionDisplay> w = new ArrayList<TransactionDisplay>(ResponseParser.parseTransactions(restring, "Unnamed Address", currentWallet.getPubKey(), TransactionDisplay.NORMAL));
-                            if(isAdded()) {
+                            if (isAdded()) {
                                 ac.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -98,7 +98,7 @@ public class FragmentTransactionsAll extends FragmentTransactionsAbstract  {
                     EtherscanAPI.getInstance().getInternalTransactions(currentWallet.getPubKey(), new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
-                            if(isAdded()) {
+                            if (isAdded()) {
                                 ac.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -112,10 +112,10 @@ public class FragmentTransactionsAll extends FragmentTransactionsAbstract  {
                         @Override
                         public void onResponse(Call call, Response response) throws IOException {
                             String restring = response.body().string();
-                            if(restring != null && restring.length() > 2)
+                            if (restring != null && restring.length() > 2)
                                 RequestCache.getInstance().put(RequestCache.TYPE_TXS_INTERNAL, currentWallet.getPubKey(), restring);
                             final ArrayList<TransactionDisplay> w = new ArrayList<TransactionDisplay>(ResponseParser.parseTransactions(restring, "Unnamed Address", currentWallet.getPubKey(), TransactionDisplay.CONTRACT));
-                            if(isAdded()) {
+                            if (isAdded()) {
                                 ac.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -126,7 +126,7 @@ public class FragmentTransactionsAll extends FragmentTransactionsAbstract  {
                         }
                     }, force);
                 } catch (IOException e) {
-                    if(isAdded()) {
+                    if (isAdded()) {
                         if (ac != null)
                             ((MainActivity) ac).snackError("Can't fetch account balances. No connection?");
 
@@ -142,17 +142,17 @@ public class FragmentTransactionsAll extends FragmentTransactionsAbstract  {
         }
     }
 
-    private void onComplete(ArrayList<TransactionDisplay> w, ArrayList<StorableWallet> storedwallets){
+    private void onComplete(ArrayList<TransactionDisplay> w, ArrayList<StorableWallet> storedwallets) {
         addToWallets(w);
         addRequestCount();
-        if (getRequestCount() >= storedwallets.size()*2) {
+        if (getRequestCount() >= storedwallets.size() * 2) {
             onItemsLoadComplete();
 
             // If transaction was send via App and has no confirmations yet (Still show it when users refreshes for 10 minutes)
             if (unconfirmed_addedTime + 10 * 60 * 1000 < System.currentTimeMillis()) // After 10 minutes remove unconfirmed (should now have at least 1 confirmation anyway)
                 unconfirmed = null;
             if (unconfirmed != null) {
-                if(wallets.get(0).getAmount() == unconfirmed.getAmount()){
+                if (wallets.get(0).getAmount() == unconfirmed.getAmount()) {
                     unconfirmed = null;
                 } else {
                     wallets.add(0, unconfirmed);
@@ -165,8 +165,8 @@ public class FragmentTransactionsAll extends FragmentTransactionsAbstract  {
     }
 
 
-    public void addUnconfirmedTransaction(String from, String to, BigInteger amount){
-        unconfirmed = new TransactionDisplay(from, to, amount, 0, System.currentTimeMillis(), "", TransactionDisplay.NORMAL, "", "0", 0, 1,1, false);
+    public void addUnconfirmedTransaction(String from, String to, BigInteger amount) {
+        unconfirmed = new TransactionDisplay(from, to, amount, 0, System.currentTimeMillis(), "", TransactionDisplay.NORMAL, "", "0", 0, 1, 1, false);
         unconfirmed_addedTime = System.currentTimeMillis();
         wallets.add(0, unconfirmed);
         notifyDataSetChanged();

@@ -35,7 +35,7 @@ public class ToSFragment extends Fragment {
         });
     }
 
-    public boolean isToSChecked(){
+    public boolean isToSChecked() {
         return checked;
     }
 

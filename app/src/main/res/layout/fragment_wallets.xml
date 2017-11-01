@@ -170,6 +170,9 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_add_wallet"
                     fab:fab_label="@string/fab_gen_new"
+                    app:fab_colorPressed="@color/colorAccent2"
+                    app:fab_colorRipple="@color/colorAccent"
+                    app:fab_colorNormal="@color/colorPrimary"
                     fab:menu_colorNormal="@color/colorPrimary"
                     fab:menu_colorPressed="@color/colorAccent2"
                     fab:menu_colorRipple="@color/colorAccent" />
@@ -180,6 +183,9 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_sacn"
                     fab:fab_label="@string/fab_add_watch"
+                    app:fab_colorPressed="@color/colorAccent2"
+                    app:fab_colorRipple="@color/colorAccent"
+                    app:fab_colorNormal="@color/colorPrimary"
                     fab:menu_colorNormal="@color/colorPrimary"
                     fab:menu_colorPressed="@color/colorAccent2"
                     fab:menu_colorRipple="@color/colorAccent" />
@@ -190,6 +196,9 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_scanadd"
                     fab:fab_label="@string/fab_scan"
+                    app:fab_colorPressed="@color/colorAccent2"
+                    app:fab_colorRipple="@color/colorAccent"
+                    app:fab_colorNormal="@color/colorPrimary"
                     fab:menu_colorNormal="@color/colorPrimary"
                     fab:menu_colorPressed="@color/colorAccent2"
                     fab:menu_colorRipple="@color/colorAccent" />

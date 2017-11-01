@@ -80,8 +80,8 @@ public class AddressDetailActivity extends SecureAppCompatActivity {
         mViewPager.setOffscreenPageLimit(3);
     }
 
-    public void setTitle(String s){
-        if(title != null) {
+    public void setTitle(String s) {
+        if (title != null) {
             title.setText(s);
             Snackbar mySnackbar = Snackbar.make(coord,
                     AddressDetailActivity.this.getResources().getString(R.string.detail_acc_name_changed_suc), Snackbar.LENGTH_SHORT);
@@ -95,14 +95,14 @@ public class AddressDetailActivity extends SecureAppCompatActivity {
         return true;
     }
 
-    public void snackError(String s){
-        if(coord == null) return;
+    public void snackError(String s) {
+        if (coord == null) return;
         Snackbar mySnackbar = Snackbar.make(coord, s, Snackbar.LENGTH_SHORT);
         mySnackbar.show();
     }
 
-    public void broadCastDataSetChanged(){
-        if(fragments != null && fragments[2] != null) {
+    public void broadCastDataSetChanged() {
+        if (fragments != null && fragments[2] != null) {
             ((FragmentTransactions) fragments[2]).notifyDataSetChanged();
         }
     }
@@ -129,7 +129,7 @@ public class AddressDetailActivity extends SecureAppCompatActivity {
         }
     }
 
-    public AppBarLayout getAppBar(){
+    public AppBarLayout getAppBar() {
         return appbar;
     }
 

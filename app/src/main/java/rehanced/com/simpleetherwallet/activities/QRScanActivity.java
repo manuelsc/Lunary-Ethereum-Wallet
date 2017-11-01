@@ -25,7 +25,7 @@ import rehanced.com.simpleetherwallet.R;
 import rehanced.com.simpleetherwallet.utils.qr.AddressEncoder;
 
 
-public class QRScanActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
+public class QRScanActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 
     public static final int REQUEST_CODE = 100;
     public static final int REQUEST_CAMERA_PERMISSION = 106;
@@ -57,10 +57,10 @@ public class QRScanActivity extends AppCompatActivity implements ZXingScannerVie
         title.setText(type == SCAN_ONLY ? "Scan Address" : "ADD WALLET");
 
         barCode = (FrameLayout) findViewById(R.id.barcode);
-       // BarcodeCapture barcodeCapture = (BarcodeCapture) getSupportFragmentManager().findFragmentById(R.id.barcode);
-       // barcodeCapture.setRetrieval(this);
+        // BarcodeCapture barcodeCapture = (BarcodeCapture) getSupportFragmentManager().findFragmentById(R.id.barcode);
+        // barcodeCapture.setRetrieval(this);
 
-        if(hasPermission(this))
+        if (hasPermission(this))
             initQRScan(barCode);
         else
             askForPermissionRead(this);
@@ -72,7 +72,7 @@ public class QRScanActivity extends AppCompatActivity implements ZXingScannerVie
         return true;
     }
 
-    public void initQRScan(FrameLayout frame){
+    public void initQRScan(FrameLayout frame) {
         mScannerView = new ZXingScannerView(this);
         frame.addView(mScannerView);
         mScannerView.setResultHandler(this);
@@ -85,13 +85,13 @@ public class QRScanActivity extends AppCompatActivity implements ZXingScannerVie
     @Override
     public void onPause() {
         super.onPause();
-        if(mScannerView != null)
+        if (mScannerView != null)
             mScannerView.stopCamera();
     }
 
     public boolean hasPermission(Context c) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if(c.checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            if (c.checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                 return true;
             }
         } else {
@@ -100,7 +100,7 @@ public class QRScanActivity extends AppCompatActivity implements ZXingScannerVie
         return false;
     }
 
-    public static void askForPermissionRead(Activity c){
+    public static void askForPermissionRead(Activity c) {
         if (Build.VERSION.SDK_INT < 23) return;
         ActivityCompat.requestPermissions(c, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
     }
@@ -121,17 +121,17 @@ public class QRScanActivity extends AppCompatActivity implements ZXingScannerVie
 
     @Override
     public void handleResult(Result result) {
-        if(result == null) return;
+        if (result == null) return;
         String address = result.getText();
         try {
             AddressEncoder scanned = AddressEncoder.decode(address);
             Intent data = new Intent();
             data.putExtra("ADDRESS", scanned.getAddress().toLowerCase());
 
-            if(address.length() > 42 && !address.startsWith("0x") && scanned.getAmount() == null)
+            if (address.length() > 42 && !address.startsWith("0x") && scanned.getAmount() == null)
                 type = PRIVATE_KEY;
 
-            if(scanned.getAmount() != null) {
+            if (scanned.getAmount() != null) {
                 data.putExtra("AMOUNT", scanned.getAmount());
                 type = REQUEST_PAYMENT;
             }

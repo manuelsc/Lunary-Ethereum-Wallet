@@ -7,7 +7,7 @@ import java.math.BigInteger;
 
 import rehanced.com.simpleetherwallet.utils.ExchangeCalculator;
 
-public class WalletDisplay implements Comparable{
+public class WalletDisplay implements Comparable {
 
     public static final byte NORMAL = 0;
     public static final byte WATCH_ONLY = 1;
@@ -70,6 +70,6 @@ public class WalletDisplay implements Comparable{
 
     @Override
     public int compareTo(@NonNull Object o) {
-        return name.compareTo(((WalletDisplay)o).getName());
+        return name.compareTo(((WalletDisplay) o).getName());
     }
 }

@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public class WellKnownAddresses extends HashMap<String, String> {
 
-    public WellKnownAddresses(){
+    public WellKnownAddresses() {
         super();
 
         put("0xb794f5ea0ba39494ce839613fffba74279579268", "Poloniex ColdWallet");

@@ -12,24 +12,24 @@ import java.util.Arrays;
 
 public class Blockies {
 
-    private static final int size = 8 ;
-    private static long  [] randseed = new long[4];
+    private static final int size = 8;
+    private static long[] randseed = new long[4];
 
-    public static Bitmap createIcon(String address){
+    public static Bitmap createIcon(String address) {
         return createIcon(address, 16);
     }
 
-    public static Bitmap createIcon(String address, int scale){
+    public static Bitmap createIcon(String address, int scale) {
         seedrand(address);
         HSL color = createColor();
         HSL bgColor = createColor();
         HSL spotColor = createColor();
 
-        double [] imgdata = createImageData();
+        double[] imgdata = createImageData();
         return createCanvas(imgdata, color, bgColor, spotColor, scale);
     }
 
-    private static Bitmap createCanvas(double [] imgData, HSL color, HSL bgcolor, HSL spotcolor, int scale){
+    private static Bitmap createCanvas(double[] imgData, HSL color, HSL bgcolor, HSL spotcolor, int scale) {
         int width = (int) Math.sqrt(imgData.length);
 
         int w = width * scale;
@@ -39,31 +39,31 @@ public class Blockies {
         Bitmap bmp = Bitmap.createBitmap(w, h, conf);
         Canvas canvas = new Canvas(bmp);
 
-        int background = toRGB((int)bgcolor.h, (int)bgcolor.s, (int)bgcolor.l);
+        int background = toRGB((int) bgcolor.h, (int) bgcolor.s, (int) bgcolor.l);
 
         Paint paint = new Paint();
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(background);
-        canvas.drawRect(0,0, w, h, paint);
+        canvas.drawRect(0, 0, w, h, paint);
 
-        int main = toRGB((int)color.h, (int)color.s, (int)color.l);
-        int scolor = toRGB((int)spotcolor.h, (int)spotcolor.s, (int)spotcolor.l);
+        int main = toRGB((int) color.h, (int) color.s, (int) color.l);
+        int scolor = toRGB((int) spotcolor.h, (int) spotcolor.s, (int) spotcolor.l);
 
-        for(int i = 0; i < imgData.length; i++) {
+        for (int i = 0; i < imgData.length; i++) {
             int row = (int) Math.floor(i / width);
             int col = i % width;
             paint = new Paint();
 
-            paint.setColor( (imgData[i] == 1.0d) ? main : scolor);
+            paint.setColor((imgData[i] == 1.0d) ? main : scolor);
 
-            if(imgData[i] > 0d) {
-                canvas.drawRect(col * scale, row * scale, (col * scale) + scale, (row * scale)+scale, paint);
+            if (imgData[i] > 0d) {
+                canvas.drawRect(col * scale, row * scale, (col * scale) + scale, (row * scale) + scale, paint);
             }
         }
         return getCroppedBitmap(bmp);
     }
 
-    private static double rand(){
+    private static double rand() {
         int t = (int) (randseed[0] ^ (randseed[0] << 11));
         randseed[0] = randseed[1];
         randseed[1] = randseed[2];
@@ -74,34 +74,34 @@ public class Blockies {
         return (t1 / Integer.MAX_VALUE);
     }
 
-    private static HSL createColor(){
+    private static HSL createColor() {
         double h = Math.floor(rand() * 360d);
         double s = ((rand() * 60d) + 40d);
-        double l = ((rand()+rand()+rand()+rand()) * 25d) ;
+        double l = ((rand() + rand() + rand() + rand()) * 25d);
         return new HSL(h, s, l);
     }
 
-    private static double [] createImageData(){
+    private static double[] createImageData() {
         int width = size;
         int height = size;
 
         double dataWidth = Math.ceil(width / 2);
         double mirrorWidth = width - dataWidth;
 
-        double [] data = new double [size*size];
+        double[] data = new double[size * size];
         int dataCount = 0;
-        for(int y = 0; y < height; y++) {
-            double [] row = new double[(int) dataWidth];
-            for(int x = 0; x < dataWidth; x++) {
-                row[x] = Math.floor(rand()*2.3d);
+        for (int y = 0; y < height; y++) {
+            double[] row = new double[(int) dataWidth];
+            for (int x = 0; x < dataWidth; x++) {
+                row[x] = Math.floor(rand() * 2.3d);
 
             }
-            double [] r = Arrays.copyOfRange(row, 0, (int)mirrorWidth);
+            double[] r = Arrays.copyOfRange(row, 0, (int) mirrorWidth);
             r = reverse(r);
             row = concat(row, r);
 
-            for(int i = 0; i < row.length; i++) {
-                data[ dataCount] = row[i];
+            for (int i = 0; i < row.length; i++) {
+                data[dataCount] = row[i];
                 dataCount++;
             }
         }
@@ -112,14 +112,14 @@ public class Blockies {
     public static double[] concat(double[] a, double[] b) {
         int aLen = a.length;
         int bLen = b.length;
-        double[] c= new double[aLen+bLen];
+        double[] c = new double[aLen + bLen];
         System.arraycopy(a, 0, c, 0, aLen);
         System.arraycopy(b, 0, c, aLen, bLen);
         return c;
     }
 
-    private static double [] reverse(double [] data) {
-        for(int i = 0; i < data.length / 2; i++){
+    private static double[] reverse(double[] data) {
+        for (int i = 0; i < data.length / 2; i++) {
             double temp = data[i];
             data[i] = data[data.length - i - 1];
             data[data.length - i - 1] = temp;
@@ -127,21 +127,21 @@ public class Blockies {
         return data;
     }
 
-    private static void seedrand(String seed){
+    private static void seedrand(String seed) {
         for (int i = 0; i < randseed.length; i++) {
             randseed[i] = 0;
         }
         for (int i = 0; i < seed.length(); i++) {
-            long test = randseed[i%4] << 5 ;
-            if(test > Integer.MAX_VALUE << 1 || test < Integer.MIN_VALUE << 1)
+            long test = randseed[i % 4] << 5;
+            if (test > Integer.MAX_VALUE << 1 || test < Integer.MIN_VALUE << 1)
                 test = (int) test;
 
-            long test2 = test - randseed[i%4];
-            randseed[i%4] = (test2 + Character.codePointAt(seed, i));
+            long test2 = test - randseed[i % 4];
+            randseed[i % 4] = (test2 + Character.codePointAt(seed, i));
         }
 
-        for(int i=0; i < randseed.length; i++)
-            randseed[i] = (int)randseed[i];
+        for (int i = 0; i < randseed.length; i++)
+            randseed[i] = (int) randseed[i];
     }
 
     private static int toRGB(float h, float s, float l) {
@@ -167,23 +167,23 @@ public class Blockies {
         g = Math.min(g, 1.0f);
         b = Math.min(b, 1.0f);
 
-        int red = (int) (r*255);
-        int green = (int) (g*255);
-        int blue = (int) (b*255);
+        int red = (int) (r * 255);
+        int green = (int) (g * 255);
+        int blue = (int) (b * 255);
         return Color.rgb(red, green, blue);
     }
 
     private static float HueToRGB(float p, float q, float h) {
         if (h < 0) h += 1;
-        if (h > 1 ) h -= 1;
+        if (h > 1) h -= 1;
         if (6 * h < 1) {
             return p + ((q - p) * 6 * h);
         }
-        if (2 * h < 1 ) {
-            return  q;
+        if (2 * h < 1) {
+            return q;
         }
         if (3 * h < 2) {
-            return p + ( (q - p) * 6 * ((2.0f / 3.0f) - h) );
+            return p + ((q - p) * 6 * ((2.0f / 3.0f) - h));
         }
         return p;
     }
@@ -207,13 +207,15 @@ public class Blockies {
         return output;
     }
 
-    static class HSL{
+    static class HSL {
         double h, s, l;
-        public HSL(double h, double s, double l){
+
+        public HSL(double h, double s, double l) {
             this.h = h;
             this.s = s;
             this.l = l;
         }
+
         @Override
         public String toString() {
             return "HSL [h=" + h + ", s=" + s + ", l=" + l + "]";

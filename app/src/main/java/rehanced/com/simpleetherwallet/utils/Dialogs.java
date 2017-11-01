@@ -40,7 +40,7 @@ import rehanced.com.simpleetherwallet.interfaces.AdDialogResponseHandler;
 
 public class Dialogs {
 
-    public static void showTokenetails(final Activity c, final TokenDisplay tok){
+    public static void showTokenetails(final Activity c, final TokenDisplay tok) {
         MaterialDialog dialog = new MaterialDialog.Builder(c)
                 .customView(R.layout.dialog_token_detail, true)
                 .show();
@@ -72,21 +72,21 @@ public class Dialogs {
         contractIcon.setImageBitmap(Blockies.createIcon(tok.getContractAddr().toLowerCase()));
         tokenname.setText(tok.getName());
         contractAddr.setText(tok.getContractAddr().toLowerCase());
-        supply.setText(ex.displayUsdNicely(tok.getTotalSupplyLong())+" "+tok.getShorty());
-        priceUSD.setText(tok.getUsdprice()+" $");
+        supply.setText(ex.displayUsdNicely(tok.getTotalSupplyLong()) + " " + tok.getShorty());
+        priceUSD.setText(tok.getUsdprice() + " $");
 
         priceETH.setText(ex.displayEthNicelyExact(
-                        ex.convertTokenToEther(1, tok.getUsdprice())
-                )+" "+ex.getEtherCurrency().getShorty());
+                ex.convertTokenToEther(1, tok.getUsdprice())
+        ) + " " + ex.getEtherCurrency().getShorty());
         capETH.setText(ex.displayUsdNicely(
-                        ex.convertTokenToEther(tok.getTotalSupplyLong(), tok.getUsdprice())
-                )+" "+ex.getEtherCurrency().getShorty());
-        capUSD.setText(ex.displayUsdNicely(tok.getUsdprice()*tok.getTotalSupplyLong()) +" $");
-        holders.setText(ex.displayUsdNicely(tok.getHolderCount())+"");
-        digits.setText(tok.getDigits()+"");
+                ex.convertTokenToEther(tok.getTotalSupplyLong(), tok.getUsdprice())
+        ) + " " + ex.getEtherCurrency().getShorty());
+        capUSD.setText(ex.displayUsdNicely(tok.getUsdprice() * tok.getTotalSupplyLong()) + " $");
+        holders.setText(ex.displayUsdNicely(tok.getHolderCount()) + "");
+        digits.setText(tok.getDigits() + "");
     }
 
-    public static void showTXDetails(final Activity c, final TransactionDisplay tx){
+    public static void showTXDetails(final Activity c, final TransactionDisplay tx) {
         MaterialDialog dialog = new MaterialDialog.Builder(c)
                 .customView(R.layout.dialog_tx_detail, true)
                 .show();
@@ -144,9 +144,9 @@ public class Dialogs {
         othericon.setImageBitmap(Blockies.createIcon(tx.getToAddress().toLowerCase()));
 
         String myName = AddressNameConverter.getInstance(c).get(tx.getFromAddress().toLowerCase());
-        if(myName == null) myName = shortName(tx.getFromAddress().toLowerCase());
+        if (myName == null) myName = shortName(tx.getFromAddress().toLowerCase());
         String otherName = AddressNameConverter.getInstance(c).get(tx.getToAddress().toLowerCase());
-        if(otherName == null) otherName = shortName(tx.getToAddress().toLowerCase());
+        if (otherName == null) otherName = shortName(tx.getToAddress().toLowerCase());
         myAddressname.setText(myName);
         otherAddressname.setText(otherName);
 
@@ -154,33 +154,33 @@ public class Dialogs {
         myAddressaddr.setText(tx.getFromAddress());
         otherAddressaddr.setText(tx.getToAddress());
         SimpleDateFormat dateformat = new SimpleDateFormat("dd. MMMM yyyy, HH:mm:ss", Locale.getDefault());
-        month.setText(dateformat.format(tx.getDate())+"");
-        blocknr.setText(tx.getBlock()+"");
-        gasUsed.setText(tx.getGasUsed()+"");
-        gasPrice.setText(tx.getGasprice()/1000000000+" Gwei");
-        nonce.setText(tx.getNounce()+"");
+        month.setText(dateformat.format(tx.getDate()) + "");
+        blocknr.setText(tx.getBlock() + "");
+        gasUsed.setText(tx.getGasUsed() + "");
+        gasPrice.setText(tx.getGasprice() / 1000000000 + " Gwei");
+        nonce.setText(tx.getNounce() + "");
         txcost.setText(
                 ExchangeCalculator.getInstance().displayEthNicelyExact(
                         ExchangeCalculator.getInstance().weiToEther(tx.getGasUsed() * tx.getGasprice())
                 )
-                +" Ξ"
+                        + " Ξ"
         );
         txcost2.setText(
                 ExchangeCalculator.getInstance().convertToUsd(ExchangeCalculator.getInstance().weiToEther(tx.getGasUsed() * tx.getGasprice()))
-                        + " "+ ExchangeCalculator.getInstance().getMainCurreny().getShorty()
+                        + " " + ExchangeCalculator.getInstance().getMainCurreny().getShorty()
         );
-        amount.setText((tx.getAmount() > 0 ? "+ " : "- " )+Math.abs(tx.getAmount())+" Ξ");
+        amount.setText((tx.getAmount() > 0 ? "+ " : "- ") + Math.abs(tx.getAmount()) + " Ξ");
         amount.setTextColor(c.getResources().getColor(tx.getAmount() > 0 ? R.color.etherReceived : R.color.etherSpent));
         amountfiat.setText(ExchangeCalculator.getInstance().displayUsdNicely(
                 ExchangeCalculator.getInstance().convertToUsd(tx.getAmount()))
-                + " "+ ExchangeCalculator.getInstance().getMainCurreny().getShorty());
+                + " " + ExchangeCalculator.getInstance().getMainCurreny().getShorty());
     }
 
-    private static String shortName(String addr){
-        return "0x"+addr.substring(2, 8);
+    private static String shortName(String addr) {
+        return "0x" + addr.substring(2, 8);
     }
 
-    public static void addWatchOnly(final MainActivity c){
+    public static void addWatchOnly(final MainActivity c) {
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= 24) // Otherwise buttons on 7.0+ are nearly invisible
             builder = new AlertDialog.Builder(c, R.style.AlertDialogTheme);
@@ -191,7 +191,7 @@ public class Dialogs {
         final EditText input = new EditText(c);
         input.setSingleLine();
         FrameLayout container = new FrameLayout(c);
-        FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.leftMargin = c.getResources().getDimensionPixelSize(R.dimen.dialog_margin);
         params.topMargin = c.getResources().getDimensionPixelSize(R.dimen.dialog_margin);
         params.bottomMargin = c.getResources().getDimensionPixelSize(R.dimen.dialog_margin);
@@ -201,11 +201,11 @@ public class Dialogs {
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         container.addView(input);
         builder.setView(container);
-        input.setOnFocusChangeListener(new View.OnFocusChangeListener()  {
+        input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus) {
-                    InputMethodManager inputMgr = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    inputMgr.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY);
+                if (hasFocus) {
+                    InputMethodManager inputMgr = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMgr.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
                 }
             }
         });
@@ -213,9 +213,9 @@ public class Dialogs {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                InputMethodManager inputMgr = (InputMethodManager)input.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager inputMgr = (InputMethodManager) input.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputMgr.hideSoftInputFromWindow(input.getWindowToken(), 0);
-                if(input.getText().toString().length() == 42 && input.getText().toString().startsWith("0x")) {
+                if (input.getText().toString().length() == 42 && input.getText().toString().startsWith("0x")) {
                     final boolean suc = WalletStorage.getInstance(c).add(new WatchWallet(input.getText().toString()), c);
                     new Handler().postDelayed(
                             new Runnable() {
@@ -242,9 +242,9 @@ public class Dialogs {
         builder.setPositiveButton(R.string.show, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                InputMethodManager inputMgr = (InputMethodManager)input.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager inputMgr = (InputMethodManager) input.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputMgr.hideSoftInputFromWindow(input.getWindowToken(), 0);
-                if(input.getText().toString().length() == 42 && input.getText().toString().startsWith("0x")) {
+                if (input.getText().toString().length() == 42 && input.getText().toString().startsWith("0x")) {
                     Intent detail = new Intent(c, AddressDetailActivity.class);
                     detail.putExtra("ADDRESS", input.getText().toString().toLowerCase());
                     c.startActivity(detail);
@@ -257,7 +257,7 @@ public class Dialogs {
         builder.setNeutralButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                InputMethodManager inputMgr = (InputMethodManager)input.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager inputMgr = (InputMethodManager) input.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputMgr.hideSoftInputFromWindow(input.getWindowToken(), 0);
                 dialog.cancel();
             }
@@ -267,7 +267,7 @@ public class Dialogs {
 
     }
 
-    public static void writeDownPassword(final WalletGenActivity c){
+    public static void writeDownPassword(final WalletGenActivity c) {
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= 24) // Otherwise buttons on 7.0+ are nearly invisible
             builder = new AlertDialog.Builder(c, R.style.AlertDialogTheme);
@@ -291,10 +291,10 @@ public class Dialogs {
         builder.show();
     }
 
-    public static void importWallets(final MainActivity c, final ArrayList<File> files){
+    public static void importWallets(final MainActivity c, final ArrayList<File> files) {
         String addresses = "";
-        for(int i=0; i < files.size() && i < 3; i++)
-            addresses += WalletStorage.stripWalletName(files.get(i).getName())+"\n";
+        for (int i = 0; i < files.size() && i < 3; i++)
+            addresses += WalletStorage.stripWalletName(files.get(i).getName()) + "\n";
 
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= 24) // Otherwise buttons on 7.0+ are nearly invisible
@@ -308,8 +308,8 @@ public class Dialogs {
             public void onClick(DialogInterface dialog, int which) {
                 try {
                     WalletStorage.getInstance(c).importWallets(c, files);
-                    c.snackError("Wallet"+(files.size() > 1 ? "s" : "")+" successfully imported!");
-                    if(c.fragments != null && c.fragments[1] != null)
+                    c.snackError("Wallet" + (files.size() > 1 ? "s" : "") + " successfully imported!");
+                    if (c.fragments != null && c.fragments[1] != null)
                         ((FragmentWallets) c.fragments[1]).update();
                 } catch (Exception e) {
                     c.snackError("Error while importing wallets");
@@ -328,7 +328,7 @@ public class Dialogs {
         builder.show();
     }
 
-    public static void adDisable(Context c, final AdDialogResponseHandler res){
+    public static void adDisable(Context c, final AdDialogResponseHandler res) {
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= 24) // Otherwise buttons on 7.0+ are nearly invisible
             builder = new AlertDialog.Builder(c, R.style.AlertDialogTheme);
@@ -353,7 +353,7 @@ public class Dialogs {
         builder.show();
     }
 
-    public static void cantExportNonWallet(Context c){
+    public static void cantExportNonWallet(Context c) {
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= 24) // Otherwise buttons on 7.0+ are nearly invisible
             builder = new AlertDialog.Builder(c, R.style.AlertDialogTheme);
@@ -371,7 +371,7 @@ public class Dialogs {
         builder.show();
     }
 
-    public static void exportWallet(Context c, DialogInterface.OnClickListener yes){
+    public static void exportWallet(Context c, DialogInterface.OnClickListener yes) {
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= 24) // Otherwise buttons on 7.0+ are nearly invisible
             builder = new AlertDialog.Builder(c, R.style.AlertDialogTheme);
@@ -389,7 +389,7 @@ public class Dialogs {
         builder.show();
     }
 
-    public static void noFullWallet(Context c){
+    public static void noFullWallet(Context c) {
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= 24) // Otherwise buttons on 7.0+ are nearly invisible
             builder = new AlertDialog.Builder(c, R.style.AlertDialogTheme);
@@ -407,7 +407,7 @@ public class Dialogs {
         builder.show();
     }
 
-    public static void noWallet(Context c){
+    public static void noWallet(Context c) {
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= 24) // Otherwise buttons on 7.0+ are nearly invisible
             builder = new AlertDialog.Builder(c, R.style.AlertDialogTheme);

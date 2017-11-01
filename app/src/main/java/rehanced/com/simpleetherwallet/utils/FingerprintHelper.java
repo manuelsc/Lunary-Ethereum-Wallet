@@ -8,7 +8,7 @@ import android.support.annotation.RequiresApi;
 import rehanced.com.simpleetherwallet.interfaces.FingerprintListener;
 
 @RequiresApi(api = Build.VERSION_CODES.M)
-public class FingerprintHelper extends FingerprintManager.AuthenticationCallback{
+public class FingerprintHelper extends FingerprintManager.AuthenticationCallback {
 
     private FingerprintListener listener;
 

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#49627e"
@@ -17,43 +16,43 @@
         android:text="Legal"
         android:paddingRight="32dp"
         android:textColor="@android:color/white"
-        android:textSize="28sp"
-        />
+        android:textSize="28sp" />
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_height="0dp"
-        android:layout_weight="1">
 
-    <TextView
-        android:id="@+id/tostext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tos"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:textSize="14sp"
-        android:textColor="#ffffff" />
-    </ScrollView>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-    <CheckBox
-        android:id="@+id/checkBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+            <TextView
+                android:id="@+id/tostext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tos"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:textSize="14sp"
+                android:textColor="#ffffff" />
+        </ScrollView>
 
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="50dp"
-        android:layout_marginTop="5dp"
-        android:textColor="#fff"
-        android:theme="@style/WhiteCheck"
-        android:text="@string/app_intro_iagree" />
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="50dp"
+            android:layout_marginTop="5dp"
+            android:textColor="#fff"
+            android:theme="@style/WhiteCheck"
+            android:text="@string/app_intro_iagree" />
     </LinearLayout>
 
 </LinearLayout>

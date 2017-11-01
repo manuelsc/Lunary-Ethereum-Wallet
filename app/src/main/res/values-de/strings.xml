@@ -248,6 +248,9 @@
     <string name="dialog_disable_ad_text">Wir sind auf Spenden und Werbeeinahmen zutiefst angewiesen um Lunary weiter verbessern zu können. Wenn dich die Werbung wirklich sehr stört können wir das verstehen und lassen sie dich auch deaktivieren. Aber wenn es nicht zuviel gefragt ist würden wir dich bitten nochmal darüber nachzudenken um Lunary auch in Zukunft noch besser machen zu können.
         Dieser kleine Banner hilft uns wirklich sehr, genauso wie jede Spende. Bitte lass den Banner aktiviert oder ziehe zumindest eine kleine Spende in betracht. Im Falle einer Änderung dieser Einstellung musst du die App neu starten damit diese Effekt zeigt. Fortfahren?</string>
 
+    <string name="showcase_got_it">ALLES KLAR</string>
+    <string name="show_case_wallet_gen_text">Um ein neues Konto anzulegen klicke einfach auf das + und wähle "Erstelle neues Konto"</string>
+    <string name="show_case_backup">Um ein bestehendes Konto zu editieren oder zu sichern drücke für ein paar Sekunden auf dein Konto</string>
 
     <string name="tos"><![CDATA[
 <p><h2>Terms and Conditions ("Terms")</h2></p>

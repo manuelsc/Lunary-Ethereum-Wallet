@@ -37,7 +37,7 @@ import rehanced.com.simpleetherwallet.utils.qr.QREncoder;
 
 import static rehanced.com.simpleetherwallet.R.id.qrcode;
 
-public class RequestEtherActivity extends SecureAppCompatActivity implements View.OnClickListener{
+public class RequestEtherActivity extends SecureAppCompatActivity implements View.OnClickListener {
 
     private CoordinatorLayout coord;
     private ImageView qr;
@@ -63,7 +63,7 @@ public class RequestEtherActivity extends SecureAppCompatActivity implements Vie
         amount = (TextView) findViewById(R.id.amount);
         usdPrice = (TextView) findViewById(R.id.usdPrice);
         walletAdapter = new WalletAdapter(wallets, this, this, this);
-        LinearLayoutManager mgr  = new LinearLayoutManager(this.getApplicationContext());
+        LinearLayoutManager mgr = new LinearLayoutManager(this.getApplicationContext());
         RecyclerView.LayoutManager mLayoutManager = mgr;
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -75,19 +75,21 @@ public class RequestEtherActivity extends SecureAppCompatActivity implements Vie
         amount.addTextChangedListener(new TextWatcher() {
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s.length() != 0) {
+                if (s.length() != 0) {
                     try {
                         double amountd = Double.parseDouble(amount.getText().toString());
-                        usdPrice.setText(ExchangeCalculator.getInstance().displayUsdNicely(ExchangeCalculator.getInstance().convertToUsd(amountd))+" "+ExchangeCalculator.getInstance().getMainCurreny().getName());
+                        usdPrice.setText(ExchangeCalculator.getInstance().displayUsdNicely(ExchangeCalculator.getInstance().convertToUsd(amountd)) + " " + ExchangeCalculator.getInstance().getMainCurreny().getName());
                         updateQR();
-                    } catch(Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -96,18 +98,18 @@ public class RequestEtherActivity extends SecureAppCompatActivity implements Vie
 
         update();
         updateQR();
-        if(((AnalyticsApplication) this.getApplication()).isGooglePlayBuild()) {
+        if (((AnalyticsApplication) this.getApplication()).isGooglePlayBuild()) {
             ((AnalyticsApplication) this.getApplication()).track("Request Activity");
         }
     }
 
 
-    public void update(){
+    public void update() {
         wallets.clear();
         ArrayList<WalletDisplay> myAddresses = new ArrayList<WalletDisplay>();
         ArrayList<StorableWallet> storedAddresses = new ArrayList<StorableWallet>(WalletStorage.getInstance(this).get());
-        for(int i=0; i < storedAddresses.size(); i++){
-            if(i == 0) selectedEtherAddress = storedAddresses.get(i).getPubKey();
+        for (int i = 0; i < storedAddresses.size(); i++) {
+            if (i == 0) selectedEtherAddress = storedAddresses.get(i).getPubKey();
             myAddresses.add(new WalletDisplay(
                     AddressNameConverter.getInstance(this).get(storedAddresses.get(i).getPubKey()),
                     storedAddresses.get(i).getPubKey()
@@ -118,24 +120,24 @@ public class RequestEtherActivity extends SecureAppCompatActivity implements Vie
         walletAdapter.notifyDataSetChanged();
     }
 
-    public void snackError(String s){
-        if(coord == null) return;
+    public void snackError(String s) {
+        if (coord == null) return;
         Snackbar mySnackbar = Snackbar.make(coord, s, Snackbar.LENGTH_SHORT);
         mySnackbar.show();
     }
 
-    public void updateQR(){
+    public void updateQR() {
         int qrCodeDimention = 400;
-        String iban = "iban:"+selectedEtherAddress;
-        if(amount.getText().toString().length() > 0 && new BigDecimal(amount.getText().toString()).compareTo(new BigDecimal("0")) > 0){
-            iban += "?amount="+amount.getText().toString();
+        String iban = "iban:" + selectedEtherAddress;
+        if (amount.getText().toString().length() > 0 && new BigDecimal(amount.getText().toString()).compareTo(new BigDecimal("0")) > 0) {
+            iban += "?amount=" + amount.getText().toString();
         }
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         QREncoder qrCodeEncoder;
-        if(prefs.getBoolean("qr_encoding_erc", false)){
+        if (prefs.getBoolean("qr_encoding_erc", true)) {
             AddressEncoder temp = new AddressEncoder(selectedEtherAddress);
-            if(amount.getText().toString().length() > 0 && new BigDecimal(amount.getText().toString()).compareTo(new BigDecimal("0")) > 0)
+            if (amount.getText().toString().length() > 0 && new BigDecimal(amount.getText().toString()).compareTo(new BigDecimal("0")) > 0)
                 temp.setAmount(amount.getText().toString());
             qrCodeEncoder = new QREncoder(AddressEncoder.encodeERC(temp), null,
                     Contents.Type.TEXT, BarcodeFormat.QR_CODE.toString(), qrCodeDimention);

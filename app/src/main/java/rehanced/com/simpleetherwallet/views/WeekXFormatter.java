@@ -12,7 +12,7 @@ public class WeekXFormatter implements IAxisValueFormatter {
 
     @Override
     public String getFormattedValue(float value, AxisBase axis) {
-        c.setTimeInMillis(((long) (value))*1000);
-        return c.get(Calendar.DAY_OF_MONTH)+". ";
+        c.setTimeInMillis(((long) (value)) * 1000);
+        return c.get(Calendar.DAY_OF_MONTH) + ". ";
     }
 }

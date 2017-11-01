@@ -2,204 +2,139 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/swipeRefreshLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools" android:id="@+id/swipeRefreshLayout"
+    android:layout_width="match_parent" android:layout_height="match_parent"
     android:background="#FFFFFF">
 
-<FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="19dp"
-        android:layout_marginBottom="16dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:layout_marginTop="19dp"
+                android:layout_marginBottom="16dp">
 
-        <TextView
-            android:text="@string/fr_wallet_overall_balance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="13sp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="3dp"
-            android:layout_weight="1" />
+                <TextView android:text="@string/fr_wallet_overall_balance"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:textSize="13sp" android:layout_gravity="center"
+                    android:layout_marginBottom="3dp" android:layout_weight="1" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="3dp">
+                <LinearLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:orientation="horizontal"
+                    android:layout_marginBottom="3dp">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/wleft"
-                android:gravity="left"
-                android:src="@drawable/ic_arrow_left"
-                android:layout_weight="1" />
+                    <ImageView android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/wleft"
+                        android:gravity="left" android:src="@drawable/ic_arrow_left"
+                        android:layout_weight="1" />
 
-            <TextView
-                android:text="0.0000 ETH"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/balance"
-                android:textSize="24sp"
-                android:gravity="center"
-                android:minWidth="135dp"
-                android:textColor="@color/colorPrimaryDark"
-                android:layout_weight="1" />
+                    <TextView android:text="0.0000 ETH" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/balance"
+                        android:textSize="24sp" android:gravity="center" android:minWidth="135dp"
+                        android:textColor="@color/colorPrimaryDark" android:layout_weight="1" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/wright"
-                android:gravity="right"
-                android:src="@drawable/ic_arrow_right"
-                android:layout_weight="1" />
+                    <ImageView android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/wright"
+                        android:gravity="right" android:src="@drawable/ic_arrow_right"
+                        android:layout_weight="1" />
 
+                </LinearLayout>
             </LinearLayout>
-    </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#7aa1a1a1"/>
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="#7aa1a1a1" />
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            <RelativeLayout android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
 
+                <android.support.v7.widget.RecyclerView android:id="@+id/recycler_view"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    tools:showIn="@layout/activity_main"
+
+                    android:scrollbars="vertical" />
+
+                <com.google.android.gms.ads.AdView
+
+                    xmlns:ads="http://schemas.android.com/apk/res-auto" android:id="@+id/adView"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_below="@id/recycler_view" ads:adSize="SMART_BANNER"
+                    ads:adUnitId="ca-app-pub-8285849835347571/7306491335" />
 
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:showIn="@layout/activity_main"
+            </RelativeLayout>
 
-            android:scrollbars="vertical" />
-
-        <com.google.android.gms.ads.AdView
-
-            xmlns:ads="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/adView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/recycler_view"
-            ads:adSize="SMART_BANNER"
-            ads:adUnitId="ca-app-pub-8285849835347571/7306491335"/>
-
-
-
-    </RelativeLayout>
-
-
-
-</LinearLayout>
-    <FrameLayout
-        android:id="@+id/nothing_found"
-        android:layout_width="fill_parent"
-        android:visibility="gone"
-        android:background="#ffffff"
-        android:layout_height="fill_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-
-            android:layout_marginTop="50dp"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="70dp"
-            android:layout_marginBottom="70dp"
-            android:orientation="vertical" >
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/etherkont" />
-
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_marginTop="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#99323232"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:textSize="16dp"
-                android:gravity="center"
-                android:text="@string/no_wallet_history" />
 
         </LinearLayout>
+        <FrameLayout android:id="@+id/nothing_found" android:layout_width="fill_parent"
+            android:visibility="gone" android:background="#ffffff"
+            android:layout_height="fill_parent">
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                android:gravity="center"
+
+                android:layout_marginTop="50dp" android:layout_marginLeft="70dp"
+                android:layout_marginRight="70dp" android:layout_marginBottom="70dp"
+                android:orientation="vertical">
+
+                <ImageView android:layout_width="100dp" android:layout_height="100dp"
+                    android:src="@drawable/etherkont" />
+
+                <TextView android:id="@+id/textView1" android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:textColor="#99323232" android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp" android:textSize="16dp"
+                    android:gravity="center" android:text="@string/no_wallet_history" />
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <RelativeLayout android:layout_width="match_parent" android:fitsSystemWindows="true"
+            android:layout_height="match_parent">
+            <com.github.clans.fab.FloatingActionMenu android:id="@+id/fabmenu"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true" android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp" android:layout_marginBottom="70dp"
+                android:layout_marginLeft="10dp" android:layout_marginTop="10dp"
+                android:layout_gravity="bottom|right" fab:menu_animationDelayPerItem="20"
+                fab:menu_shadowColor="#444" fab:menu_colorNormal="@color/colorPrimary"
+                fab:menu_colorPressed="@color/colorAccent2"
+                fab:menu_colorRipple="@color/colorAccent">
+
+                <com.github.clans.fab.FloatingActionButton android:id="@+id/gen_fab"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:src="@drawable/ic_add_wallet" app:fab_colorPressed="@color/colorAccent2"
+                    app:fab_colorRipple="@color/colorAccent"
+                    app:fab_colorNormal="@color/colorPrimary"
+                    fab:menu_colorNormal="@color/colorPrimary"
+                    fab:menu_colorPressed="@color/colorAccent2"
+                    fab:menu_colorRipple="@color/colorAccent" fab:fab_label="@string/fab_gen_new" />
+
+                <com.github.clans.fab.FloatingActionButton android:id="@+id/add_fab"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:src="@drawable/ic_sacn" app:fab_colorPressed="@color/colorAccent2"
+                    app:fab_colorRipple="@color/colorAccent"
+                    app:fab_colorNormal="@color/colorPrimary"
+                    fab:menu_colorNormal="@color/colorPrimary"
+                    fab:menu_colorPressed="@color/colorAccent2"
+                    fab:menu_colorRipple="@color/colorAccent"
+                    fab:fab_label="@string/fab_add_watch" />
+
+                <com.github.clans.fab.FloatingActionButton android:id="@+id/scan_fab"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:src="@drawable/ic_scanadd" app:fab_colorPressed="@color/colorAccent2"
+                    app:fab_colorRipple="@color/colorAccent"
+                    app:fab_colorNormal="@color/colorPrimary"
+                    fab:menu_colorNormal="@color/colorPrimary"
+                    fab:menu_colorPressed="@color/colorAccent2"
+                    fab:menu_colorRipple="@color/colorAccent" fab:fab_label="@string/fab_scan" />
+
+
+            </com.github.clans.fab.FloatingActionMenu>
+        </RelativeLayout>
 
     </FrameLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:fitsSystemWindows="true"
-        android:layout_height="match_parent">
-    <com.github.clans.fab.FloatingActionMenu
-        android:id="@+id/fabmenu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="70dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="bottom|right"
-        fab:menu_animationDelayPerItem="20"
-        fab:menu_shadowColor="#444"
-        fab:menu_colorNormal="@color/colorPrimary"
-        fab:menu_colorPressed="@color/colorAccent2"
-        fab:menu_colorRipple="@color/colorAccent">
-
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/gen_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_add_wallet"
-            fab:menu_colorNormal="@color/colorPrimary"
-            fab:menu_colorPressed="@color/colorAccent2"
-            fab:menu_colorRipple="@color/colorAccent"
-            fab:fab_label="@string/fab_gen_new" />
-
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/add_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_sacn"
-            fab:menu_colorNormal="@color/colorPrimary"
-            fab:menu_colorPressed="@color/colorAccent2"
-            fab:menu_colorRipple="@color/colorAccent"
-            fab:fab_label="@string/fab_add_watch" />
-
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/scan_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_scanadd"
-            fab:menu_colorNormal="@color/colorPrimary"
-            fab:menu_colorPressed="@color/colorAccent2"
-            fab:menu_colorRipple="@color/colorAccent"
-            fab:fab_label="@string/fab_scan" />
-
-
-    </com.github.clans.fab.FloatingActionMenu>
-    </RelativeLayout>
-
-</FrameLayout>
-
-</android.support.v4.widget.SwipeRefreshLayout >
+</android.support.v4.widget.SwipeRefreshLayout>

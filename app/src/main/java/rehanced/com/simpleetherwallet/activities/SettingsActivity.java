@@ -30,13 +30,13 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void setupActionBar() {
-        ViewGroup rootView = (ViewGroup)findViewById(R.id.action_bar_root); //id from appcompat
+        ViewGroup rootView = (ViewGroup) findViewById(R.id.action_bar_root); //id from appcompat
 
         if (rootView != null) {
             View view = getLayoutInflater().inflate(R.layout.activity_settings, rootView, false);
             rootView.addView(view, 0);
 
-            Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
         }
 
@@ -70,16 +70,16 @@ public class SettingsActivity extends AppCompatActivity {
                     return true;
                 }
             });
-            if(((AnalyticsApplication)getActivity().getApplication()).isGooglePlayBuild()){
+            if (((AnalyticsApplication) getActivity().getApplication()).isGooglePlayBuild()) {
                 final SwitchPreference adSwitch = (SwitchPreference) findPreference("showAd");
                 adSwitch.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                     @Override
                     public boolean onPreferenceChange(Preference preference, Object o) {
-                        if(adSwitch.isChecked()){
+                        if (adSwitch.isChecked()) {
                             Dialogs.adDisable(getActivity(), new AdDialogResponseHandler() {
                                 @Override
                                 public void continueSettingChange(boolean mContinue) {
-                                    if(mContinue)
+                                    if (mContinue)
                                         adSwitch.setChecked(false);
                                 }
                             });

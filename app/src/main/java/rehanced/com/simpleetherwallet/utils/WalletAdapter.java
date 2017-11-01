@@ -39,8 +39,8 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.MyViewHold
             walletaddress = (AutofitTextView) view.findViewById(R.id.walletaddress);
             walletname = (TextView) view.findViewById(R.id.walletname);
             walletbalance = (TextView) view.findViewById(R.id.walletbalance);
-            addressimage= (ImageView) view.findViewById(R.id.addressimage);
-            type= (ImageView) view.findViewById(R.id.type);
+            addressimage = (ImageView) view.findViewById(R.id.addressimage);
+            type = (ImageView) view.findViewById(R.id.type);
             container = (LinearLayout) view.findViewById(R.id.container);
         }
 
@@ -81,8 +81,8 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.MyViewHold
         holder.walletaddress.setText(box.getPublicKey());
         String walletname = AddressNameConverter.getInstance(context).get(box.getPublicKey());
         holder.walletname.setText(walletname == null ? "New Wallet" : walletname);
-        if(box.getType() != WalletDisplay.CONTACT)
-            holder.walletbalance.setText(ExchangeCalculator.getInstance().displayBalanceNicely(ExchangeCalculator.getInstance().convertRate(box.getBalance(), ExchangeCalculator.getInstance().getCurrent().getRate()))+" "+ ExchangeCalculator.getInstance().getCurrencyShort());
+        if (box.getType() != WalletDisplay.CONTACT)
+            holder.walletbalance.setText(ExchangeCalculator.getInstance().displayBalanceNicely(ExchangeCalculator.getInstance().convertRate(box.getBalance(), ExchangeCalculator.getInstance().getCurrent().getRate())) + " " + ExchangeCalculator.getInstance().getCurrencyShort());
         holder.addressimage.setImageBitmap(Blockies.createIcon(box.getPublicKey()));
 
         holder.type.setVisibility(box.getType() == TransactionDisplay.NORMAL || box.getType() == WalletDisplay.CONTACT ? View.INVISIBLE : View.VISIBLE);

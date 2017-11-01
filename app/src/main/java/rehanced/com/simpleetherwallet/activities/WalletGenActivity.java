@@ -45,49 +45,49 @@ public class WalletGenActivity extends SecureAppCompatActivity {
             }
         });
 
-        if(getIntent().hasExtra("PRIVATE_KEY")){
-            privateKeyProvided  = getIntent().getStringExtra("PRIVATE_KEY");
+        if (getIntent().hasExtra("PRIVATE_KEY")) {
+            privateKeyProvided = getIntent().getStringExtra("PRIVATE_KEY");
             walletGenText.setText(getResources().getText(R.string.import_text));
             toolbar_title.setText(R.string.import_title);
             mEmailSignInButton.setText(R.string.import_button);
         }
 
-        if(((AnalyticsApplication) this.getApplication()).isGooglePlayBuild()) {
+        if (((AnalyticsApplication) this.getApplication()).isGooglePlayBuild()) {
             ((AnalyticsApplication) this.getApplication()).track("Walletgen Activity");
         }
     }
 
     private void genCheck() {
-        if(! passwordConfirm.getText().toString().equals(password.getText().toString())){
+        if (!passwordConfirm.getText().toString().equals(password.getText().toString())) {
             snackError(getResources().getString(R.string.error_incorrect_password));
             return;
         }
-        if(! isPasswordValid(passwordConfirm.getText().toString())){
+        if (!isPasswordValid(passwordConfirm.getText().toString())) {
             snackError(getResources().getString(R.string.error_invalid_password));
             return;
         }
         Dialogs.writeDownPassword(this);
     }
 
-    public void gen(){
+    public void gen() {
         Settings.walletBeingGenerated = true; // Lock so a user can only generate one wallet at a time
 
         // For statistics only
-        if(((AnalyticsApplication) this.getApplication()).isGooglePlayBuild()) {
+        if (((AnalyticsApplication) this.getApplication()).isGooglePlayBuild()) {
             ((AnalyticsApplication) this.getApplication()).event("Wallet generated");
         }
 
         Intent data = new Intent();
         data.putExtra("PASSWORD", passwordConfirm.getText().toString());
-        if(privateKeyProvided != null)
+        if (privateKeyProvided != null)
             data.putExtra("PRIVATE_KEY", privateKeyProvided);
         setResult(RESULT_OK, data);
         finish();
     }
 
 
-    public void snackError(String s){
-        if(coord == null) return;
+    public void snackError(String s) {
+        if (coord == null) return;
         Snackbar mySnackbar = Snackbar.make(coord, s, Snackbar.LENGTH_SHORT);
         mySnackbar.show();
     }
@@ -95,8 +95,6 @@ public class WalletGenActivity extends SecureAppCompatActivity {
     private boolean isPasswordValid(String password) {
         return password.length() >= 9;
     }
-
-
 
 
 }

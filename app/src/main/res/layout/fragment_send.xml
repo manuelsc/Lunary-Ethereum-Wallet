@@ -1,8 +1,5 @@
-<android.support.v4.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -33,7 +30,7 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:background="#7aa1a1a1"/>
+                android:background="#7aa1a1a1" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -56,6 +53,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_height="match_parent">
+
                     <TextView
                         android:id="@+id/fromName"
                         android:text=""
@@ -64,8 +62,8 @@
                         android:layout_marginTop="5dp"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        android:textColor="@color/colorPrimaryDark"
-                        />
+                        android:textColor="@color/colorPrimaryDark" />
+
                     <Spinner
                         android:id="@+id/spinner"
                         android:layout_width="match_parent"
@@ -88,7 +86,7 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:background="#7aa1a1a1"/>
+                android:background="#7aa1a1a1" />
 
 
             <LinearLayout
@@ -110,6 +108,7 @@
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
                     <TextView
                         android:id="@+id/toName"
                         android:text=""
@@ -196,7 +195,7 @@
                         android:layout_marginTop="1dp"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="13sp"
-                        android:text="/"/>
+                        android:text="/" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -344,7 +343,7 @@
                         android:layout_marginTop="1dp"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="13sp"
-                        android:text="/"/>
+                        android:text="/" />
 
 
                     <LinearLayout
@@ -386,7 +385,7 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:background="#7aa1a1a1"/>
+                android:background="#7aa1a1a1" />
 
 
             <SeekBar
@@ -422,6 +421,7 @@
                     android:layout_marginTop="5dp"
                     android:gravity="center"
                     android:layout_weight="1">
+
                     <TextView
                         android:id="@+id/gasText"
                         android:text="12"
@@ -469,6 +469,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_height="wrap_content">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -480,7 +481,7 @@
                         android:layout_width="wrap_content"
                         android:layout_marginLeft="4dp"
                         android:layout_height="22dp"
-                        android:src="@drawable/ic_action_expand"/>
+                        android:src="@drawable/ic_action_expand" />
 
                 </LinearLayout>
 
@@ -489,7 +490,7 @@
                     android:layout_height="1dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"
-                    android:background="#7aa1a1a1"/>
+                    android:background="#7aa1a1a1" />
             </LinearLayout>
 
             <LinearLayout
@@ -507,7 +508,7 @@
                     android:layout_marginLeft="25dp"
                     android:layout_marginRight="25dp"
                     android:layout_marginBottom="5dp"
-                    android:text="@string/send_expert_warning"/>
+                    android:text="@string/send_expert_warning" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -519,7 +520,7 @@
                     <TextView
                         android:layout_width="90dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/data"/>
+                        android:text="@string/data" />
 
                     <EditText
                         android:id="@+id/data"
@@ -543,7 +544,7 @@
                     <TextView
                         android:layout_width="90dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/gas_limit"/>
+                        android:text="@string/gas_limit" />
 
                     <EditText
                         android:id="@+id/gaslimit"
@@ -618,7 +619,7 @@
                         android:layout_marginTop="1dp"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="13sp"
-                        android:text="/"/>
+                        android:text="/" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -657,7 +658,7 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
-                android:background="#7aa1a1a1"/>
+                android:background="#7aa1a1a1" />
 
             <Button
                 android:id="@+id/send"
@@ -668,7 +669,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:text="@string/fragment_send_send_button"/>
+                android:text="@string/fragment_send_send_button" />
 
         </LinearLayout>
 

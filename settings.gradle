@@ -1,1 +1,1 @@
-include ':app', ':materialdrawer', ':MPChartLib', ':Fab', ':ratethisapp', ':autofittextview', ':appintro'
+include ':app'

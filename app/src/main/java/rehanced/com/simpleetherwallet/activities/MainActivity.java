@@ -48,7 +48,7 @@ import rehanced.com.simpleetherwallet.utils.OwnWalletUtils;
 import rehanced.com.simpleetherwallet.utils.Settings;
 import rehanced.com.simpleetherwallet.utils.WalletStorage;
 
-public class MainActivity extends SecureAppCompatActivity implements NetworkUpdateListener{
+public class MainActivity extends SecureAppCompatActivity implements NetworkUpdateListener {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
@@ -57,6 +57,7 @@ public class MainActivity extends SecureAppCompatActivity implements NetworkUpda
     private CoordinatorLayout coord;
     private SharedPreferences preferences;
     private AppBarLayout appbar;
+    private int generateRefreshCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +66,7 @@ public class MainActivity extends SecureAppCompatActivity implements NetworkUpda
 
         // App Intro
         preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        if(preferences.getLong("APP_INSTALLED", 0) == 0){
+        if (preferences.getLong("APP_INSTALLED", 0) == 0) {
             Intent intro = new Intent(this, rehanced.com.simpleetherwallet.activities.AppIntroActivity.class);
             startActivityForResult(intro, rehanced.com.simpleetherwallet.activities.AppIntroActivity.REQUEST_CODE);
         }
@@ -117,7 +118,7 @@ public class MainActivity extends SecureAppCompatActivity implements NetworkUpda
                     }
                 });
 
-        if(! ((AnalyticsApplication) this.getApplication()).isGooglePlayBuild()) {
+        if (!((AnalyticsApplication) this.getApplication()).isGooglePlayBuild()) {
             wip.addDrawerItems(new PrimaryDrawerItem().withName(getResources().getString(R.string.drawer_donate)).withIcon(R.drawable.ic_action_donate));
         }
 
@@ -158,29 +159,35 @@ public class MainActivity extends SecureAppCompatActivity implements NetworkUpda
         Settings.initiate(this);
         NotificationLauncher.getInstance().start(this);
 
-        if(getIntent().hasExtra("STARTAT")){ //  Click on Notification, show Transactions
-            if(tabLayout != null)
+        if (getIntent().hasExtra("STARTAT")) { //  Click on Notification, show Transactions
+            if (tabLayout != null)
                 tabLayout.getTabAt(getIntent().getIntExtra("STARTAT", 2)).select();
             broadCastDataSetChanged();
-        } else if(Settings.startWithWalletTab){ // if enabled in setting select wallet tab instead of price tab
-            if(tabLayout != null)
+        } else if (Settings.startWithWalletTab) { // if enabled in setting select wallet tab instead of price tab
+            if (tabLayout != null)
                 tabLayout.getTabAt(1).select();
         }
 
         mViewPager.setOffscreenPageLimit(3);
 
         // Rate Dialog (only show on google play builds)
-        if(((AnalyticsApplication) this.getApplication()).isGooglePlayBuild()) {
+        if (((AnalyticsApplication) this.getApplication()).isGooglePlayBuild()) {
             try {
                 RateThisApp.onCreate(this);
                 RateThisApp.Config config = new RateThisApp.Config(3, 5);
                 RateThisApp.init(config);
                 RateThisApp.showRateDialogIfNeeded(this, R.style.AlertDialogTheme);
-            } catch (Exception e) {}
+            } catch (Exception e) {
+            }
         }
         //Security.removeProvider("BC");
         Security.insertProviderAt(new org.spongycastle.jce.provider.BouncyCastleProvider(), 1);
 
+    }
+
+    public void setSelectedPage(int i){
+        if(mViewPager != null)
+            mViewPager.setCurrentItem(i, true);
     }
 
     // Spongy Castle Provider
@@ -188,7 +195,7 @@ public class MainActivity extends SecureAppCompatActivity implements NetworkUpda
         Security.insertProviderAt(new org.spongycastle.jce.provider.BouncyCastleProvider(), 1);
     }
 
-    public SharedPreferences getPreferences(){
+    public SharedPreferences getPreferences() {
         return preferences;
     }
 
@@ -197,17 +204,18 @@ public class MainActivity extends SecureAppCompatActivity implements NetworkUpda
         switch (requestCode) {
             case ExternalStorageHandler.REQUEST_WRITE_STORAGE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if(fragments != null && fragments[1] != null)
-                        ((FragmentWallets)fragments[1]).export();
+                    if (fragments != null && fragments[1] != null)
+                        ((FragmentWallets) fragments[1]).export();
                 } else {
                     snackError(getString(R.string.main_grant_permission_export));
                 }
                 return;
-            }case ExternalStorageHandler.REQUEST_READ_STORAGE: {
+            }
+            case ExternalStorageHandler.REQUEST_READ_STORAGE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     try {
                         WalletStorage.getInstance(this).importingWalletsDetector(this);
-                    } catch(Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 } else {
@@ -219,14 +227,14 @@ public class MainActivity extends SecureAppCompatActivity implements NetworkUpda
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         broadCastDataSetChanged();
 
         // Update wallets if activity resumed and a new wallet was found (finished generation or added as watch only address)
-        if(fragments != null && fragments[1] != null && WalletStorage.getInstance(this).get().size() != ((FragmentWallets)fragments[1]).getDisplayedWalletCount()){
+        if (fragments != null && fragments[1] != null && WalletStorage.getInstance(this).get().size() != ((FragmentWallets) fragments[1]).getDisplayedWalletCount()) {
             try {
-                ((FragmentWallets)fragments[1]).update();
+                ((FragmentWallets) fragments[1]).update();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -234,7 +242,7 @@ public class MainActivity extends SecureAppCompatActivity implements NetworkUpda
     }
 
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
        /* if(preferences == null)
             preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -250,7 +258,7 @@ public class MainActivity extends SecureAppCompatActivity implements NetworkUpda
             if (resultCode == RESULT_OK) {
                 byte type = data.getByteExtra("TYPE", rehanced.com.simpleetherwallet.activities.QRScanActivity.SCAN_ONLY);
                 if (type == rehanced.com.simpleetherwallet.activities.QRScanActivity.SCAN_ONLY) {
-                    if(data.getStringExtra("ADDRESS").length() != 42 || ! data.getStringExtra("ADDRESS").startsWith("0x")) {
+                    if (data.getStringExtra("ADDRESS").length() != 42 || !data.getStringExtra("ADDRESS").startsWith("0x")) {
                         snackError("Invalid Ethereum address!");
                         return;
                     }
@@ -258,7 +266,7 @@ public class MainActivity extends SecureAppCompatActivity implements NetworkUpda
                     watch.putExtra("ADDRESS", data.getStringExtra("ADDRESS"));
                     startActivity(watch);
                 } else if (type == rehanced.com.simpleetherwallet.activities.QRScanActivity.ADD_TO_WALLETS) {
-                    if(data.getStringExtra("ADDRESS").length() != 42 || ! data.getStringExtra("ADDRESS").startsWith("0x")) {
+                    if (data.getStringExtra("ADDRESS").length() != 42 || !data.getStringExtra("ADDRESS").startsWith("0x")) {
                         snackError("Invalid Ethereum address!");
                         return;
                     }
@@ -313,6 +321,25 @@ public class MainActivity extends SecureAppCompatActivity implements NetworkUpda
                 if (data.hasExtra("PRIVATE_KEY"))
                     generatingService.putExtra("PRIVATE_KEY", data.getStringExtra("PRIVATE_KEY"));
                 startService(generatingService);
+
+                final Handler handler = new Handler();
+                generateRefreshCount = 0;
+                final int walletcount = WalletStorage.getInstance(this).getFullOnly().size();
+                Runnable runnable = new Runnable() {
+                    public void run() {
+                        try {
+                            if(walletcount < WalletStorage.getInstance(MainActivity.this).getFullOnly().size()) {
+                                ((FragmentWallets) fragments[1]).update();
+                                return;
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        if (generateRefreshCount++ < 8)
+                            handler.postDelayed(this, 3000);
+                    }
+                };
+                handler.postDelayed(runnable, 4000);
             }
         } else if (requestCode == rehanced.com.simpleetherwallet.activities.SendActivity.REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
@@ -358,29 +385,29 @@ public class MainActivity extends SecureAppCompatActivity implements NetworkUpda
         }
     }
 
-    public void importPrivateKey(String privatekey){
+    public void importPrivateKey(String privatekey) {
         Intent genI = new Intent(this, rehanced.com.simpleetherwallet.activities.WalletGenActivity.class);
         genI.putExtra("PRIVATE_KEY", privatekey);
         startActivityForResult(genI, rehanced.com.simpleetherwallet.activities.WalletGenActivity.REQUEST_CODE);
     }
 
-    public void snackError(String s, int length){
-        if(coord == null) return;
+    public void snackError(String s, int length) {
+        if (coord == null) return;
         Snackbar mySnackbar = Snackbar.make(coord, s, length);
         mySnackbar.show();
     }
 
-    public void snackError(String s){
+    public void snackError(String s) {
         snackError(s, Snackbar.LENGTH_SHORT);
     }
 
     private void selectItem(int position) {
         switch (position) {
-            case 1:{
+            case 1: {
                 try {
                     WalletStorage.getInstance(this).importingWalletsDetector(this);
 
-                } catch(Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 break;
@@ -396,7 +423,7 @@ public class MainActivity extends SecureAppCompatActivity implements NetworkUpda
                         .setMessage("Lunary is published under GPL3\n" +
                                 "Developed by Manuel S. C. for Rehanced, 2017\n"
                                 + "www.rehanced.com\n" +
-                                getString(R.string.translator_name)+"\n"+
+                                getString(R.string.translator_name) + "\n" +
                                 "\nCredits:\n" +
                                 "MaterialDrawer by Mike Penz\n" +
                                 "MPAndroidChart by Philipp Jahoda\n" +
@@ -404,12 +431,12 @@ public class MainActivity extends SecureAppCompatActivity implements NetworkUpda
                                 "XZING\n" +
                                 "FloatingActionButton by Dmytro Tarianyk\n" +
                                 "RateThisApp by Keisuke Kobayashi\n" +
-                                "AppIntro by Maximilian Narr\n"+
-                                "Material Dialogs by Aidan Michael Follestad\n"+
-                                "Poloniex for price data\n"+
+                                "AppIntro by Maximilian Narr\n" +
+                                "Material Dialogs by Aidan Michael Follestad\n" +
+                                "Poloniex for price data\n" +
                                 "Web3j by Conor Svensson\n" +
-                                "PatternLock by Zhang Hai\n"+
-                                "Ethereum Foundation for usage of the icon according to (CC A 3.0)\n"+
+                                "PatternLock by Zhang Hai\n" +
+                                "Ethereum Foundation for usage of the icon according to (CC A 3.0)\n" +
                                 "Powered by Etherscan.io APIs\n" +
                                 "Token balances powered by Ethplorer.io\n\n" +
                                 "Lunary is published under GPL3\n" +
@@ -425,7 +452,7 @@ public class MainActivity extends SecureAppCompatActivity implements NetworkUpda
                 break;
             }
             case 5: {
-                if(WalletStorage.getInstance(this).getFullOnly().size() == 0){
+                if (WalletStorage.getInstance(this).getFullOnly().size() == 0) {
                     Dialogs.noFullWallet(this);
                 } else {
                     Intent donate = new Intent(this, SendActivity.class);
@@ -440,8 +467,8 @@ public class MainActivity extends SecureAppCompatActivity implements NetworkUpda
         }
     }
 
-    public void broadCastDataSetChanged(){
-        if(fragments != null && fragments[1] != null && fragments[2] != null) {
+    public void broadCastDataSetChanged() {
+        if (fragments != null && fragments[1] != null && fragments[2] != null) {
             ((FragmentWallets) fragments[1]).notifyDataSetChanged();
             ((FragmentTransactionsAll) fragments[2]).notifyDataSetChanged();
         }
@@ -453,7 +480,7 @@ public class MainActivity extends SecureAppCompatActivity implements NetworkUpda
             @Override
             public void run() {
                 broadCastDataSetChanged();
-                if(fragments != null && fragments[0] != null ) {
+                if (fragments != null && fragments[0] != null) {
                     ((FragmentPrice) fragments[0]).update();
                 }
             }
@@ -482,7 +509,7 @@ public class MainActivity extends SecureAppCompatActivity implements NetworkUpda
         }
     }
 
-    public AppBarLayout getAppBar(){
+    public AppBarLayout getAppBar() {
         return appbar;
     }
 }

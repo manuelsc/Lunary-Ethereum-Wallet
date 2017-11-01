@@ -42,7 +42,7 @@ public class WalletGenService extends IntentService {
         String password = intent.getStringExtra("PASSWORD");
         String privatekey = "";
 
-        if(intent.hasExtra("PRIVATE_KEY")){
+        if (intent.hasExtra("PRIVATE_KEY")) {
             normalMode = false;
             privatekey = intent.getStringExtra("PRIVATE_KEY");
         }
@@ -50,18 +50,18 @@ public class WalletGenService extends IntentService {
         sendNotification();
         try {
             String walletAddress;
-            if(normalMode) { // Create new key
+            if (normalMode) { // Create new key
                 walletAddress = OwnWalletUtils.generateNewWalletFile(password, new File(this.getFilesDir(), ""), true);
             } else { // Privatekey passed
                 ECKeyPair keys = ECKeyPair.create(Hex.decode(privatekey));
                 walletAddress = OwnWalletUtils.generateWalletFile(password, keys, new File(this.getFilesDir(), ""), true);
             }
 
-            WalletStorage.getInstance(this).add(new FullWallet("0x"+walletAddress, walletAddress), this);
-            AddressNameConverter.getInstance(this).put("0x"+walletAddress, "Wallet "+("0x"+walletAddress).substring(0, 6), this);
+            WalletStorage.getInstance(this).add(new FullWallet("0x" + walletAddress, walletAddress), this);
+            AddressNameConverter.getInstance(this).put("0x" + walletAddress, "Wallet " + ("0x" + walletAddress).substring(0, 6), this);
             Settings.walletBeingGenerated = false;
 
-            finished("0x"+walletAddress);
+            finished("0x" + walletAddress);
         } catch (CipherException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -75,7 +75,7 @@ public class WalletGenService extends IntentService {
         }
     }
 
-    private void sendNotification(){
+    private void sendNotification() {
         builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setColor(0x2d435c)
@@ -90,7 +90,7 @@ public class WalletGenService extends IntentService {
         mNotifyMgr.notify(mNotificationId, builder.build());
     }
 
-    private void finished(String address){
+    private void finished(String address) {
         builder
                 .setContentTitle(normalMode ? getString(R.string.notification_wallgen_finished) : getString(R.string.notification_wallimp_finished))
                 .setLargeIcon(Blockies.createIcon(address.toLowerCase()))
@@ -103,7 +103,7 @@ public class WalletGenService extends IntentService {
                 .setContentText(getString(R.string.notification_click_to_view));
 
         if (android.os.Build.VERSION.SDK_INT >= 18) // Android bug in 4.2, just disable it for everyone then...
-            builder.setVibrate(new long[] { 1000, 1000});
+            builder.setVibrate(new long[]{1000, 1000});
 
         Intent main = new Intent(this, MainActivity.class);
         main.putExtra("STARTAT", 1);

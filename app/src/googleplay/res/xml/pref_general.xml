@@ -1,71 +1,47 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <SwitchPreference
-        android:defaultValue="false"
-        android:key="zeroAmountSwitch"
+    <SwitchPreference android:defaultValue="false" android:key="zeroAmountSwitch"
         android:summary="@string/pref_description_social_recommendations"
         android:title="@string/pref_title_social_recommendations" />
 
 
-    <SwitchPreference
-        android:defaultValue="false"
-        android:key="startAtWallet"
-        android:summary="@string/pref_sum_start"
-        android:title="@string/pref_title_start" />
+    <SwitchPreference android:defaultValue="true" android:key="startAtWallet"
+        android:summary="@string/pref_sum_start" android:title="@string/pref_title_start" />
 
 
-    <SwitchPreference
-        android:defaultValue="true"
-        android:key="notifications_new_message"
+    <SwitchPreference android:defaultValue="true" android:key="notifications_new_message"
         android:title="@string/pref_title_new_message_notifications"
         android:summary="@string/pref_title_new_message_notifications_sum" />
 
 
-    <ListPreference
-        android:defaultValue="3"
-        android:entries="@array/pref_sync_frequency_titles"
-        android:entryValues="@array/pref_sync_frequency_values"
-        android:key="sync_frequency"
-        android:negativeButtonText="@null"
-        android:positiveButtonText="@null"
+    <ListPreference android:defaultValue="3" android:entries="@array/pref_sync_frequency_titles"
+        android:entryValues="@array/pref_sync_frequency_values" android:key="sync_frequency"
+        android:negativeButtonText="@null" android:positiveButtonText="@null"
         android:title="@string/pref_title_sync_frequency"
-        android:summary="@string/pref_sum_sync_frequency"/>
+        android:summary="@string/pref_sum_sync_frequency" />
 
 
-    <ListPreference
-        android:entries="@array/pref_currencys"
-        android:entryValues="@array/pref_currencys"
-        android:key="maincurrency"
-        android:summary="%s"
-        android:negativeButtonText="@null"
-        android:positiveButtonText="@null"
+    <ListPreference android:entries="@array/pref_currencys"
+        android:entryValues="@array/pref_currencys" android:key="maincurrency" android:summary="%s"
+        android:negativeButtonText="@null" android:positiveButtonText="@null"
         android:title="@string/pref_currencys_title" />
 
-    <PreferenceCategory
-        android:title="@string/prefs_cat_security">
-    <SwitchPreference
-        android:defaultValue="false"
-        android:key="use_app_lock"
-        android:title="@string/prefs_lock_with_pw"
-        android:summary="@string/prefs_lock_with_pw_sum" />
+    <PreferenceCategory android:title="@string/prefs_cat_security">
+        <SwitchPreference android:defaultValue="false" android:key="use_app_lock"
+            android:title="@string/prefs_lock_with_pw"
+            android:summary="@string/prefs_lock_with_pw_sum" />
 
-    <PreferenceScreen
-        android:title="@string/prefs_set_pw"
-        android:summary="@string/prefs_set_pw_sum">
+        <PreferenceScreen android:title="@string/prefs_set_pw"
+            android:summary="@string/prefs_set_pw_sum">
 
-        <intent android:action="rehanced.com.simpleetherwallet.activities.SetAppLockActivity"/>
-    </PreferenceScreen>
+            <intent android:action="rehanced.com.simpleetherwallet.activities.SetAppLockActivity" />
+        </PreferenceScreen>
     </PreferenceCategory>
 
-    <PreferenceCategory
-        android:title="@string/setting_cat_advanced">
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="qr_encoding_erc"
+    <PreferenceCategory android:title="@string/setting_cat_advanced">
+        <SwitchPreference android:defaultValue="true" android:key="qr_encoding_erc"
             android:title="@string/setting_erc_qr_encoding" />
-        <SwitchPreference
-            android:defaultValue="true"
-            android:key="showAd"
+        <SwitchPreference android:defaultValue="true" android:key="showAd"
             android:title="@string/setting_show_ad" />
 
     </PreferenceCategory>

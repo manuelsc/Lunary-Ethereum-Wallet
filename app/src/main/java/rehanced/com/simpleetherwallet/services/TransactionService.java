@@ -72,18 +72,18 @@ public class TransactionService extends IntentService {
                         );
 
                         Log.d("txx",
-                                "Nonce: "+tx.getNonce()+"\n"+
-                                        "gasPrice: "+tx.getGasPrice()+"\n"+
-                                        "gasLimit: "+tx.getGasLimit()+"\n"+
-                                        "To: "+tx.getTo()+"\n"+
-                                        "Amount: "+tx.getValue()+"\n"+
-                                        "Data: "+tx.getData()
+                                "Nonce: " + tx.getNonce() + "\n" +
+                                        "gasPrice: " + tx.getGasPrice() + "\n" +
+                                        "gasLimit: " + tx.getGasLimit() + "\n" +
+                                        "To: " + tx.getTo() + "\n" +
+                                        "Amount: " + tx.getValue() + "\n" +
+                                        "Data: " + tx.getData()
                         );
 
-                        byte [] signed = TransactionEncoder.signMessage(tx, (byte) 1, keys);
+                        byte[] signed = TransactionEncoder.signMessage(tx, (byte) 1, keys);
 
                         forwardTX(signed);
-                    } catch(Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                         error("Can't connect to network, retry it later");
                     }
@@ -96,7 +96,7 @@ public class TransactionService extends IntentService {
         }
     }
 
-    private void forwardTX(byte [] signed) throws IOException {
+    private void forwardTX(byte[] signed) throws IOException {
         EtherscanAPI.getInstance().forwardTransaction("0x" + Hex.toHexString(signed), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -106,13 +106,13 @@ public class TransactionService extends IntentService {
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
                 String received = response.body().string();
-                try{
+                try {
                     suc(new JSONObject(received).getString("result"));
-                }catch(Exception e){
+                } catch (Exception e) {
                     // Advanced error handling. If etherscan returns error message show the shortened version in notification. Else abbort with unknown error
                     try {
                         String errormsg = new JSONObject(received).getJSONObject("error").getString("message");
-                        if(errormsg.indexOf(".") > 0)
+                        if (errormsg.indexOf(".") > 0)
                             errormsg = errormsg.substring(0, errormsg.indexOf("."));
                         error(errormsg); // f.E Insufficient funds
                     } catch (JSONException e1) {
@@ -123,7 +123,7 @@ public class TransactionService extends IntentService {
         });
     }
 
-    private void suc(String hash){
+    private void suc(String hash) {
         builder
                 .setContentTitle(getString(R.string.notification_transfersuc))
                 .setProgress(100, 100, false)
@@ -145,7 +145,7 @@ public class TransactionService extends IntentService {
         mNotifyMgr.notify(mNotificationId, builder.build());
     }
 
-    private void error(String err){
+    private void error(String err) {
         builder
                 .setContentTitle(getString(R.string.notification_transferfail))
                 .setProgress(100, 100, false)
@@ -166,7 +166,7 @@ public class TransactionService extends IntentService {
         mNotifyMgr.notify(mNotificationId, builder.build());
     }
 
-    private void sendNotification(){
+    private void sendNotification() {
         builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setColor(0x2d435c)

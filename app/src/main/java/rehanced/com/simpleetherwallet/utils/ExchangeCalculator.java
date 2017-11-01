@@ -28,15 +28,16 @@ public class ExchangeCalculator {
     private DecimalFormat formatterCrypt = new DecimalFormat("#,###,###.####");
     private DecimalFormat formatterCryptExact = new DecimalFormat("#,###,###.#######");
 
-    private ExchangeCalculator(){}
+    private ExchangeCalculator() {
+    }
 
-    public static ExchangeCalculator getInstance(){
-        if(instance == null)
+    public static ExchangeCalculator getInstance() {
+        if (instance == null)
             instance = new ExchangeCalculator();
         return instance;
     }
 
-    private CurrencyEntry[] conversionNames = new CurrencyEntry []{
+    private CurrencyEntry[] conversionNames = new CurrencyEntry[]{
             new CurrencyEntry("ETH", 1, "Ξ"),
             new CurrencyEntry("BTC", 0.07, "฿"),
             new CurrencyEntry("USD", 0, "$")
@@ -44,56 +45,56 @@ public class ExchangeCalculator {
 
     private int index = 0;
 
-    public void setIndex(int index){
+    public void setIndex(int index) {
         this.index = index;
     }
 
-    public int getIndex(){
+    public int getIndex() {
         return index;
     }
 
-    public double getRateForChartDisplay(){
+    public double getRateForChartDisplay() {
         return rateForChartDisplay;
     }
 
-    public CurrencyEntry next(){
+    public CurrencyEntry next() {
         index = (index + 1) % conversionNames.length;
         return conversionNames[index];
     }
 
-    public CurrencyEntry getCurrent(){
+    public CurrencyEntry getCurrent() {
         return conversionNames[index];
     }
 
-    public CurrencyEntry previous(){
+    public CurrencyEntry previous() {
         index = index > 0 ? index - 1 : conversionNames.length - 1;
         return conversionNames[index];
     }
 
-    public CurrencyEntry getMainCurreny(){
+    public CurrencyEntry getMainCurreny() {
         return conversionNames[2];
     }
 
-    public CurrencyEntry getEtherCurrency(){
+    public CurrencyEntry getEtherCurrency() {
         return conversionNames[0];
     }
 
-    public String getCurrencyShort(){
+    public String getCurrencyShort() {
         return conversionNames[index].getShorty();
     }
 
-    public String displayBalanceNicely(double d){
-        if(index == 2)
+    public String displayBalanceNicely(double d) {
+        if (index == 2)
             return displayUsdNicely(d);
         else
             return displayEthNicely(d);
     }
 
-    public String displayUsdNicely(double d){
+    public String displayUsdNicely(double d) {
         return formatterUsd.format(d);
     }
 
-    public String displayEthNicely(double d){
+    public String displayEthNicely(double d) {
         return formatterCrypt.format(d);
     }
 
@@ -103,18 +104,19 @@ public class ExchangeCalculator {
 
     /**
      * Converts given tokenbalance to ETH
+     *
      * @param tokenbalance native token balance
-     * @param tokenusd price in USD for each token
+     * @param tokenusd     price in USD for each token
      * @return Ether worth of given tokens
      */
-    public double convertTokenToEther(double tokenbalance, double tokenusd){
-        return Math.floor((( (tokenbalance * tokenusd) / conversionNames[2].getRate()) * 10000 )) / 10000;
+    public double convertTokenToEther(double tokenbalance, double tokenusd) {
+        return Math.floor((((tokenbalance * tokenusd) / conversionNames[2].getRate()) * 10000)) / 10000;
     }
 
-    public double convertRate(double balance, double rate){
-        if(index == 2) {
+    public double convertRate(double balance, double rate) {
+        if (index == 2) {
             if (balance * rate >= 100000) // dont display cents if bigger than 100k
-                return (int)Math.floor(balance * rate);
+                return (int) Math.floor(balance * rate);
             return Math.floor(balance * rate * 100) / 100;
         } else {
             if (balance * rate >= 1000)
@@ -125,64 +127,65 @@ public class ExchangeCalculator {
         }
     }
 
-    public double weiToEther(long weis){
+    public double weiToEther(long weis) {
         return new BigDecimal(weis).divide(ONE_ETHER, 8, BigDecimal.ROUND_DOWN).doubleValue();
     }
 
-    public String convertRateExact(BigDecimal balance, double rate){
-        if(index == 2) {
+    public String convertRateExact(BigDecimal balance, double rate) {
+        if (index == 2) {
             return displayUsdNicely(Math.floor(balance.doubleValue() * rate * 100) / 100) + "";
         } else
             return displayEthNicelyExact(balance.multiply(new BigDecimal(rate)).setScale(7, RoundingMode.CEILING).doubleValue());
     }
 
-    public double convertToUsd(double balance){
+    public double convertToUsd(double balance) {
         return Math.floor(balance * getUSDPrice() * 100) / 100;
     }
 
     /**
      * Used for DetailFragmentOverview "Overall Balance"
+     *
      * @param token List of all tokens on an address
      * @return ether price of all tokens combined (exclusive ether balance itself)
      */
-    public double sumUpTokenEther(List<TokenDisplay> token){
+    public double sumUpTokenEther(List<TokenDisplay> token) {
         double summedEther = 0;
-        for(TokenDisplay t : token){
-            if(t.getShorty().equals("ETH")) continue;
+        for (TokenDisplay t : token) {
+            if (t.getShorty().equals("ETH")) continue;
             summedEther += convertTokenToEther(t.getBalanceDouble(), t.getUsdprice());
         }
         return summedEther;
     }
 
-    public double getUSDPrice(){
+    public double getUSDPrice() {
         return Math.floor(conversionNames[2].getRate() * 100) / 100;
     }
 
-    public double getBTCPrice(){
+    public double getBTCPrice() {
         return Math.floor(conversionNames[1].getRate() * 10000) / 10000;
     }
 
     public void updateExchangeRates(final String currency, final NetworkUpdateListener update) throws IOException {
-        if(lastUpdateTimestamp + 40*60*1000 > System.currentTimeMillis() && currency.equals(conversionNames[2].getName())){ // Dont refresh if not older than 40 min and currency hasnt changed
+        if (lastUpdateTimestamp + 40 * 60 * 1000 > System.currentTimeMillis() && currency.equals(conversionNames[2].getName())) { // Dont refresh if not older than 40 min and currency hasnt changed
             return;
         }
-        if(! currency.equals(conversionNames[2].getName())){
+        if (!currency.equals(conversionNames[2].getName())) {
             conversionNames[2].setName(currency);
-            if(currency.equals("USD"))
+            if (currency.equals("USD"))
                 conversionNames[2].setShorty("$");
-            else if(currency.equals("EUR"))
+            else if (currency.equals("EUR"))
                 conversionNames[2].setShorty("€");
-            else if(currency.equals("GPB"))
+            else if (currency.equals("GPB"))
                 conversionNames[2].setShorty("£");
-            else if(currency.equals("AUD"))
+            else if (currency.equals("AUD"))
                 conversionNames[2].setShorty("$");
-            else if(currency.equals("RUB"))
+            else if (currency.equals("RUB"))
                 conversionNames[2].setShorty("р");
-            else if(currency.equals("CHF"))
+            else if (currency.equals("CHF"))
                 conversionNames[2].setShorty("Fr");
-            else if(currency.equals("CAD"))
+            else if (currency.equals("CAD"))
                 conversionNames[2].setShorty("$");
-            else if(currency.equals("JPY"))
+            else if (currency.equals("JPY"))
                 conversionNames[2].setShorty("¥");
 
             else
@@ -192,7 +195,8 @@ public class ExchangeCalculator {
         //Log.d("updateingn", "Initialize price update");
         EtherscanAPI.getInstance().getEtherPrice(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {}
+            public void onFailure(Call call, IOException e) {
+            }
 
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
@@ -201,7 +205,7 @@ public class ExchangeCalculator {
 
                     conversionNames[1].setRate(data.getDouble("ethbtc"));
                     conversionNames[2].setRate(data.getDouble("ethusd"));
-                    if(!currency.equals("USD"))
+                    if (!currency.equals("USD"))
                         convert(currency, update);
                     else
                         update.onUpdate(response);
@@ -214,9 +218,10 @@ public class ExchangeCalculator {
     }
 
     private void convert(final String currency, final NetworkUpdateListener update) throws IOException {
-        EtherscanAPI.getInstance().getPriceConversionRates("USD"+currency, new Callback() {
+        EtherscanAPI.getInstance().getPriceConversionRates("USD" + currency, new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {}
+            public void onFailure(Call call, IOException e) {
+            }
 
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
@@ -224,7 +229,8 @@ public class ExchangeCalculator {
                 rateForChartDisplay = ResponseParser.parsePriceConversionRate(response.body().string());
                 conversionNames[2].setRate(Math.floor(conversionNames[2].getRate() * rateForChartDisplay * 100) / 100);
                 update.onUpdate(response);
-            }});
+            }
+        });
     }
 
 }

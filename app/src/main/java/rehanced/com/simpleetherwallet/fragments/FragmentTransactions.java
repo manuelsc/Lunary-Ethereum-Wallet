@@ -24,25 +24,25 @@ import static android.view.View.GONE;
 public class FragmentTransactions extends FragmentTransactionsAbstract {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView  = super.onCreateView(inflater, container, savedInstanceState);
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
         send.setVisibility(GONE);
         requestTx.setVisibility(GONE);
         fabmenu.setVisibility(View.GONE);
         return rootView;
     }
 
-    public void update(boolean force){
-        if(ac == null) return;
+    public void update(boolean force) {
+        if (ac == null) return;
         resetRequestCount();
         getWallets().clear();
-        if(swipeLayout != null)
+        if (swipeLayout != null)
             swipeLayout.setRefreshing(true);
 
         try {
             EtherscanAPI.getInstance().getNormalTransactions(address, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    if(isAdded()) {
+                    if (isAdded()) {
                         ac.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -52,13 +52,14 @@ public class FragmentTransactions extends FragmentTransactionsAbstract {
                         });
                     }
                 }
+
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     String restring = response.body().string();
-                    if(restring != null && restring.length() > 2)
+                    if (restring != null && restring.length() > 2)
                         RequestCache.getInstance().put(RequestCache.TYPE_TXS_NORMAL, address, restring);
                     final List<TransactionDisplay> w = new ArrayList<TransactionDisplay>(ResponseParser.parseTransactions(restring, "Unnamed Address", address, TransactionDisplay.NORMAL));
-                    if(isAdded()) {
+                    if (isAdded()) {
                         ac.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -71,7 +72,7 @@ public class FragmentTransactions extends FragmentTransactionsAbstract {
             EtherscanAPI.getInstance().getInternalTransactions(address, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    if(isAdded()) {
+                    if (isAdded()) {
                         ac.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -85,10 +86,10 @@ public class FragmentTransactions extends FragmentTransactionsAbstract {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     String restring = response.body().string();
-                    if(restring != null && restring.length() > 2)
+                    if (restring != null && restring.length() > 2)
                         RequestCache.getInstance().put(RequestCache.TYPE_TXS_INTERNAL, address, restring);
                     final List<TransactionDisplay> w = new ArrayList<TransactionDisplay>(ResponseParser.parseTransactions(restring, "Unnamed Address", address, TransactionDisplay.CONTRACT));
-                    if(isAdded()) {
+                    if (isAdded()) {
                         ac.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -99,14 +100,15 @@ public class FragmentTransactions extends FragmentTransactionsAbstract {
                 }
             }, force);
         } catch (IOException e) {
-            if(ac != null)
-                ((AddressDetailActivity)ac).snackError("Can't fetch account balances. No connection?");
+            if (ac != null)
+                ((AddressDetailActivity) ac).snackError("Can't fetch account balances. No connection?");
             onItemsLoadComplete();
             e.printStackTrace();
-        };
+        }
+        ;
     }
 
-    private void onComplete(List<TransactionDisplay> w){
+    private void onComplete(List<TransactionDisplay> w) {
         addToWallets(w);
         addRequestCount();
         if (getRequestCount() >= 2) {

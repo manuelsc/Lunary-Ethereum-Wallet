@@ -7,13 +7,13 @@ public class DontShowNegativeFormatter implements IAxisValueFormatter {
 
     private boolean dispalyInUsd;
 
-    public DontShowNegativeFormatter(boolean dispalyInUsd){
+    public DontShowNegativeFormatter(boolean dispalyInUsd) {
         this.dispalyInUsd = dispalyInUsd;
     }
 
     @Override
     public String getFormattedValue(float value, AxisBase axis) {
-        if(dispalyInUsd) {
+        if (dispalyInUsd) {
             return value >= 0 ? ((int) value) + "" : "";
         } else {
             return value >= 0 ? Math.floor(value * 1000) / 1000 + "" : "";

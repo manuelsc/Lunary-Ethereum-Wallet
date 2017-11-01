@@ -52,19 +52,19 @@ public class AppLockActivity extends BasePatternActivity implements PatternView.
     private static boolean pausedFirst = false;
     private static boolean unlockedFirst = false;
 
-    public static void protectWithLock(Activity c, boolean onResume){
+    public static void protectWithLock(Activity c, boolean onResume) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(c.getApplicationContext());
-        if(!preferences.getBoolean("use_app_lock", false)) return;
+        if (!preferences.getBoolean("use_app_lock", false)) return;
 
-        Log.d("secureactivity", onResume +" ||>> "+unlockedFirst);
-        if(!onResume && unlockedFirst){ //pausedFirst
+        Log.d("secureactivity", onResume + " ||>> " + unlockedFirst);
+        if (!onResume && unlockedFirst) { //pausedFirst
             SharedPreferences.Editor editor = preferences.edit();
             editor.putLong("APP_UNLOCKED", System.currentTimeMillis());
             editor.apply();
         }
 
         // Ask for login if pw protection is enabled and last login is more than 4 minutes ago
-        if(preferences.getLong("APP_UNLOCKED", 0) <= System.currentTimeMillis() -  4 * 60 * 1000
+        if (preferences.getLong("APP_UNLOCKED", 0) <= System.currentTimeMillis() - 4 * 60 * 1000
                 && onResume && !pausedFirst && !preferences.getString("APP_LOCK_PATTERN", "").equals("")) {
             Intent patternLock = new Intent(c, AppLockActivity.class);
             c.startActivityForResult(patternLock, AppLockActivity.REQUEST_CODE);
@@ -72,7 +72,7 @@ public class AppLockActivity extends BasePatternActivity implements PatternView.
         pausedFirst = onResume;
     }
 
-    public static void handleLockResponse(Activity c, int resultCode){
+    public static void handleLockResponse(Activity c, int resultCode) {
         if (resultCode != RESULT_OK) {
             c.finish();
             unlockedFirst = false;
@@ -85,7 +85,7 @@ public class AppLockActivity extends BasePatternActivity implements PatternView.
         }
     }
 
-    public void onBackPressed(){
+    public void onBackPressed() {
         unlockedFirst = false;
     }
 
@@ -99,7 +99,7 @@ public class AppLockActivity extends BasePatternActivity implements PatternView.
         fingerprintcontainer = (LinearLayout) findViewById(R.id.fingerprintcontainer);
         hasFingerprintSupport = AppLockUtils.hasDeviceFingerprintSupport(this);
 
-        if(hasFingerprintSupport()) {
+        if (hasFingerprintSupport()) {
             sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
             setupFingerprintStuff();
         }
@@ -114,7 +114,7 @@ public class AppLockActivity extends BasePatternActivity implements PatternView.
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public void setupFingerprintStuff(){
+    public void setupFingerprintStuff() {
         fingerprintManager = (FingerprintManager) this.getSystemService(Context.FINGERPRINT_SERVICE);
         fingerprintHelper = new FingerprintHelper(this);
         try {
@@ -188,7 +188,7 @@ public class AppLockActivity extends BasePatternActivity implements PatternView.
 
     @Override
     public void onPatternDetected(List<PatternView.Cell> pattern) {
-        if(sharedPreferences.getLong("WRONG_PATTERN_LOCK", 0) != 0 && sharedPreferences.getLong("WRONG_PATTERN_LOCK", 0) > System.currentTimeMillis() - 60 * 1000){
+        if (sharedPreferences.getLong("WRONG_PATTERN_LOCK", 0) != 0 && sharedPreferences.getLong("WRONG_PATTERN_LOCK", 0) > System.currentTimeMillis() - 60 * 1000) {
             mMessageText.setText("Locked for 1 minute!");
             postClearPatternRunnable();
             return;
@@ -205,7 +205,7 @@ public class AppLockActivity extends BasePatternActivity implements PatternView.
         }
     }
 
-    public boolean hasFingerprintSupport(){
+    public boolean hasFingerprintSupport() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && hasFingerprintSupport;
     }
 
@@ -218,9 +218,9 @@ public class AppLockActivity extends BasePatternActivity implements PatternView.
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
-        if(sharedPreferences == null)
+        if (sharedPreferences == null)
             sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         if (fingerprintHelper != null && hasFingerprintSupport())
@@ -238,7 +238,7 @@ public class AppLockActivity extends BasePatternActivity implements PatternView.
 
     protected void onWrongPattern() {
         ++mNumFailedAttempts;
-        if(mNumFailedAttempts >= 5){
+        if (mNumFailedAttempts >= 5) {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putLong("WRONG_PATTERN_LOCK", System.currentTimeMillis());
             editor.commit();
@@ -264,8 +264,8 @@ public class AppLockActivity extends BasePatternActivity implements PatternView.
 
     @Override
     public void authenticationFailed(String error) {
-        Log.d("fingerprintauth", "FAILED: "+error);
-        if(!unlockedWithoutFprint && !error.equals("Fingerprint operation cancelled."))
+        Log.d("fingerprintauth", "FAILED: " + error);
+        if (!unlockedWithoutFprint && !error.equals("Fingerprint operation cancelled."))
             Toast.makeText(this, "You are not authorized!", Toast.LENGTH_SHORT).show();
     }
 

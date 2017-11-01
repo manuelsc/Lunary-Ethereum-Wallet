@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/container">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/container">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:text="@string/activity_send_title"
-            android:textSize="20sp"
-            android:gravity="center"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:text="@string/activity_send_title"
+        android:textSize="20sp"
+        android:gravity="center" />
 
     <View
         android:layout_width="match_parent"
@@ -23,16 +21,16 @@
         android:layout_marginBottom="11dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:background="#7aa1a1a1"/>
+        android:background="#7aa1a1a1" />
 
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/mainpanel">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/mainpanel">
 
         <LinearLayout
             android:orientation="vertical"
@@ -56,7 +54,7 @@
                     android:layout_gravity="bottom"
                     android:layout_marginRight="12dp"
                     android:layout_marginBottom="2dp"
-                    android:id="@+id/my_addressicon"/>
+                    android:id="@+id/my_addressicon" />
 
 
                 <LinearLayout
@@ -72,7 +70,7 @@
                         android:id="@+id/walletname"
                         android:singleLine="true"
                         android:textColor="@color/colorPrimaryDark"
-                        android:text=""/>
+                        android:text="" />
 
                     <me.grantland.widget.AutofitTextView
                         android:layout_marginTop="3dp"
@@ -81,12 +79,11 @@
                         android:textSize="15sp"
                         android:id="@+id/walletaddr"
                         android:singleLine="true"
-                        android:text=""/>
+                        android:text="" />
 
                 </LinearLayout>
 
             </LinearLayout>
-
 
 
             <LinearLayout
@@ -104,7 +101,7 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:layout_marginRight="12dp"
-                    android:id="@+id/other_addressicon"/>
+                    android:id="@+id/other_addressicon" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -120,7 +117,7 @@
                         android:layout_gravity="center"
                         android:textColor="@color/colorPrimaryDark"
                         android:id="@+id/other_address"
-                        android:text=""/>
+                        android:text="" />
 
                     <me.grantland.widget.AutofitTextView
                         android:layout_marginTop="3dp"
@@ -129,8 +126,8 @@
                         android:textSize="15sp"
                         android:id="@+id/other_addressaddr"
                         android:singleLine="true"
-                        android:text=""/>
-                    </LinearLayout>
+                        android:text="" />
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -138,7 +135,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="16dp"
-                android:background="#7aa1a1a1"/>
+                android:background="#7aa1a1a1" />
 
             <LinearLayout
                 android:layout_marginTop="8dp"
@@ -155,7 +152,7 @@
                     android:gravity="center"
                     android:textColor="@color/etherReceived"
                     android:id="@+id/amount"
-                    android:text=""/>
+                    android:text="" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -164,14 +161,14 @@
                     android:singleLine="true"
                     android:gravity="center"
                     android:id="@+id/amountfiat"
-                    android:text=""/>
+                    android:text="" />
 
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#7aa1a1a1"/>
+                android:background="#7aa1a1a1" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -180,7 +177,7 @@
                 android:layout_marginTop="11dp"
                 android:text="@string/transaction_failed"
                 android:id="@+id/errormsg"
-                android:textColor="#BBA80A00"/>
+                android:textColor="#BBA80A00" />
 
             <LinearLayout
                 android:layout_marginTop="14dp"
@@ -194,7 +191,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
                     android:gravity="top"
-                    android:text="@string/timestamp"/>
+                    android:text="@string/timestamp" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -202,7 +199,7 @@
                     android:textSize="12sp"
                     android:gravity="right"
                     android:id="@+id/month"
-                    android:text=""/>
+                    android:text="" />
 
             </LinearLayout>
 
@@ -218,7 +215,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
                     android:gravity="top"
-                    android:text="@string/block_height"/>
+                    android:text="@string/block_height" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -226,7 +223,7 @@
                     android:textSize="12sp"
                     android:gravity="right"
                     android:id="@+id/blocknr"
-                    android:text=""/>
+                    android:text="" />
 
             </LinearLayout>
 
@@ -242,7 +239,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
                     android:gravity="top"
-                    android:text="@string/nonce"/>
+                    android:text="@string/nonce" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -250,7 +247,7 @@
                     android:textSize="12sp"
                     android:gravity="right"
                     android:id="@+id/nonce"
-                    android:text=""/>
+                    android:text="" />
 
             </LinearLayout>
 
@@ -266,7 +263,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
                     android:gravity="top"
-                    android:text="@string/gas_price"/>
+                    android:text="@string/gas_price" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -274,7 +271,7 @@
                     android:textSize="12sp"
                     android:gravity="right"
                     android:id="@+id/gasPrice"
-                    android:text=""/>
+                    android:text="" />
 
             </LinearLayout>
 
@@ -290,7 +287,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
                     android:gravity="top"
-                    android:text="@string/gas_used"/>
+                    android:text="@string/gas_used" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -298,7 +295,7 @@
                     android:textSize="12sp"
                     android:gravity="right"
                     android:id="@+id/gasused"
-                    android:text=""/>
+                    android:text="" />
 
             </LinearLayout>
 
@@ -314,7 +311,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
                     android:gravity="top"
-                    android:text="@string/tx_cost"/>
+                    android:text="@string/tx_cost" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -322,7 +319,7 @@
                     android:textSize="12sp"
                     android:gravity="right"
                     android:id="@+id/txcost"
-                    android:text=""/>
+                    android:text="" />
 
             </LinearLayout>
 
@@ -338,7 +335,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
                     android:gravity="top"
-                    android:text=""/>
+                    android:text="" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -346,7 +343,7 @@
                     android:textSize="12sp"
                     android:gravity="right"
                     android:id="@+id/txcost2"
-                    android:text=""/>
+                    android:text="" />
 
             </LinearLayout>
 
@@ -358,9 +355,9 @@
                 android:id="@+id/openinbrowser"
                 app:backgroundTint="@color/colorPrimaryDark"
                 android:textColor="#FFFFFF"
-                android:layout_marginBottom="8dp"/>
+                android:layout_marginBottom="8dp" />
 
         </LinearLayout>
-        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

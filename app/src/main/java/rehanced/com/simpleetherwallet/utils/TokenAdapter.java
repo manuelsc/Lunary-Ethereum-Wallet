@@ -77,17 +77,17 @@ public class TokenAdapter extends RecyclerView.Adapter<TokenAdapter.MyViewHolder
 
         holder.name.setText(box.getName());
         double tbalance = box.getBalanceDouble();
-        holder.nativebalance.setText(ExchangeCalculator.getInstance().displayEthNicely(tbalance)+" "+box.getShorty());
+        holder.nativebalance.setText(ExchangeCalculator.getInstance().displayEthNicely(tbalance) + " " + box.getShorty());
         holder.etherbalance.setText(
                 ExchangeCalculator.getInstance().displayEthNicely(
                         ExchangeCalculator.getInstance().convertRate(
-                            ExchangeCalculator.getInstance().convertTokenToEther(tbalance, box.getUsdprice()),
+                                ExchangeCalculator.getInstance().convertTokenToEther(tbalance, box.getUsdprice()),
                                 ExchangeCalculator.getInstance().getCurrent().getRate()
-                        ))+" "+ExchangeCalculator.getInstance().getCurrent().getShorty());
-        if(box.getContractAddr() != null && box.getContractAddr().length() > 3) {
+                        )) + " " + ExchangeCalculator.getInstance().getCurrent().getShorty());
+        if (box.getContractAddr() != null && box.getContractAddr().length() > 3) {
             holder.image.setText("");
             String iconName = box.getName();
-            if(iconName.indexOf(" ") > 0)
+            if (iconName.indexOf(" ") > 0)
                 iconName = iconName.substring(0, iconName.indexOf(" "));
             holder.image.setBackground(new BitmapDrawable(context.getResources(), TokenIconCache.getInstance(context).get(iconName)));
         } else {
@@ -95,7 +95,7 @@ public class TokenAdapter extends RecyclerView.Adapter<TokenAdapter.MyViewHolder
             holder.image.setBackgroundResource(0);
             holder.etherbalance.setText(
                     ExchangeCalculator.getInstance().displayEthNicely(
-                    ExchangeCalculator.getInstance().convertRate(tbalance, ExchangeCalculator.getInstance().getCurrent().getRate()))+" "+
+                            ExchangeCalculator.getInstance().convertRate(tbalance, ExchangeCalculator.getInstance().getCurrent().getRate())) + " " +
                             ExchangeCalculator.getInstance().getCurrent().getShorty());
         }
 

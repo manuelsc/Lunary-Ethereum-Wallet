@@ -31,7 +31,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     private int position;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView  month, walletbalance, walletname, other_address, plusminus;
+        public TextView month, walletbalance, walletname, other_address, plusminus;
         public ImageView my_addressicon, other_addressicon, type, error;
         private LinearLayout container;
 
@@ -43,8 +43,8 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             walletname = (TextView) view.findViewById(R.id.walletname);
             other_address = (TextView) view.findViewById(R.id.other_address);
 
-            my_addressicon= (ImageView) view.findViewById(R.id.my_addressicon);
-            other_addressicon= (ImageView) view.findViewById(R.id.other_addressicon);
+            my_addressicon = (ImageView) view.findViewById(R.id.my_addressicon);
+            other_addressicon = (ImageView) view.findViewById(R.id.other_addressicon);
             type = (ImageView) view.findViewById(R.id.type);
             error = (ImageView) view.findViewById(R.id.error);
             container = (LinearLayout) view.findViewById(R.id.container);
@@ -83,26 +83,26 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             }
         });
 
-        holder.walletbalance.setText(ExchangeCalculator.getInstance().displayBalanceNicely(ExchangeCalculator.getInstance().convertRate(Math.abs(box.getAmount()), ExchangeCalculator.getInstance().getCurrent().getRate()))+" "+ ExchangeCalculator.getInstance().getCurrencyShort());
+        holder.walletbalance.setText(ExchangeCalculator.getInstance().displayBalanceNicely(ExchangeCalculator.getInstance().convertRate(Math.abs(box.getAmount()), ExchangeCalculator.getInstance().getCurrent().getRate())) + " " + ExchangeCalculator.getInstance().getCurrencyShort());
 
         String walletname = AddressNameConverter.getInstance(context).get(box.getFromAddress());
         holder.walletname.setText(walletname == null ? box.getWalletName() : walletname);
 
         String toName = AddressNameConverter.getInstance(context).get(box.getToAddress());
-        holder.other_address.setText(toName == null ? box.getToAddress() : toName + " ("+box.getToAddress().substring(0, 10) +")");
+        holder.other_address.setText(toName == null ? box.getToAddress() : toName + " (" + box.getToAddress().substring(0, 10) + ")");
         holder.plusminus.setText(box.getAmount() > 0 ? "+" : "-");
 
         holder.plusminus.setTextColor(context.getResources().getColor(box.getAmount() > 0 ? R.color.etherReceived : R.color.etherSpent));
         holder.walletbalance.setTextColor(context.getResources().getColor(box.getAmount() > 0 ? R.color.etherReceived : R.color.etherSpent));
         holder.container.setAlpha(1f);
-        if(box.getConfirmationStatus() == 0) {
+        if (box.getConfirmationStatus() == 0) {
             holder.month.setText("Unconfirmed");
             holder.month.setTextColor(context.getResources().getColor(R.color.unconfirmedNew));
             holder.container.setAlpha(0.75f);
-        }else if(box.getConfirmationStatus() > 12) {
+        } else if (box.getConfirmationStatus() > 12) {
             holder.month.setText(dateformat.format(new Date(box.getDate())));
             holder.month.setTextColor(context.getResources().getColor(R.color.normalBlack));
-        }else {
+        } else {
             holder.month.setText(box.getConfirmationStatus() + " / 12 Confirmations");
             holder.month.setTextColor(context.getResources().getColor(R.color.unconfirmed));
         }

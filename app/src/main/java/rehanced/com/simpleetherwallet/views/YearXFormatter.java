@@ -9,7 +9,7 @@ import java.util.GregorianCalendar;
 public class YearXFormatter implements IAxisValueFormatter {
 
     GregorianCalendar c = new GregorianCalendar();
-    String [] months = new String[]{
+    String[] months = new String[]{
             "Jan",
             "Feb",
             "Mar",
@@ -26,7 +26,7 @@ public class YearXFormatter implements IAxisValueFormatter {
 
     @Override
     public String getFormattedValue(float value, AxisBase axis) {
-        c.setTimeInMillis(((long) (value))*1000);
-        return months[c.get(Calendar.MONTH)+1];
+        c.setTimeInMillis(((long) (value)) * 1000);
+        return months[c.get(Calendar.MONTH) + 1];
     }
 }

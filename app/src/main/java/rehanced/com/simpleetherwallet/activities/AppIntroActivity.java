@@ -39,12 +39,12 @@ public class AppIntroActivity extends AppIntro2 {
     @Override
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
-        if(tosFragment.isToSChecked()) {
+        if (tosFragment.isToSChecked()) {
             Intent data = new Intent();
             data.putExtra("TOS", true);
             setResult(RESULT_OK, data);
             finish();
-        }else
+        } else
             Toast.makeText(this, R.string.app_intro_please_agree, Toast.LENGTH_SHORT).show();
     }
 

@@ -8,7 +8,7 @@
 
 
     <SwitchPreference
-        android:defaultValue="false"
+        android:defaultValue="true"
         android:key="startAtWallet"
         android:summary="@string/pref_sum_start"
         android:title="@string/pref_title_start" />
@@ -29,7 +29,7 @@
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
         android:title="@string/pref_title_sync_frequency"
-        android:summary="@string/pref_sum_sync_frequency"/>
+        android:summary="@string/pref_sum_sync_frequency" />
 
 
     <ListPreference
@@ -41,26 +41,24 @@
         android:positiveButtonText="@null"
         android:title="@string/pref_currencys_title" />
 
-    <PreferenceCategory
-        android:title="@string/prefs_cat_security">
-    <SwitchPreference
-        android:defaultValue="false"
-        android:key="use_app_lock"
-        android:title="@string/prefs_lock_with_pw"
-        android:summary="@string/prefs_lock_with_pw_sum" />
-
-    <PreferenceScreen
-        android:title="@string/prefs_set_pw"
-        android:summary="@string/prefs_set_pw_sum">
-
-        <intent android:action="rehanced.com.simpleetherwallet.activities.SetAppLockActivity"/>
-    </PreferenceScreen>
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:title="@string/setting_cat_advanced">
+    <PreferenceCategory android:title="@string/prefs_cat_security">
         <SwitchPreference
             android:defaultValue="false"
+            android:key="use_app_lock"
+            android:title="@string/prefs_lock_with_pw"
+            android:summary="@string/prefs_lock_with_pw_sum" />
+
+        <PreferenceScreen
+            android:title="@string/prefs_set_pw"
+            android:summary="@string/prefs_set_pw_sum">
+
+            <intent android:action="rehanced.com.simpleetherwallet.activities.SetAppLockActivity" />
+        </PreferenceScreen>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/setting_cat_advanced">
+        <SwitchPreference
+            android:defaultValue="true"
             android:key="qr_encoding_erc"
             android:title="@string/setting_erc_qr_encoding" />
 
