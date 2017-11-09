@@ -20,8 +20,10 @@ Lunary is a beautifully designed, easy to use, secure and Open Source Ethereum W
 * No registration or sign up required  
 * Price history charts  
 * Fingerprint / Password protection
+* ERC-67 and ICAP Support
+* Adjustable gas price with minimum at 0.1 up to 32 gwei
 * Supporting 8 Currencies: USD, EUR, GBP, CHF, AUD, CAD, JPY, RUB  
-* Available in English, German and Spanish
+* Available in English, German, Spanish, Portuguese and Hungarian
 
 ## Build:
 Google Play flavor requires own API key:
@@ -31,7 +33,7 @@ public class APIKey {
 }
 ```
 
-## Thanks to:
+## Dependencies:
 * [Web3j](https://github.com/web3j/web3j)
 * [FloatingActionButton](https://github.com/Clans/FloatingActionButton)
 * [MaterialDrawer](https://github.com/mikepenz/MaterialDrawer)
