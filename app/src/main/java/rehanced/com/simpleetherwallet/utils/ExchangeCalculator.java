@@ -218,7 +218,7 @@ public class ExchangeCalculator {
     }
 
     private void convert(final String currency, final NetworkUpdateListener update) throws IOException {
-        EtherscanAPI.getInstance().getPriceConversionRates("USD" + currency, new Callback() {
+        EtherscanAPI.getInstance().getPriceConversionRates(currency, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
             }

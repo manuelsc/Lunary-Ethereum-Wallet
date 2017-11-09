@@ -161,7 +161,7 @@ public class EtherscanAPI {
 
 
     public void getPriceConversionRates(String currencyConversion, Callback b) throws IOException {
-        get("http://download.finance.yahoo.com/d/quotes.csv?s=" + currencyConversion + "=X&f=snl1", b);
+        get("https://api.fixer.io/latest?base=USD&symbols=" + currencyConversion, b);
     }
 
 

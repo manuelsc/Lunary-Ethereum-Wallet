@@ -98,7 +98,7 @@ public class FragmentPrice extends Fragment {
             @Override
             public void onClick(View view) {
                 displayInUsd = !displayInUsd;
-                update();
+                update(true);
                 general();
 
                 if (ac != null && ac.getPreferences() != null) {
@@ -145,7 +145,7 @@ public class FragmentPrice extends Fragment {
 
         swipeLayout.setRefreshing(true);
         general();
-        update();
+        update(true);
         priceChart.setVisibility(View.INVISIBLE);
         return rootView;
     }
@@ -153,11 +153,13 @@ public class FragmentPrice extends Fragment {
     private void next() {
         displayType = (displayType + 1) % PERIOD.length;
         general();
+        update(true);
     }
 
     private void previous() {
         displayType = displayType > 0 ? displayType - 1 : PERIOD.length - 1;
         general();
+        update(true);
     }
 
     private void general() {
@@ -168,13 +170,6 @@ public class FragmentPrice extends Fragment {
             SharedPreferences.Editor editor = ac.getPreferences().edit();
             editor.putInt("displaytype_chart", displayType);
             editor.apply();
-        }
-
-        //swipeLayout.setRefreshing(true);
-        try {
-            loadPriceData(TIMESTAMPS[displayType], PERIOD[displayType]);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -203,7 +198,7 @@ public class FragmentPrice extends Fragment {
                         JSONObject o = data.getJSONObject(i);
                         yVals.add(new Entry(o.getLong("date"), (float) Math.floor(o.getDouble("high") * exchangeRate * commas) / commas));
                     }
-
+                    if(ac == null) return;
                     ac.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -211,7 +206,7 @@ public class FragmentPrice extends Fragment {
                             onItemsLoadComplete();
                             if (isAdded()) {
                                 setupChart(priceChart, getData(yVals), getResources().getColor(R.color.colorPrimaryLittleDarker));
-                                update();
+                                update(false);
                             }
                         }
                     });
@@ -309,19 +304,27 @@ public class FragmentPrice extends Fragment {
     public void updateExchangeRates() {
         try {
             ExchangeCalculator.getInstance().updateExchangeRates(ac != null ? ac.getPreferences().getString("maincurrency", "USD") : "USD", ac);
-            update();
+            update(true);
             onItemsLoadComplete();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void update() {
+    public void update(boolean updateChart) {
         if (price != null)
             price.setText(displayInUsd ?
                     ExchangeCalculator.getInstance().displayUsdNicely(ExchangeCalculator.getInstance().getUSDPrice()) + " " + ExchangeCalculator.getInstance().getMainCurreny().getName() :
                     ExchangeCalculator.getInstance().displayEthNicely(ExchangeCalculator.getInstance().getBTCPrice()) + " BTC"
             );
+
+        if(updateChart) {
+            try {
+                loadPriceData(TIMESTAMPS[displayType], PERIOD[displayType]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         onItemsLoadComplete();
     }
 

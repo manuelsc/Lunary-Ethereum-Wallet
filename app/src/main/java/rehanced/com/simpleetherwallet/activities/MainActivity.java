@@ -370,7 +370,7 @@ public class MainActivity extends SecureAppCompatActivity implements NetworkUpda
                             public void run() {
                                 if (fragments != null) {
                                     if (fragments[0] != null)
-                                        ((FragmentPrice) fragments[0]).update();
+                                        ((FragmentPrice) fragments[0]).update(true);
                                     if (fragments[1] != null) {
                                         ((FragmentWallets) fragments[1]).updateBalanceText();
                                         ((FragmentWallets) fragments[1]).notifyDataSetChanged();
@@ -481,7 +481,7 @@ public class MainActivity extends SecureAppCompatActivity implements NetworkUpda
             public void run() {
                 broadCastDataSetChanged();
                 if (fragments != null && fragments[0] != null) {
-                    ((FragmentPrice) fragments[0]).update();
+                    ((FragmentPrice) fragments[0]).update(true);
                 }
             }
         });
