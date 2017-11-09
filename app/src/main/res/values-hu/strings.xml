@@ -1,0 +1,348 @@
+<resources>
+    <string name="translator_name"></string>
+
+    <string name="app_name">Lunary</string>
+
+    <string name="action_settings">Beállítások
+    </string>
+    <string name="title_activity_main">Lunary</string>
+
+    <string name="fab_scan">Cím / kulcs szkennelése</string>
+    <string name="fab_add_watch">Cím kikeresése</string>
+    <string name="fab_add_aswatch">Csak beérkező befizetésekre használt Pénztárca hozzáadása</string>
+    <string name="fab_gen_new">Új Pénztárca létrehozása</string>
+    <string name="fab_request">Bekérés</string>
+    <string name="fab_send">Küldés</string>
+    <string name="fab_sendether">Pénz küldése</string>
+    <string name="fab_setwalletname">Pénztárca nevének beállítása</string>
+    <string name="drawer_import">Pénztárcák importálása</string>
+    <string name="drawer_about">Rólunk</string>
+    <string name="drawer_donate">Hozzájárulás</string>
+
+    <string name="fr_price_current_price">Jelenlegi ár</string>
+    <string name="fr_wallet_overall_balance">Egyenleg</string>
+    <string name="fr_detail_acc_balance">Számlán lévő egyenleg</string>
+
+    <string name="main_ac_wallet_added_suc">A Pénztárcát sikeresen hozzáadtuk</string>
+    <string name="main_ac_wallet_added_er">A Pénztárcát már korábban hozzáadtuk</string>
+    <string name="main_ac_wallet_added_fatal">Nem érvényes a cím</string>
+    <string name="detail_acc_name_changed_suc">A Pénztárcát sikeresen átneveztük</string>
+    <string name="title_activity_settings">Beállítások</string>
+
+    <string name="pref_header_general">Általános</string>
+
+    <string name="pref_title_social_recommendations">0 összegű tranzakciók mutatása</string>
+    <string name="pref_description_social_recommendations">Megadott összeg nélküli tranzakciók elrejtése vagy mutatása</string>
+
+
+    <string name="pref_title_start">Pénztárca alapértelmezett megjelenítése</string>
+    <string name="pref_sum_start">Ha engedélyezi, az applikáció indításkor a kiválasztott Pénztárcát mutatja az összegek helyett.</string>
+
+    <string name="pref_header_data_sync">Adat &amp; szinkronizálás</string>
+
+    <string name="pref_title_sync_frequency">Értesítések szinkronizálása</string>
+    <string name="pref_sum_sync_frequency">Mennyi időnként frissítsen, hogy az új tranzakciók megjelenjenek</string>
+
+    <string name="pref_currencys_title">Valuták mutatása</string>
+    <string-array name="pref_currencys">
+        <item>USD</item>
+        <item>EUR</item>
+        <item>CHF</item>
+        <item>GBP</item>
+        <item>AUD</item>
+        <item>CAD</item>
+        <item>JPY</item>
+        <item>RUB</item>
+    </string-array>
+
+    <string-array name="pref_sync_frequency_titles">
+        <item>1 óra</item>
+        <item>2 óra</item>
+        <item>4 óra</item>
+        <item>6 óra</item>
+        <item>8 óra</item>
+        <item>16 óra</item>
+        <item>24 óra</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>1</item>
+        <item>2</item>
+        <item>4</item>
+        <item>6</item>
+        <item>8</item>
+        <item>16</item>
+        <item>24</item>
+    </string-array>
+
+
+    <string name="notification_title">Beérkező tranzakció</string>
+
+    <string-array name="multi_select_list_preference_default_value" />
+
+    <string name="pref_title_system_sync_settings">A rendszer szinkronizálási beállításai</string>
+
+    <string name="pref_header_notifications">Értesítések</string>
+
+    <string name="pref_title_new_message_notifications">Beérkező tranzakció</string>
+    <string name="pref_title_new_message_notifications_sum">Értesítsen, ha beérkezik tanzakció bármelyik Pénztárcába</string>
+
+    <string name="pref_title_ringtone">Csengőhang</string>
+    <string name="pref_ringtone_silent">Halk</string>
+
+    <string name="pref_title_vibrate">Rezgés</string>
+    <string name="title_activity_wallet_gen">Pénztárca létrehozása</string>
+
+    <string name="prompt_email">Jelszó</string>
+    <string name="prompt_password">Jelszó megerősítése</string>
+    <string name="action_sign_in">Létrehozás</string>
+
+    <string name="error_invalid_password">A jelszó túl rövid (min: 9 karakter)</string>
+    <string name="error_incorrect_password">A beírt jelszavak nem egyeznek</string>
+
+    <string name="generate_text">Ön egy új, titkosított, offline Pénztárcát készül létrehozni az eszközén. Javasoljuk, hogy válassszon biztonságos jelszót, pénze védelme érdekében. Kérjük vegye figyelembe hogy a biztonságos Pénztárca létrehozása hosszadalmas folyamat, ami akár percekig is eltarthat. Ez a folyamat a háttérben fut, így ezalatt telefonját a megszokott módon tudja használni. A folyamatot nyomonkövetheti a telefonja tetején megjelenő értesítések között. Amint készen van, értesítjük Önt.</string>
+    <string name="import_text">Ön egy nem titkosított kulcsot készül importálni. Javasoljuk, hogy válassszon biztonságos jelszót, pénze védelme érdekében. Kérjük vegye figyelembe hogy a biztonságos Pénztárca létrehozása hosszadalmas folyamat, ami akár percekig is eltarthat. Ez a folyamat a háttérben fut, így ezalatt telefonját a megszokott módon tudja használni. A folyamatot nyomonkövetheti a telefonja tetején megjelenő értesítések között. Amint készen van, értesítjük Önt.</string>
+
+    <string name="wallet_gen_service_title">Új Pénztárca létrehozása</string>
+    <string name="wallet_gen_service_title_import">Pénztárca importálása</string>
+    <string name="choose_recipient_enterscan">Címzett Bevitele / szkennelés </string>
+    <string name="choose_recipient_contacts">Vagy válasszon a címjegyzékből</string>
+
+    <string name="choose_your_address">Feladó</string>
+    <string name="send_to">Kinek</string>
+    <string name="choose_ether_amount">Rendelkezésre áll</string>
+    <string name="choose_gas">Tranzakció díja</string>
+
+
+    <string name="request_activity_ether">Fizetés bekérése</string>
+    <string name="request_activity_to">Saját Pénztárcák / Címek</string>
+
+    <string name="no_tx_history">Itt átnézheti az összes tranzakciót, amit indított és ami beérkezett. Miután hozzáadott egy Pénztárcát és átutalt rá némi összeget, a tranzakció és minden további pénzmozgás itt fog megjelenni.</string>
+    <string name="no_wallet_history">Még nem hozott létre Pénztárcát. Könnyen létrehozhat egy újat, vagy importálhat egyet a lenti gomb segítségével.</string>
+
+
+    <string name="app_intro_text">Üdv a Lunary-nál - ingyenes és nyílt forráskódú virtuális Pénztárca androidra. Mielőtt belekezdne, kérjük, olvassa el a szolgáltatás feltételeit.</string>
+    <string name="app_intro_title">Lunary Pénztárca</string>
+    <string name="app_intro_please_agree">Kérjük, olvassa el, és fogadja el a szolgáltatás feltételeit mielőtt továbblépne.</string>
+    <string name="app_intro_iagree">Elfogadom a szolgáltatás feltételeit</string>
+    <string name="fragment_send_ether_amount">Összeg</string>
+    <string name="fragment_send_cheaper">Olcsóbb</string>
+    <string name="fragment_send_faster">Gyorsabb</string>
+    <string name="fragment_send_total">Végösszeg</string>
+    <string name="fragment_send_send_button">Küld</string>
+    <string name="fragment_recipient_hint_address">Cím</string>
+    <string name="fragment_recipient_continue">Folytatás</string>
+    <string name="fragment_detail_add_sharing">Cím megosztása</string>
+    <string name="fragment_detail_share_button">Megosztás</string>
+    <string name="walletgen_title">Pénztárca léterhozása</string>
+    <string name="request_ether_title">Bekérés</string>
+    <string name="qr_scan_title">QR kód</string>
+    <string name="activity_send_title">Tranzakció</string>
+    <string name="last_24_hours">Elmúlt 24 óra</string>
+    <string name="last_7_days">Elmúlt 7 nap</string>
+    <string name="last_30_days">Elmúlt 30 nap</string>
+    <string name="last_year">Elmúlt év</string>
+    <string name="err_no_con">Nincs internet kapcsolat</string>
+    <string name="wallet_menu_title">Pénztárca beállításai</string>
+    <string name="wallet_menu_changename">Pénztárca nevének megváltoztatása</string>
+    <string name="wallet_menu_copyadd">Címet vágólapra másol</string>
+    <string name="wallet_menu_export">Pénztárca exportálása</string>
+    <string name="wallet_menu_delete">Pénztárca törlése</string>
+    <string name="wallet_suc_exported">Pénztárca exportálása sikeres</string>
+    <string name="wallet_no_permission">Exportáláshoz engedély</string>
+    <string name="wallet_one_at_a_time">Várjon egy kicsit</string>
+    <string name="wallet_one_at_a_time_text">A Pénztárca létrehozása folyamatban van. A folyamatot nyomonkövetheti az értesítéseknél. Értesítjük amint elkészült az új Pénztárca. Ha egy újat szeretne létrehozni, kérjük várja meg, amíg a jelenlegi elkészül.</string>
+    <string name="button_ok">OK</string>
+    <string name="wallet_removal_title">FIGYELMEZTETÉS! Pénztárca eltávolítása</string>
+    <string name="wallet_removal_sure">Biztos benne hogy törli a Pénztárcát?</string>
+    <string name="wallet_removal_privkey">! EZ EGY PÉNZTÁRCA EGYEDI AZONOSÍTÓVAL ! HA NINCS BELŐLE BIZTONSÁGI MENTÉSE ÉS ANÉLKÜL FOLYTATJA MINDEN ÖSSZEG ELVESZIK! BIZTOS BENNE, HOGY FOLYTATJA? PÉNZTÁRCA CÍME:</string>
+    <string name="wallet_removal_last_warning">BIZTOS BENNE? A PÉNZTÁRCA ÉS MINDEN PÉNZ / TOKEN VELE EGYÜTT VÉGLEGESEN TÖRLŐDNI FOG. EZ AZ UTOLSÓ FIGYELMEZTETÉS A KÖVETKEZŐ PÉNZTÁRCÁVAL KAPCSOLATBAN:</string>
+    <string name="button_yes">Igen</string>
+    <string name="button_no">Nem</string>
+    <string name="name_your_wallet">Pénztárca elnevezése</string>
+    <string name="button_cancel">Mégse</string>
+    <string name="name_other_address">További címek elnevezése</string>
+    <string name="trans_menu_title">Tranzakció beállítások</string>
+    <string name="trans_menu_changename">Cím nevének megváltoztatása</string>
+    <string name="trans_menu_viewreceiver">Címzett adatainak megtekintése</string>
+    <string name="trans_menu_openinb">Böngészőben megnyit</string>
+    <string name="trans_no_trans_found">Ehhez a címhez nem talált tranzakciót.</string>
+    <string name="err_send_not_enough_ether">Ehhez a címhez nem elegendő</string>
+    <string name="err_send_invalidamount">Érvénytelen összeg</string>
+    <string name="err_send_noreceiver">Nincs címzett megadva</string>
+    <string name="err_send_noamount">Nincs összeg megadva</string>
+    <string name="name_your_address">Saját cím elnevezése</string>
+    <string name="name_this_address">Ennek a címnek az elnevezése</string>
+    <string name="addressbook_menu_title">Címjegyzék beállításai</string>
+    <string name="addressbook_menu_remove">Eltávolít</string>
+    <string name="import_title">Pénztárca importálása</string>
+    <string name="import_button">Importálás</string>
+    <string name="main_grant_permission_export">Pénztárcák exportáláshoz írási engedély</string>
+    <string name="main_grant_permission_import">Pénztárcák importálásához olvasási engedély</string>
+    <string name="dialog_watch_only_title">Cím kikeresése</string>
+    <string name="dialog_importing_wallets_title">Pénztárcák importálása?</string>
+    <string name="dialog_importing_wallets_text">A következő %1$d Pénztárcákat %2$s találtuk a Lunary mappájában. Szeretné importálni a következőt: %3$s</string>
+    <string name="dialog_ex_nofull_title">Nincs megfelelő Pénztárca</string>
+    <string name="dialog_ex_nofull_text">Csak befizetésre használt Pénztárca nem exportálható.</string>
+    <string name="dialog_exporting_title">Pénztárca exportálása</string>
+    <string name="dialog_exporting_text">A Pénztárcáról másolat készül a \"Lunary\" mappába az android telefon root könyvtárában. Kérjük vegye figyelembe, hogy a telefonján futó többi alkalmazás is elérheti bármelyik Pénztárcát, amit ide exportál. Ezért javasoljuk, hogy töröljön minden exportált Pénztárcát a Lunary mappából, amint készen van a biztonsági mentésükkel.</string>
+    <string name="dialog_nofullwallet">Nem megfelelő Pénztárca</string>
+    <string name="dialog_nofullwallet_text">Ahhoz, hogy pénzt utaljon egy Pénztárcára van szüksége egyedi azonosítóval. Kérjük, hozzon létre vagy importáljon egyet.</string>
+    <string name="dialog_no_wallets">Nem található Pénztárca</string>
+    <string name="dialog_no_wallets_text">Ahhoz, hogy bekérjen pénzt, szüksége van egy Pénztárcára vagy egy címre.</string>
+    <string name="dialog_no_wallets_found">Nem található Pénztárca</string>
+    <string name="dialog_no_wallets_found_text">Kérjük helyezze az importálni kívánt Pénztárcát a Lunary mappába, és ellenőrizze, hogy helyes-e a név. Amikor a Mist-ből vagy másik asztali kliensből importál, nem kell átneveznie a Pénztárcát.</string>
+    <string name="notification_ticker">Beérkező tranzakció…</string>
+    <string name="notification_transfersuc">Sikeres átutalás</string>
+    <string name="notification_transferfail">Átutalás sikertelen</string>
+    <string name="notification_transferingticker">Átutalás…</string>
+    <string name="notification_transfering_title">Összeg átutalása</string>
+    <string name="notification_might_take_a_minute">Ez eltarthat egy ideig</string>
+    <string name="notification_wallgen_maytake">Ez hosszabb ideig is eltarthat</string>
+    <string name="notification_wallgen_title">Pénztárca létrehozása…</string>
+    <string name="notification_wallimp_title">Pénztárca importálása…</string>
+    <string name="notification_wallgen_finished">A Pénztárca kész</string>
+    <string name="notification_wallimp_finished">A Pénztárca importálása befejeződött.</string>
+    <string name="notification_click_to_view">Kattintson a megtekintéshez</string>
+    <string name="ether_and_token">Pénz és Token</string>
+    <string name="prefs_lock_with_pw">Jelszóval lezár</string>
+    <string name="prefs_lock_with_pw_sum">Ha engedélyezi, a Lunary jelszót kér, mielőtt elindulna.</string>
+    <string name="prefs_set_pw">Jelszó beállítása</string>
+    <string name="prefs_set_pw_sum">Bejelentkezés beállításai</string>
+    <string name="prefs_cat_security">Biztonság</string>
+    <string name="fab_sendether_from">Pénz bekérése innen</string>
+    <string name="fab_sendether_to">Pénz utalása ide</string>
+    <string name="open_in_browser">Böngészőben megnyit</string>
+    <string name="tx_cost">TX költség</string>
+    <string name="gas_used">Felhasznált üzemanyag</string>
+    <string name="gas_price">Üzemanyag ár</string>
+    <string name="nonce">Egyszeri</string>
+    <string name="block_height">Block Height</string>
+    <string name="timestamp">Időbélyeg</string>
+    <string name="wallet_menu_share">Cím megosztása</string>
+    <string name="wallet_menu_action_copied_to_clipboard">Vágólapra másolva</string>
+    <string name="created">Létrehozva</string>
+    <string name="digits">Számok</string>
+    <string name="holders">Üres hely</string>
+    <string name="market_cap">Market Cap</string>
+    <string name="price">Ár</string>
+    <string name="total_supply">Teljes készlet</string>
+    <string name="token">Token</string>
+    <string name="gas_limit">Üzemanyaglimit:</string>
+    <string name="optional_data_as_hex">Opcionális adat mint hex</string>
+    <string name="data">Adat:</string>
+    <string name="send_expert_warning">Hozzáadhat további adatokat is a tranzakcióhoz. Ha nem tudja hogy mire jó, akkor ne módosítson benne semmit.</string>
+    <string name="expert_mode_optional">Szakértő mód (Opcionális)</string>
+    <string name="transaction_failed">Tranzakció sikertelen</string>
+    <string name="reddit">Lunary Subreddit</string>
+    <string name="add">Hozzáad</string>
+    <string name="show">Mutasd</string>
+    <string name="setting_erc_qr_encoding">ERC-67 QR kódolás használata</string>
+    <string name="setting_cat_advanced">Haladó</string>
+    <string name="password_in_clear_text">Jelszó mutatása</string>
+
+    <string name="dialog_write_down_pw_title">Fontos!</string>
+    <string name="dialog_write_down_pw_text">A Lunary titkosítja a Pénztárcáját az Ön által megadott jelszóval. Ez a jelszó az egyetlen mód arra, hogy hozzáférjen a Pénztárcához, ezért ne felejtse el. Javasoljuk, hogy jegyezze fel valahova.</string>
+    <string name="dialog_back_button">Mégse</string>
+    <string name="setting_show_ad">Reklámok megjelenítése</string>
+
+    <string name="dialog_disable_ad_title">:(</string>
+    <string name="dialog_disable_ad_text">A hozzájárulások és a reklámbevétel teszi lehetővé hogy aktívan dolgozzunk és továbbfejlesszük a Lunary-t. Ha nagyon zavarja a reklám, megértjük, és kikapcsolhatja. De ha nem nagy kérés, hagyja így, hogy tovább tökéletesíthessük a Lunary-t. Ez a kis reklám sokat segít nekünk ebben. Ugyanígy, minden hozzájárulás, amit kapunk. Kérjük, ne kapcsolja ki a reklámot, és járuljon hozzá a munkánkhoz egy kisebb összeggel. A változtatásokhoz újra kell indítania az applikációt. Folytatja?</string>
+
+    <string name="showcase_got_it">Értem</string>
+    <string name="show_case_wallet_gen_text">Új Pénztárca létrehozásához kattintson a + jelre, és válassza az "Új Pénztárca létrehozását"</string>
+    <string name="show_case_backup">Módosításhoz és biztonsági mentés létrehozásához kattintson rá az adott Pénztárcára, és tartsa lenyomva.</string>
+
+    <string name="tos"><![CDATA[
+<p><h2>Terms and Conditions ("Terms")</h2></p>
+
+<p>Last updated: May 28, 2017</p>
+
+<p>Please read these Terms and Conditions ("Terms", "Terms and Conditions") carefully before using the Lunary Ether Wallet (the "Service") operated by Lunary Ether Wallet, Rehanced ("us", "we", or "our").
+
+Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all visitors, users and others who access or use the Service.
+
+By accessing or using the Service you agree to be bound by these Terms. If you disagree with any part of the terms then you may not access the Service. This Terms & Conditions agreement is licensed by TermsFeed to Lunary Ether Wallet.</p>
+
+<p><b>Links To Other Web Sites</b></p>
+
+<p>Our Service may contain links to third-party web sites or services that are not owned or controlled by Lunary Ether Wallet.
+
+Lunary Ether Wallet has no control over, and assumes no responsibility for, the content, privacy policies, or practices of any third party web sites or services. You further acknowledge and agree that Lunary Ether Wallet shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with use of or reliance on any such content, goods or services available on or through any such web sites or services.
+
+We strongly advise you to read the terms and conditions and privacy policies of any third-party web sites or services that you visit.</p>
+
+
+<p><b>ASSUMPTION OF RISK</b></p>
+
+<p>You acknowledge and agree that there are risks associated with utilizing an app service including, but not limited to, the risk of failure of hardware, software, the risk of malicious software introduction, and the risk that third parties may obtain unauthorized access to information stored within your device. You acknowledge and agree that we will not be responsible for any communication failures, disruptions, errors, distortions or delays you may experience when using our app, however caused. We take no responsibility for and will not be liable for any losses, damages or claims arising from the use of our app, including, but not limited to, any losses, damages or claims arising from (a) passwords being "Bruteforced", (b) hardware failure or data loss, (c) forgotten passwords, (d) corrupted wallet files, (e) incorrectly constructed transactions or mistyped Ether addresses; or (f) unauthorized access to mobile applications, (g)"phishing," viruses, third-party attacks or any other unauthorized third-party activities. </p>
+
+<p><b>SUSPENSION; TERMINATION </b></p>
+
+<p>We do not and can not terminate your usage of this app or any of your wallets. However we are using a third party API called "Etherscan.IO" to fetch certain statistics like transaction history and account balances. This API is not provided by us and etherscan.io who reseveres its right through their terms of service to terminate any abuse of their API such as request spamming or similar. In case of termiantion from Etherscan.IO certain features of this app are not available to you any more such as fetching transaction histories and account balances. Your wallets and its funds aswell as basic app features like exporting your wallets and generating new ones will always be available to you regardless of an etherscan.io account termination or not. For more information about etherscan.io take a look at their terms of service here: <a href="https://etherscan.io/terms">https://etherscan.io/terms</a>
+</p>
+
+<p><b>Governing Law</b></p>
+
+<p>These Terms shall be governed and construed in accordance with the laws of Austria, without regard to its conflict of law provisions.
+
+Our failure to enforce any right or provision of these Terms will not be considered a waiver of those rights. If any provision of these Terms is held to be invalid or unenforceable by a court, the remaining provisions of these Terms will remain in effect. These Terms constitute the entire agreement between us regarding our Service, and supersede and replace any prior agreements we might have between us regarding the Service.</p>
+
+<p><b>DISCLAIMER OF WARRANTIES </b></p>
+<p>(a) TO THE MAXIMUM EXTENT PERMITTED UNDER APPLICABLE LAW, AND EXCEPT AS EXPRESSLY PROVIDED TO THE CONTRARY IN A WRITING BY US, OUR SERVICES ARE PROVIDED ON AN “AS IS” AND “AS AVAILABLE” BASIS. TO THE MAXIMUM EXTENT PERMITTED UNDER APPLICABLE LAW. WE EXPRESSLY DISCLAIM, AND YOU WAIVE, ALL WARRANTIES OF ANY KIND, WHETHER EXPRESS OR IMPLIED, INCLUDING, WITHOUT LIMITATION, IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT AS TO OUR SERVICES, INCLUDING THE INFORMATION, CONTENT AND MATERIALS CONTAINED THEREIN.</p>
+
+<p>(b) YOU ACKNOWLEDGE THAT INFORMATION YOU STORE OR TRANSFER THROUGH OUR SERVICES MAY BECOME IRRETRIEVABLY LOST OR CORRUPTED OR TEMPORARILY UNAVAILABLE DUE TO A VARIETY OF CAUSES, INCLUDING SOFTWARE FAILURES, PROTOCOL CHANGES BY THIRD PARTY PROVIDERS, INTERNET OUTAGES, FORCE MAJEURE EVENT OR OTHER DISASTERS, SCHEDULED OR UNSCHEDULED MAINTENANCE, OR OTHER CAUSES EITHER WITHIN OR OUTSIDE OUR CONTROL. YOU ARE SOLELY RESPONSIBLE FOR BACKING UP AND MAINTAINING DUPLICATE COPIES OF ANY INFORMATION YOU STORE OR TRANSFER THROUGH OUR SERVICES. </p>
+
+<p><b>LIMITATION OF LIABILITY</b></p>
+
+<p>EXCEPT AS OTHERWISE REQUIRED BY LAW, IN NO EVENT SHALL COMPANY, OUR DIRECTORS, MEMBERS, EMPLOYEES OR AGENTS BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES, OR ANY OTHER DAMAGES OF ANY KIND, INCLUDING BUT NOT LIMITED TO LOSS OF USE, LOSS OF PROFITS OR LOSS OF DATA, WHETHER IN AN ACTION IN CONTRACT, TORT (INCLUDING BUT NOT LIMITED TO NEGLIGENCE) OR OTHERWISE, ARISING OUT OF OR IN ANY WAY CONNECTED WITH THE USE OF OR INABILITY TO USE OUR SERVICES OR THE COMPANY MATERIALS, INCLUDING WITHOUT LIMITATION ANY DAMAGES CAUSED BY OR RESULTING FROM RELIANCE BY ANY USER ON ANY INFORMATION OBTAINED FROM COMPANY, OR THAT RESULT FROM MISTAKES, OMISSIONS, INTERRUPTIONS, DELETION OF FILES OR EMAIL, ERRORS, DEFECTS, VIRUSES, DELAYS IN OPERATION OR TRANSMISSION OR ANY FAILURE OF PERFORMANCE, WHETHER OR NOT RESULTING FROM A FORCE MAJEURE EVENT, COMMUNICATIONS FAILURE, THEFT, DESTRUCTION OR UNAUTHORIZED ACCESS TO COMPANY’S RECORDS, PROGRAMS OR SERVICES. </p>
+
+<p><b>Changes</b></p>
+
+<p>We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material we will try to provide at least 30 days notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.
+
+By continuing to access or use our Service after those revisions become effective, you agree to be bound by the revised terms. If you do not agree to the new terms, please stop using the Service.
+</p>
+
+<p><b>Contact Us</b></p>
+
+<p>If you have any questions about these Terms, please contact us.</p>
+
+<br/><br/>
+
+<p><h2>Disclaimer</h2></p>
+
+<p>Last updated: May 28, 2017</p>
+
+<p>The information contained on http://rehanced.com website and mobile app (the "Service") is for general information purposes only.</p>
+
+<p>Lunary Ether Wallet assumes no responsibility for errors or omissions in the contents on the Service.</p>
+
+<p>In no event shall Lunary Ether Wallet be liable for any special, direct, indirect, consequential, or incidental damages or any damages or loss of profits whatsoever, whether in an action of contract, negligence or other tort, arising out of or in connection with the use of the Service or the contents of the Service. Lunary Ether Wallet reserves the right to make additions, deletions, or modification to the contents on the Service at any time without prior notice.</p>
+
+<p>Your wallets and private keys generated by this app are only stored locally on your device. Should you lose your wallet or keys (f.e in case of a device malfunction, factory reset, loss, physical damages, viruses or malware on the device or any other interaction with your device that may directly or indirectly result in data loss or manipulation) we are not able to help you return your funds or restore your keys because we don\'t have that data. Everything wallet related is stored physically on your device and only on your device. We are not liable for any loss of coins ("ether") or tokens in any of above mentioned cases or malfunction of our service or harmfull apps by third parties.</p>
+
+
+<p><h2>Privacy Policy - Lunary Ether Wallet</h2></p>
+
+<p><b>Data protection</b></p>
+
+<p>We do not collect or save any of your private data by ourself as we do not communicate with a server owned by us. Information just as account balances, transaction histories and other similar to Ethereum related information are part of a public available and distributed ledger called "Blockchain". This information is not stored by us on any of our servers, the mentioned information is fetched from this Blockchain via a third party service called etherscan.io. You also agree to this etherscan.io privacy policy as found here: <a href="https://etherscan.io/terms">https://etherscan.io/terms</a>
+We use the etherscan.io service to fetch Blockchain information and use it to display it to you via our app. Your Wallets, including its private keys, which are generated by this app are stored only locally on your device and are never shared or transmitted via web.
+If there are further questions please don\'t hesitate to contact us as we are happy to help you in this regard.
+For app usage statistics we use Google Analytics. More details about Google Analytics can be found in the paragraph "Privacy Policy for the use of Google Analytics".</p>
+
+<p><b>Privacy Policy for the use of Google Analytics</b></p>
+
+<p>This app uses Google Analytics, an analytics service provided by Google, Inc. (“Google”). Google Analytics uses “cookies”, which are text files placed on your device, to help analyze how users use it. The information generated about your use of this app (including your IP address) is sent to and stored at a Google server in the U.S.A. Google will use this information on behalf of the operator of this app for the purpose of evaluating your use of the app, compiling reports on activity for operators and providing them other services relating to app activity and usage. The IP-address, that your device conveys within the scope of Google Analytics, will not be associated with any other data held by Google. For more information about Google Analytics visit <a href="https://google.com/analytics/terms">https://google.com/analytics/terms</a></p>
+
+
+<p>By using this application you agree to our Privicy Policy and the processing of the collected information by Google, according to the above mentioned purposes. If you do not consent to such processing, please do not further access or use our applications.
+More details about this topic can be found in Google\'s Privacy Policies:
+<a href="https://google.com/policies/privacy">https://google.com/policies/privacy</a> </p>
+
+]]>
+    </string>
+
+
+
+</resources>
