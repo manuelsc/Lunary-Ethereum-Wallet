@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -399,6 +400,7 @@ public class FragmentSend extends Fragment {
         final EditText input = new EditText(ac);
         final CheckBox showpw = new CheckBox(ac);
         showpw.setText(R.string.password_in_clear_text);
+        input.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
         input.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
         LinearLayout container = new LinearLayout(ac);

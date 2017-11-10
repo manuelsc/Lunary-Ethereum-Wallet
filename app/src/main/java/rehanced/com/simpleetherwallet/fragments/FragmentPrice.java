@@ -74,6 +74,7 @@ public class FragmentPrice extends Fragment {
 
     private int displayType = 1;
     private boolean displayInUsd = true; // True = USD, False = BTC
+    private boolean refreshChart = true;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -144,19 +145,22 @@ public class FragmentPrice extends Fragment {
         }
 
         swipeLayout.setRefreshing(true);
-        general();
         update(true);
+        general();
+
         priceChart.setVisibility(View.INVISIBLE);
         return rootView;
     }
 
     private void next() {
+        refreshChart = true;
         displayType = (displayType + 1) % PERIOD.length;
         general();
         update(true);
     }
 
     private void previous() {
+        refreshChart = true;
         displayType = displayType > 0 ? displayType - 1 : PERIOD.length - 1;
         general();
         update(true);
@@ -178,6 +182,7 @@ public class FragmentPrice extends Fragment {
         EtherscanAPI.getInstance().getPriceChart((System.currentTimeMillis() / 1000) - time, period, displayInUsd, new Callback() { // 1467321600,
             @Override
             public void onFailure(Call call, IOException e) {
+                if(ac == null) return;
                 ac.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -303,8 +308,8 @@ public class FragmentPrice extends Fragment {
 
     public void updateExchangeRates() {
         try {
+            refreshChart = false;
             ExchangeCalculator.getInstance().updateExchangeRates(ac != null ? ac.getPreferences().getString("maincurrency", "USD") : "USD", ac);
-            update(true);
             onItemsLoadComplete();
         } catch (IOException e) {
             e.printStackTrace();
@@ -318,12 +323,13 @@ public class FragmentPrice extends Fragment {
                     ExchangeCalculator.getInstance().displayEthNicely(ExchangeCalculator.getInstance().getBTCPrice()) + " BTC"
             );
 
-        if(updateChart) {
+        if(refreshChart && updateChart) {
             try {
                 loadPriceData(TIMESTAMPS[displayType], PERIOD[displayType]);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            refreshChart = true;
         }
         onItemsLoadComplete();
     }
