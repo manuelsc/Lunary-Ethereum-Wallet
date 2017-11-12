@@ -151,7 +151,7 @@ public class FragmentTransactionsAll extends FragmentTransactionsAbstract {
             // If transaction was send via App and has no confirmations yet (Still show it when users refreshes for 10 minutes)
             if (unconfirmed_addedTime + 10 * 60 * 1000 < System.currentTimeMillis()) // After 10 minutes remove unconfirmed (should now have at least 1 confirmation anyway)
                 unconfirmed = null;
-            if (unconfirmed != null) {
+            if (unconfirmed != null && wallets.size() > 0) {
                 if (wallets.get(0).getAmount() == unconfirmed.getAmount()) {
                     unconfirmed = null;
                 } else {

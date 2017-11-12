@@ -198,7 +198,7 @@ public abstract class FragmentTransactionsAbstract extends Fragment implements V
     public boolean onContextItemSelected(MenuItem item) {
         int position = -1;
         try {
-            position = walletAdapter.getPosition();
+            position = TransactionAdapter.calculateBoxPosition(walletAdapter.getPosition());
         } catch (Exception e) {
             e.printStackTrace();
             return super.onContextItemSelected(item);
@@ -286,7 +286,7 @@ public abstract class FragmentTransactionsAbstract extends Fragment implements V
     @Override
     public void onClick(View view) {
         if (ac == null) return;
-        int itemPosition = recyclerView.getChildLayoutPosition(view);
+        int itemPosition = TransactionAdapter.calculateBoxPosition(recyclerView.getChildLayoutPosition(view));
         if (itemPosition >= wallets.size()) return;
         Dialogs.showTXDetails(ac, wallets.get(itemPosition));
     }

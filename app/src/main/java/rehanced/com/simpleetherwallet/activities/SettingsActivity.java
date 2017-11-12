@@ -79,13 +79,17 @@ public class SettingsActivity extends AppCompatActivity {
                             Dialogs.adDisable(getActivity(), new AdDialogResponseHandler() {
                                 @Override
                                 public void continueSettingChange(boolean mContinue) {
-                                    if (mContinue)
+                                    if (mContinue) {
                                         adSwitch.setChecked(false);
+                                        Settings.displayAds = false;
+                                    }
                                 }
                             });
                             return false;
-                        } else
+                        } else {
+                            Settings.displayAds = true;
                             return true;
+                        }
                     }
                 });
             }

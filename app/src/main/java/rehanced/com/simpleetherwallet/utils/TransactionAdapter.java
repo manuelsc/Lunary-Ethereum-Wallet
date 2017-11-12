@@ -20,7 +20,7 @@ import rehanced.com.simpleetherwallet.R;
 import rehanced.com.simpleetherwallet.data.TransactionDisplay;
 
 
-public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.MyViewHolder> {
+public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
     private List<TransactionDisplay> boxlist;
@@ -30,12 +30,25 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     private View.OnClickListener clickListener;
     private int position;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView month, walletbalance, walletname, other_address, plusminus;
-        public ImageView my_addressicon, other_addressicon, type, error;
+    private static final int CONTENT = 0;
+    private static final int AD = 1;
+    private static final int LIST_AD_DELTA = 9;
+
+    @Override
+    public int getItemViewType(int position) {
+        if(!Settings.displayAds) return CONTENT;
+        if (position % LIST_AD_DELTA == 0) {
+            return AD;
+        }
+        return CONTENT;
+    }
+
+    class MyViewHolder extends RecyclerView.ViewHolder {
+        TextView month, walletbalance, walletname, other_address, plusminus;
+        ImageView my_addressicon, other_addressicon, type, error;
         private LinearLayout container;
 
-        public MyViewHolder(View view) {
+        MyViewHolder(View view) {
             super(view);
             month = (TextView) view.findViewById(R.id.month);
             walletbalance = (TextView) view.findViewById(R.id.walletbalance);
@@ -50,10 +63,11 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             container = (LinearLayout) view.findViewById(R.id.container);
         }
 
-        public void clearAnimation() {
+        void clearAnimation() {
             container.clearAnimation();
         }
     }
+
 
     public TransactionAdapter(List<TransactionDisplay> boxlist, Context context, View.OnClickListener clickListener, View.OnCreateContextMenuListener listener) {
         this.boxlist = boxlist;
@@ -63,56 +77,72 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.view_w_transaction, parent, false);
-        itemView.setOnCreateContextMenuListener(contextMenuListener);
-        itemView.setOnClickListener(clickListener);
-        return new MyViewHolder(itemView);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == CONTENT) {
+            View itemView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.view_w_transaction, parent, false);
+            itemView.setOnCreateContextMenuListener(contextMenuListener);
+            itemView.setOnClickListener(clickListener);
+            return new MyViewHolder(itemView);
+        } else {
+            return new AdRecyclerHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.view_w_transaction_ad, parent, false));
+        }
+    }
+
+    public static int calculateBoxPosition(int position){
+        if(!Settings.displayAds) return position;
+        if(position < LIST_AD_DELTA) return position - 1;
+        return position - (position / LIST_AD_DELTA) - 1;
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        TransactionDisplay box = boxlist.get(position);
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder_, final int position) {
+        if (getItemViewType(position) == CONTENT) {
+            MyViewHolder holder = (MyViewHolder) holder_;
+            TransactionDisplay box = boxlist.get(calculateBoxPosition(position));
 
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                setPosition(position);
-                return false;
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    setPosition(position);
+                    return false;
+                }
+            });
+
+            holder.walletbalance.setText(ExchangeCalculator.getInstance().displayBalanceNicely(ExchangeCalculator.getInstance().convertRate(Math.abs(box.getAmount()), ExchangeCalculator.getInstance().getCurrent().getRate())) + " " + ExchangeCalculator.getInstance().getCurrencyShort());
+
+            String walletname = AddressNameConverter.getInstance(context).get(box.getFromAddress());
+            holder.walletname.setText(walletname == null ? box.getWalletName() : walletname);
+
+            String toName = AddressNameConverter.getInstance(context).get(box.getToAddress());
+            holder.other_address.setText(toName == null ? box.getToAddress() : toName + " (" + box.getToAddress().substring(0, 10) + ")");
+            holder.plusminus.setText(box.getAmount() > 0 ? "+" : "-");
+
+            holder.plusminus.setTextColor(context.getResources().getColor(box.getAmount() > 0 ? R.color.etherReceived : R.color.etherSpent));
+            holder.walletbalance.setTextColor(context.getResources().getColor(box.getAmount() > 0 ? R.color.etherReceived : R.color.etherSpent));
+            holder.container.setAlpha(1f);
+            if (box.getConfirmationStatus() == 0) {
+                holder.month.setText("Unconfirmed");
+                holder.month.setTextColor(context.getResources().getColor(R.color.unconfirmedNew));
+                holder.container.setAlpha(0.75f);
+            } else if (box.getConfirmationStatus() > 12) {
+                holder.month.setText(dateformat.format(new Date(box.getDate())));
+                holder.month.setTextColor(context.getResources().getColor(R.color.normalBlack));
+            } else {
+                holder.month.setText(box.getConfirmationStatus() + " / 12 Confirmations");
+                holder.month.setTextColor(context.getResources().getColor(R.color.unconfirmed));
             }
-        });
 
-        holder.walletbalance.setText(ExchangeCalculator.getInstance().displayBalanceNicely(ExchangeCalculator.getInstance().convertRate(Math.abs(box.getAmount()), ExchangeCalculator.getInstance().getCurrent().getRate())) + " " + ExchangeCalculator.getInstance().getCurrencyShort());
+            holder.type.setVisibility(box.getType() == TransactionDisplay.NORMAL ? View.INVISIBLE : View.VISIBLE);
+            holder.error.setVisibility(box.isError() ? View.VISIBLE : View.GONE);
+            holder.my_addressicon.setImageBitmap(Blockies.createIcon(box.getFromAddress().toLowerCase()));
+            holder.other_addressicon.setImageBitmap(Blockies.createIcon(box.getToAddress().toLowerCase()));
 
-        String walletname = AddressNameConverter.getInstance(context).get(box.getFromAddress());
-        holder.walletname.setText(walletname == null ? box.getWalletName() : walletname);
-
-        String toName = AddressNameConverter.getInstance(context).get(box.getToAddress());
-        holder.other_address.setText(toName == null ? box.getToAddress() : toName + " (" + box.getToAddress().substring(0, 10) + ")");
-        holder.plusminus.setText(box.getAmount() > 0 ? "+" : "-");
-
-        holder.plusminus.setTextColor(context.getResources().getColor(box.getAmount() > 0 ? R.color.etherReceived : R.color.etherSpent));
-        holder.walletbalance.setTextColor(context.getResources().getColor(box.getAmount() > 0 ? R.color.etherReceived : R.color.etherSpent));
-        holder.container.setAlpha(1f);
-        if (box.getConfirmationStatus() == 0) {
-            holder.month.setText("Unconfirmed");
-            holder.month.setTextColor(context.getResources().getColor(R.color.unconfirmedNew));
-            holder.container.setAlpha(0.75f);
-        } else if (box.getConfirmationStatus() > 12) {
-            holder.month.setText(dateformat.format(new Date(box.getDate())));
-            holder.month.setTextColor(context.getResources().getColor(R.color.normalBlack));
+            setAnimation(holder.container, position);
         } else {
-            holder.month.setText(box.getConfirmationStatus() + " / 12 Confirmations");
-            holder.month.setTextColor(context.getResources().getColor(R.color.unconfirmed));
+            AdRecyclerHolder holder = (AdRecyclerHolder) holder_;
+            holder.loadAd(context);
         }
-
-        holder.type.setVisibility(box.getType() == TransactionDisplay.NORMAL ? View.INVISIBLE : View.VISIBLE);
-        holder.error.setVisibility(box.isError() ? View.VISIBLE : View.GONE);
-        holder.my_addressicon.setImageBitmap(Blockies.createIcon(box.getFromAddress().toLowerCase()));
-        holder.other_addressicon.setImageBitmap(Blockies.createIcon(box.getToAddress().toLowerCase()));
-
-        setAnimation(holder.container, position);
     }
 
     public int getPosition() {
@@ -124,8 +154,9 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     }
 
     @Override
-    public void onViewRecycled(MyViewHolder holder) {
-        holder.itemView.setOnLongClickListener(null);
+    public void onViewRecycled(RecyclerView.ViewHolder holder) {
+        if(holder instanceof MyViewHolder)
+            holder.itemView.setOnLongClickListener(null);
         super.onViewRecycled(holder);
     }
 
@@ -139,12 +170,18 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
 
     @Override
-    public void onViewDetachedFromWindow(MyViewHolder holder) {
-        holder.clearAnimation();
+    public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+        if(holder instanceof MyViewHolder)
+            ((MyViewHolder)holder).clearAnimation();
     }
 
     @Override
     public int getItemCount() {
-        return boxlist.size();
+        if(!Settings.displayAds) return boxlist.size();
+        int additionalContent = 1;
+        if (boxlist.size() > 0 && boxlist.size() >= LIST_AD_DELTA) {
+            additionalContent += (boxlist.size() / (LIST_AD_DELTA-1));
+        }
+        return boxlist.size() + additionalContent;
     }
 }

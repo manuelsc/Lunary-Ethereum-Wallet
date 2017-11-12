@@ -33,6 +33,7 @@ public class AddressEncoder {
         if (!s.startsWith("ethereum:") && !s.startsWith("ETHEREUM:"))
             throw new IOException("Invalid data format, see ERC-67 https://github.com/ethereum/EIPs/issues/67");
         AddressEncoder re = new AddressEncoder(s.substring(9, 51));
+        if(s.length() == 51) return re;
         String[] parsed = s.substring(51).split("\\?");
         for (String entry : parsed) {
             String[] entry_s = entry.split("=");
