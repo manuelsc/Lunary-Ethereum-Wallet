@@ -27,6 +27,6 @@ public class YearXFormatter implements IAxisValueFormatter {
     @Override
     public String getFormattedValue(float value, AxisBase axis) {
         c.setTimeInMillis(((long) (value)) * 1000);
-        return months[c.get(Calendar.MONTH) + 1];
+        return months[c.get(Calendar.MONTH)];
     }
 }

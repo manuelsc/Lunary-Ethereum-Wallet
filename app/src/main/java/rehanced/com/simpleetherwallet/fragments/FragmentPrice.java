@@ -4,6 +4,8 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -186,8 +188,10 @@ public class FragmentPrice extends Fragment {
                 ac.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        onItemsLoadComplete();
-                        ac.snackError(getString(R.string.err_no_con), Snackbar.LENGTH_LONG);
+                        try {
+                            onItemsLoadComplete();
+                            ac.snackError(getString(R.string.err_no_con), Snackbar.LENGTH_LONG);
+                        } catch(Exception e){}
                     }
                 });
             }
@@ -336,8 +340,14 @@ public class FragmentPrice extends Fragment {
 
     void onItemsLoadComplete() {
         if (swipeLayout == null) return;
-        swipeLayout.setRefreshing(false);
         if (colorPadding == null) return;
-        colorPadding.setBackgroundColor(0xF05a7899);
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                swipeLayout.setRefreshing(false);
+                colorPadding.setBackgroundColor(0xF05a7899);
+            }
+        });
+
     }
 }
