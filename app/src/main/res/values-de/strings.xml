@@ -19,7 +19,7 @@
 
     <string name="fr_price_current_price">Aktueller Preis</string>
     <string name="fr_wallet_overall_balance">Gesamt Kontostand</string>
-    <string name="fr_detail_acc_balance">Account Kontostand</string>
+    <string name="fr_detail_acc_balance">Kontostand</string>
 
     <string name="main_ac_wallet_added_suc">Konto erfolgreich hinzugefügt</string>
     <string name="main_ac_wallet_added_er">Konto war bereits hinzugefügt</string>
