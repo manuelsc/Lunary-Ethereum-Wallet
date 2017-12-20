@@ -101,6 +101,7 @@ public class FragmentPrice extends Fragment {
             @Override
             public void onClick(View view) {
                 displayInUsd = !displayInUsd;
+                refreshChart = true;
                 update(true);
                 general();
 
@@ -139,6 +140,7 @@ public class FragmentPrice extends Fragment {
             @Override
             public void onRefresh() {
                 updateExchangeRates();
+                update(false);
             }
         });
 

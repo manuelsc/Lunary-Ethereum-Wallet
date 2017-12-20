@@ -124,6 +124,11 @@ public class EtherscanAPI {
             tokenName = tokenName.substring(0, tokenName.indexOf(" "));
         if (TokenIconCache.getInstance(c).contains(tokenName)) return;
 
+        if(tokenName.equalsIgnoreCase("OMGToken"))
+            tokenName = "omise";
+        else if(tokenName.equalsIgnoreCase("0x"))
+            tokenName = "0xtoken_28";
+
         final String tokenNamef = tokenName;
         get("http://etherscan.io//token/images/" + tokenNamef + ".PNG", new Callback() {
             @Override

@@ -32,6 +32,7 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,6 +79,7 @@ public class FragmentSend extends Fragment {
     private ExchangeCalculator exchange = ExchangeCalculator.getInstance();
     private LinearLayout expertMode;
     private EditText data, userGasLimit;
+    private double realGas;
 
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
@@ -135,7 +137,7 @@ public class FragmentSend extends Fragment {
         gas.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                double realGas = (i - 8);
+                realGas = (i - 8);
                 if (i < 10)
                     realGas = (double) (i + 1) / 10d;
 
@@ -353,7 +355,7 @@ public class FragmentSend extends Fragment {
     }
 
     private BigDecimal getCurTotalCost() {
-        return curAmount.add(curTxCost);
+        return curAmount.add(curTxCost, MathContext.DECIMAL64);
     }
 
     private void updateTotalCostDisplay() {
@@ -467,7 +469,7 @@ public class FragmentSend extends Fragment {
         txService.putExtra("FROM_ADDRESS", fromAddress);
         txService.putExtra("TO_ADDRESS", toAddress.getText().toString());
         txService.putExtra("AMOUNT", curAmount.toPlainString()); // In ether, gets converted by the service itself
-        txService.putExtra("GAS_PRICE", new BigDecimal((gas.getProgress() + 1) + "").multiply(new BigDecimal("1000000000")).toPlainString());// "21000000000");
+        txService.putExtra("GAS_PRICE", (new BigDecimal(realGas + "").multiply(new BigDecimal("1000000000")).toBigInteger()).toString());// "21000000000");
         txService.putExtra("GAS_LIMIT", userGasLimit.getText().length() <= 0 ? gaslimit.toString() : userGasLimit.getText().toString());
         txService.putExtra("PASSWORD", password);
         txService.putExtra("DATA", data.getText().toString());
