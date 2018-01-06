@@ -251,6 +251,10 @@
     <string name="showcase_got_it">Értem</string>
     <string name="show_case_wallet_gen_text">Új Pénztárca létrehozásához kattintson a + jelre, és válassza az "Új Pénztárca létrehozását"</string>
     <string name="show_case_backup">Módosításhoz és biztonsági mentés létrehozásához kattintson rá az adott Pénztárcára, és tartsa lenyomva.</string>
+    <string name="wallet_menu_private_key">Show Private Key</string>
+    <string name="activity_private_key_title">Private Key</string>
+    <string name="activity_private_key_explanation">This is the unencrypted private key of your wallet. Anyone with access to this key or QR code can spend your funds like ether and tokens. Dont store this unencrypted!</string>
+    <string name="activity_private_key_wrong_pw">Your password is not correct - cant decrypt private key!</string>
 
     <string name="tos" tools:ignore="TypographyOther"><![CDATA[
 <p><h2>GNU GENERAL PUBLIC LICENSE</h2></p>

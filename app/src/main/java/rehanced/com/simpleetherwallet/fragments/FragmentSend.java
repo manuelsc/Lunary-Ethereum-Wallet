@@ -1,27 +1,19 @@
 package rehanced.com.simpleetherwallet.fragments;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -44,11 +36,13 @@ import rehanced.com.simpleetherwallet.BuildConfig;
 import rehanced.com.simpleetherwallet.R;
 import rehanced.com.simpleetherwallet.activities.AnalyticsApplication;
 import rehanced.com.simpleetherwallet.activities.SendActivity;
+import rehanced.com.simpleetherwallet.interfaces.PasswordDialogCallback;
 import rehanced.com.simpleetherwallet.network.EtherscanAPI;
 import rehanced.com.simpleetherwallet.services.TransactionService;
 import rehanced.com.simpleetherwallet.utils.AddressNameConverter;
 import rehanced.com.simpleetherwallet.utils.Blockies;
 import rehanced.com.simpleetherwallet.utils.CollapseAnimator;
+import rehanced.com.simpleetherwallet.utils.Dialogs;
 import rehanced.com.simpleetherwallet.utils.ExchangeCalculator;
 import rehanced.com.simpleetherwallet.utils.ResponseParser;
 import rehanced.com.simpleetherwallet.utils.WalletStorage;
@@ -232,7 +226,16 @@ public class FragmentSend extends Fragment {
                     if (BuildConfig.DEBUG)
                         Log.d("etherbalance", (getCurTotalCost().compareTo(curAvailable) < 0) + " | " + getCurTotalCost() + " | " + curAvailable + " | " + data.getText() + " | " + curAmount);
                     if (getCurTotalCost().compareTo(curAvailable) < 0 || BuildConfig.DEBUG || data.getText().length() > 0) {
-                        askForPasswordAndDecode(spinner.getSelectedItem().toString());
+                        Dialogs.askForPasswordAndDecode(ac, spinner.getSelectedItem().toString(), new PasswordDialogCallback(){
+
+                            @Override
+                            public void success(String password) {
+                                sendEther(password, spinner.getSelectedItem().toString());
+                            }
+
+                            @Override
+                            public void canceled() {}
+                        });
                     } else {
                         ac.snackError(getString(R.string.err_send_not_enough_ether));
                     }
@@ -395,74 +398,6 @@ public class FragmentSend extends Fragment {
         }
     }
 
-    private void askForPasswordAndDecode(final String fromAddress) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(ac, R.style.AlertDialogTheme);
-        builder.setTitle("Wallet Password");
-
-        final EditText input = new EditText(ac);
-        final CheckBox showpw = new CheckBox(ac);
-        showpw.setText(R.string.password_in_clear_text);
-        input.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        input.setTransformationMethod(PasswordTransformationMethod.getInstance());
-
-        LinearLayout container = new LinearLayout(ac);
-        container.setOrientation(LinearLayout.VERTICAL);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
-        params.topMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
-        params.bottomMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
-        params.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
-
-        LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params2.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
-        params2.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
-        input.setLayoutParams(params);
-        showpw.setLayoutParams(params2);
-
-        container.addView(input);
-        container.addView(showpw);
-        builder.setView(container);
-
-        showpw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (!isChecked)
-                    input.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                else
-                    input.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                input.setSelection(input.getText().length());
-            }
-        });
-
-        builder.setView(container);
-        input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    InputMethodManager inputMgr = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    inputMgr.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
-                }
-            }
-        });
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                InputMethodManager inputMgr = (InputMethodManager) input.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMgr.hideSoftInputFromWindow(input.getWindowToken(), 0);
-                sendEther(input.getText().toString(), fromAddress);
-                dialog.dismiss();
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                InputMethodManager inputMgr = (InputMethodManager) input.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMgr.hideSoftInputFromWindow(input.getWindowToken(), 0);
-                dialog.cancel();
-            }
-        });
-
-        builder.show();
-
-    }
 
     private void sendEther(String password, String fromAddress) {
         Intent txService = new Intent(ac, TransactionService.class);

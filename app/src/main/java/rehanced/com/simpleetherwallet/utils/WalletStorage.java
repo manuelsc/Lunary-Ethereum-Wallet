@@ -24,6 +24,7 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Map;
 
+import rehanced.com.simpleetherwallet.BuildConfig;
 import rehanced.com.simpleetherwallet.activities.MainActivity;
 import rehanced.com.simpleetherwallet.data.FullWallet;
 import rehanced.com.simpleetherwallet.data.WatchWallet;
@@ -176,7 +177,8 @@ public class WalletStorage {
             String address = stripWalletName(toImport.get(i).getName());
             if (address.length() == 40) {
                 copyFile(toImport.get(i), new File(c.getFilesDir(), address));
-                toImport.get(i).delete();
+                if(! BuildConfig.DEBUG)
+                    toImport.get(i).delete();
                 WalletStorage.getInstance(c).add(new FullWallet("0x" + address, address), c);
                 AddressNameConverter.getInstance(c).put("0x" + address, "Wallet " + ("0x" + address).substring(0, 6), c);
 

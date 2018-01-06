@@ -251,6 +251,10 @@
     <string name="showcase_got_it">GOT IT</string>
     <string name="show_case_wallet_gen_text">To generate a new wallet just press on the + and select "Generate New Wallet"</string>
     <string name="show_case_backup">To modify existing wallets or create a backup just press and hold down on the wallet.</string>
+    <string name="wallet_menu_private_key">Show Private Key</string>
+    <string name="activity_private_key_title">Private Key</string>
+    <string name="activity_private_key_explanation">This is the unencrypted private key of your wallet. Anyone with access to this key or QR code can spend your funds like ether and tokens. Dont store this unencrypted!</string>
+    <string name="activity_private_key_wrong_pw">Your password is not correct - cant decrypt private key!</string>
 
     <string name="tos" tools:ignore="TypographyOther"><![CDATA[
 <p><h2>GNU GENERAL PUBLIC LICENSE</h2></p>

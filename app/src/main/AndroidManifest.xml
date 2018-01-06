@@ -109,6 +109,11 @@
             android:name=".activities.AppIntroActivity"
             android:theme="@style/AppTheme.NoActionBar2"
             android:label="@string/title_activity_main" />
+        <activity
+            android:name=".activities.PrivateKeyActivity"
+            android:label="@string/title_activity_settings"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/AppTheme.NoActionBar2" />
 
         <activity
             android:name=".activities.AppLockActivity"

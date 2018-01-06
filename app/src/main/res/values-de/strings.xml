@@ -134,7 +134,7 @@
     <string name="walletgen_title">Generiere Konto</string>
     <string name="request_ether_title">Ether Anfordern</string>
     <string name="qr_scan_title">QR Adresse</string>
-    <string name="activity_send_title">Überweisungen</string>
+    <string name="activity_send_title">Überweisung</string>
     <string name="last_24_hours">Letzten 24 Stunden</string>
     <string name="last_7_days">Letzten 7 Tage</string>
     <string name="last_30_days">Letzten 30 Tage</string>
@@ -251,6 +251,10 @@
     <string name="showcase_got_it">ALLES KLAR</string>
     <string name="show_case_wallet_gen_text">Um ein neues Konto anzulegen klicke einfach auf das + und wähle "Erstelle neues Konto"</string>
     <string name="show_case_backup">Um ein bestehendes Konto zu editieren oder zu sichern drücke für ein paar Sekunden auf dein Konto</string>
+    <string name="wallet_menu_private_key">Privatater Schlüssel</string>
+    <string name="activity_private_key_title">Privater Schlüssel</string>
+    <string name="activity_private_key_explanation">Dies ist dein unverschlüsselter privater Schlüssel für dein Konto. Jeder mit Zugriff zu diesem Schlüssel oder QR Code kann deine Beträge wie Ether und Token ausgeben. Speichere diese Informationen daher auf keinen Fall unverschlüsselt!</string>
+    <string name="activity_private_key_wrong_pw">Das eingegebene Passwort ist falsch - privater Schlüssel konnte nicht entschlüsselt werden!</string>
 
     <string name="tos" tools:ignore="TypographyOther"><![CDATA[
 <p><h2>GNU GENERAL PUBLIC LICENSE</h2></p>

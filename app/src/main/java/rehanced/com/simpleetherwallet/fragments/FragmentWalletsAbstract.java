@@ -50,10 +50,12 @@ import rehanced.com.simpleetherwallet.R;
 import rehanced.com.simpleetherwallet.activities.AddressDetailActivity;
 import rehanced.com.simpleetherwallet.activities.AnalyticsApplication;
 import rehanced.com.simpleetherwallet.activities.MainActivity;
+import rehanced.com.simpleetherwallet.activities.PrivateKeyActivity;
 import rehanced.com.simpleetherwallet.activities.QRScanActivity;
 import rehanced.com.simpleetherwallet.activities.WalletGenActivity;
 import rehanced.com.simpleetherwallet.data.CurrencyEntry;
 import rehanced.com.simpleetherwallet.data.WalletDisplay;
+import rehanced.com.simpleetherwallet.interfaces.PasswordDialogCallback;
 import rehanced.com.simpleetherwallet.interfaces.StorableWallet;
 import rehanced.com.simpleetherwallet.network.EtherscanAPI;
 import rehanced.com.simpleetherwallet.utils.AddressNameConverter;
@@ -274,7 +276,8 @@ public abstract class FragmentWalletsAbstract extends Fragment implements View.O
         menu.add(0, 201, 0, R.string.wallet_menu_copyadd);
         menu.add(0, 202, 0, R.string.wallet_menu_share);
         menu.add(0, 203, 0, R.string.wallet_menu_export);
-        menu.add(0, 204, 0, R.string.wallet_menu_delete);
+        menu.add(0, 204, 0, R.string.wallet_menu_private_key);
+        menu.add(0, 205, 0, R.string.wallet_menu_delete);
     }
 
     @Override
@@ -320,6 +323,25 @@ public abstract class FragmentWalletsAbstract extends Fragment implements View.O
                 }
                 break;
             case 204:
+                final int finalPosition2 = position;
+                if (wallets.get(finalPosition2).getType() == WalletDisplay.NORMAL) {
+                    Dialogs.askForPasswordAndDecode(ac, wallets.get(finalPosition2).getPublicKey(), new PasswordDialogCallback(){
+                        @Override
+                        public void success(String password) {
+                            Intent i = new Intent(ac, PrivateKeyActivity.class);
+                            i.putExtra(PrivateKeyActivity.PASSWORD, password);
+                            i.putExtra(PrivateKeyActivity.ADDRESS,  wallets.get(finalPosition2).getPublicKey());
+                            startActivity(i);
+                        }
+
+                        @Override
+                        public void canceled() {}
+                    });
+                } else {
+                    Dialogs.cantExportNonWallet(ac);
+                }
+                break;
+            case 205:
                 confirmDelete(wallets.get(position).getPublicKey(), wallets.get(position).getType());
                 break;
         }

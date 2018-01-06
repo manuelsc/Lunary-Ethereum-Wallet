@@ -9,10 +9,14 @@ import android.os.Build;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -37,8 +41,79 @@ import rehanced.com.simpleetherwallet.data.TransactionDisplay;
 import rehanced.com.simpleetherwallet.data.WatchWallet;
 import rehanced.com.simpleetherwallet.fragments.FragmentWallets;
 import rehanced.com.simpleetherwallet.interfaces.AdDialogResponseHandler;
+import rehanced.com.simpleetherwallet.interfaces.PasswordDialogCallback;
 
 public class Dialogs {
+
+    public static void askForPasswordAndDecode(Activity ac, final String fromAddress, final PasswordDialogCallback callback) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(ac, R.style.AlertDialogTheme);
+        builder.setTitle("Wallet Password");
+
+        final EditText input = new EditText(ac);
+        final CheckBox showpw = new CheckBox(ac);
+        showpw.setText(R.string.password_in_clear_text);
+        input.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        input.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+        LinearLayout container = new LinearLayout(ac);
+        container.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.leftMargin = ac.getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+        params.topMargin = ac.getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+        params.bottomMargin = ac.getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+        params.rightMargin = ac.getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+
+        LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params2.leftMargin = ac.getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+        params2.rightMargin = ac.getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+        input.setLayoutParams(params);
+        showpw.setLayoutParams(params2);
+
+        container.addView(input);
+        container.addView(showpw);
+        builder.setView(container);
+
+        showpw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!isChecked)
+                    input.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                else
+                    input.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                input.setSelection(input.getText().length());
+            }
+        });
+
+        builder.setView(container);
+        input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    InputMethodManager inputMgr = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMgr.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+                }
+            }
+        });
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                InputMethodManager inputMgr = (InputMethodManager) input.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMgr.hideSoftInputFromWindow(input.getWindowToken(), 0);
+                callback.success(input.getText().toString());
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                InputMethodManager inputMgr = (InputMethodManager) input.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMgr.hideSoftInputFromWindow(input.getWindowToken(), 0);
+                callback.canceled();
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+
+    }
 
     public static void showTokenetails(final Activity c, final TokenDisplay tok) {
         MaterialDialog dialog = new MaterialDialog.Builder(c)
