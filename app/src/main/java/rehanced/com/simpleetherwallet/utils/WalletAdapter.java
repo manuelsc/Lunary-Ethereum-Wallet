@@ -81,7 +81,7 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.MyViewHold
         holder.walletaddress.setText(box.getPublicKey());
         String walletname = AddressNameConverter.getInstance(context).get(box.getPublicKey());
         holder.walletname.setText(walletname == null ? "New Wallet" : walletname);
-        if (box.getType() != WalletDisplay.CONTACT)
+        if (box.getType() != WalletDisplay.CONTACT && box.getBalance() >= 0)
             holder.walletbalance.setText(ExchangeCalculator.getInstance().displayBalanceNicely(ExchangeCalculator.getInstance().convertRate(box.getBalance(), ExchangeCalculator.getInstance().getCurrent().getRate())) + " " + ExchangeCalculator.getInstance().getCurrencyShort());
         holder.addressimage.setImageBitmap(Blockies.createIcon(box.getPublicKey()));
 

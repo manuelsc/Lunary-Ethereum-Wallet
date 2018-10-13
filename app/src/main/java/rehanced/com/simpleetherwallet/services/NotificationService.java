@@ -1,6 +1,7 @@
 package rehanced.com.simpleetherwallet.services;
 
 import android.app.IntentService;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -11,7 +12,6 @@ import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -89,7 +89,8 @@ public class NotificationService extends IntentService {
     }
 
     private void sendNotification(String address, String amount) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+        String channelId = "6321";
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setLargeIcon(Blockies.createIcon(address.toLowerCase()))
                 .setColor(0x2d435c)
@@ -103,8 +104,19 @@ public class NotificationService extends IntentService {
         if (android.os.Build.VERSION.SDK_INT >= 18) // Android bug in 4.2, just disable it for everyone then...
             builder.setVibrate(new long[]{1000, 1000});
 
+
         final NotificationManager mNotifyMgr =
                 (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        if(android.os.Build.VERSION.SDK_INT >= 26) {
+            NotificationChannel notificationChannel = new NotificationChannel(channelId, "Lunary", NotificationManager.IMPORTANCE_LOW);
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(Color.CYAN);
+            notificationChannel.enableVibration(true);
+            notificationChannel.setVibrationPattern(new long[]{1000, 1000});
+            mNotifyMgr.createNotificationChannel(notificationChannel);
+            builder.setChannelId(channelId);
+        }
 
         Intent main = new Intent(this, MainActivity.class);
         main.putExtra("STARTAT", 2);

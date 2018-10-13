@@ -229,7 +229,7 @@ public abstract class FragmentWalletsAbstract extends Fragment implements View.O
                         ac.snackError("Can't fetch account balances. Invalid response.");
                     final List<WalletDisplay> w = new ArrayList<WalletDisplay>();
                     for (StorableWallet cur : storedwallets)
-                        w.add(new WalletDisplay(AddressNameConverter.getInstance(ac).get(cur.getPubKey()), cur.getPubKey(), new BigInteger("-1"), WalletDisplay.CONTACT));
+                        w.add(new WalletDisplay(AddressNameConverter.getInstance(ac).get(cur.getPubKey()), cur.getPubKey(), new BigInteger("-1"), WalletDisplay.NORMAL));
 
                     ac.runOnUiThread(new Runnable() {
                         @Override

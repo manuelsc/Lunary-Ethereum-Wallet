@@ -3,14 +3,14 @@ import org.apache.tools.ant.taskdefs.condition.Os
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
     defaultConfig {
         applicationId "com.rehanced.lunary"
         minSdkVersion 16
-        targetSdkVersion 25
-        versionCode 28
-        versionName "1.37"
+        targetSdkVersion 28
+        versionCode 29
+        versionName "1.38"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
@@ -79,6 +79,7 @@ android {
         compileTask -> compileTask.dependsOn ndkBuild
     }
 
+
 }
 
 dependencies {
@@ -87,16 +88,18 @@ dependencies {
     })
     compile 'com.github.clans:fab:1.6.4'
     compile 'me.dm7.barcodescanner:zxing:1.8.4'
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.squareup.okhttp3:okhttp:3.8.0'
-    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.android.support:appcompat-v7:28.0.0'
+    compile 'com.android.support:support-v13:28.0.0'
+    compile 'com.android.support:animated-vector-drawable:28.0.0'
+    compile 'com.android.support:design:28.0.0'
+    compile 'com.squareup.okhttp3:okhttp:3.8.1'
+    compile 'com.android.support:support-v4:28.0.0'
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:multidex:1.0.1'
-    compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile 'com.android.support:multidex:1.0.3'
+    compile 'com.android.support:recyclerview-v7:28.0.0'
     compile 'org.web3j:core-android:2.2.1'
-    googleplayCompile 'com.google.android.gms:play-services-analytics:11.0.4'
-    googleplayCompile 'com.google.android.gms:play-services-ads:11.0.4'
+    googleplayCompile 'com.google.android.gms:play-services-analytics:16.0.4'
+    googleplayCompile 'com.google.android.gms:play-services-ads:17.0.0'
     compile 'me.zhanghai.android.patternlock:library:2.1.2'
     compile 'com.afollestad.material-dialogs:core:0.9.4.5'
     compile 'io.github.kobakei:ratethisapp:1.2.0'

@@ -36,6 +36,17 @@ public class TransactionService extends IntentService {
         super("Transaction Service");
     }
 
+    private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
+    public static String bytesToHex(byte[] bytes) {
+        char[] hexChars = new char[bytes.length * 2];
+        for ( int j = 0; j < bytes.length; j++ ) {
+            int v = bytes[j] & 0xFF;
+            hexChars[j * 2] = hexArray[v >>> 4];
+            hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+        }
+        return new String(hexChars);
+    }
+
     @Override
     protected void onHandleIntent(Intent intent) {
         sendNotification();
@@ -80,7 +91,9 @@ public class TransactionService extends IntentService {
                                         "Data: " + tx.getData()
                         );
 
-                        byte[] signed = TransactionEncoder.signMessage(tx, (byte) 1, keys);
+                        byte[] signed = TransactionEncoder.signMessage(tx, keys);
+
+                        Log.d("txx", "TX: "+bytesToHex(signed));
 
                         forwardTX(signed);
                     } catch (Exception e) {
