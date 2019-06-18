@@ -1,14 +1,19 @@
 package rehanced.com.simpleetherwallet.fragments;
 
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 import rehanced.com.simpleetherwallet.R;
 
@@ -24,7 +29,7 @@ public class ToSFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         tos = (TextView) getView().findViewById(R.id.tostext);
-        tos.setText(Html.fromHtml(getActivity().getResources().getString(R.string.tos)));
+        tos.setText(Html.fromHtml(loadTerms()));
         read = (CheckBox) getView().findViewById(R.id.checkBox);
 
         read.setOnClickListener(new View.OnClickListener() {
@@ -33,6 +38,26 @@ public class ToSFragment extends Fragment {
                 checked = read.isChecked();
             }
         });
+    }
+
+    private String loadTerms() {
+        StringBuilder termsString = new StringBuilder();
+        BufferedReader reader;
+        try {
+            reader = new BufferedReader(
+                    new InputStreamReader(getActivity().getAssets().open("gpl.txt")));
+
+            String str;
+            while ((str = reader.readLine()) != null) {
+                termsString.append(str);
+            }
+
+            reader.close();
+            return termsString.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public boolean isToSChecked() {
