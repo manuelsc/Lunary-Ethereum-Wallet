@@ -218,15 +218,16 @@ public class ExchangeCalculator {
     }
 
     private void convert(final String currency, final NetworkUpdateListener update) throws IOException {
-        EtherscanAPI.getInstance().getPriceConversionRates(currency, new Callback() {
+        EtherscanAPI.getInstance().getPriceConversionRates(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+
             }
 
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
 
-                rateForChartDisplay = ResponseParser.parsePriceConversionRate(response.body().string());
+                rateForChartDisplay = ResponseParser.parsePriceConversionRate(currency, response.body().string());
                 conversionNames[2].setRate(Math.floor(conversionNames[2].getRate() * rateForChartDisplay * 100) / 100);
                 update.onUpdate(response);
             }

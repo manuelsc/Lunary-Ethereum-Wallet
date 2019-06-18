@@ -39,7 +39,7 @@ public class EtherscanAPI {
     }
 
     public void getPriceChart(long starttime, int period, boolean usd, Callback b) throws IOException {
-        get("http://poloniex.com/public?command=returnChartData&currencyPair=" + (usd ? "USDT_ETH" : "BTC_ETH") + "&start=" + starttime + "&end=9999999999&period=" + period, b);
+        get("https://poloniex.com/public?command=returnChartData&currencyPair=" + (usd ? "USDT_ETH" : "BTC_ETH") + "&start=" + starttime + "&end=9999999999&period=" + period, b);
     }
 
 
@@ -54,11 +54,11 @@ public class EtherscanAPI {
     public void getInternalTransactions(String address, Callback b, boolean force) throws IOException {
         if (!force && RequestCache.getInstance().contains(RequestCache.TYPE_TXS_INTERNAL, address)) {
             b.onResponse(null, new Response.Builder().code(200).message("").request(new Request.Builder()
-                    .url("http://api.etherscan.io/api?module=account&action=txlistinternal&address=" + address + "&startblock=0&endblock=99999999&sort=asc&apikey=" + token)
+                    .url("https://api.etherscan.io/api?module=account&action=txlistinternal&address=" + address + "&startblock=0&endblock=99999999&sort=asc&apikey=" + token)
                     .build()).protocol(Protocol.HTTP_1_0).body(ResponseBody.create(MediaType.parse("JSON"), RequestCache.getInstance().get(RequestCache.TYPE_TXS_INTERNAL, address))).build());
             return;
         }
-        get("http://api.etherscan.io/api?module=account&action=txlistinternal&address=" + address + "&startblock=0&endblock=99999999&sort=asc&apikey=" + token, b);
+        get("https://api.etherscan.io/api?module=account&action=txlistinternal&address=" + address + "&startblock=0&endblock=99999999&sort=asc&apikey=" + token, b);
     }
 
 
@@ -73,21 +73,21 @@ public class EtherscanAPI {
     public void getNormalTransactions(String address, Callback b, boolean force) throws IOException {
         if (!force && RequestCache.getInstance().contains(RequestCache.TYPE_TXS_NORMAL, address)) {
             b.onResponse(null, new Response.Builder().code(200).message("").request(new Request.Builder()
-                    .url("http://api.etherscan.io/api?module=account&action=txlist&address=" + address + "&startblock=0&endblock=99999999&sort=asc&apikey=" + token)
+                    .url("https://api.etherscan.io/api?module=account&action=txlist&address=" + address + "&startblock=0&endblock=99999999&sort=asc&apikey=" + token)
                     .build()).protocol(Protocol.HTTP_1_0).body(ResponseBody.create(MediaType.parse("JSON"), RequestCache.getInstance().get(RequestCache.TYPE_TXS_NORMAL, address))).build());
             return;
         }
-        get("http://api.etherscan.io/api?module=account&action=txlist&address=" + address + "&startblock=0&endblock=99999999&sort=asc&apikey=" + token, b);
+        get("https://api.etherscan.io/api?module=account&action=txlist&address=" + address + "&startblock=0&endblock=99999999&sort=asc&apikey=" + token, b);
     }
 
 
     public void getEtherPrice(Callback b) throws IOException {
-        get("http://api.etherscan.io/api?module=stats&action=ethprice&apikey=" + token, b);
+        get("https://api.etherscan.io/api?module=stats&action=ethprice&apikey=" + token, b);
     }
 
 
     public void getGasPrice(Callback b) throws IOException {
-        get("http://api.etherscan.io/api?module=proxy&action=eth_gasPrice&apikey=" + token, b);
+        get("https://api.etherscan.io/api?module=proxy&action=eth_gasPrice&apikey=" + token, b);
     }
 
 
@@ -106,7 +106,7 @@ public class EtherscanAPI {
                     .build()).protocol(Protocol.HTTP_1_0).body(ResponseBody.create(MediaType.parse("JSON"), RequestCache.getInstance().get(RequestCache.TYPE_TOKEN, address))).build());
             return;
         }
-        get("http://api.ethplorer.io/getAddressInfo/" + address + "?apiKey=freekey", b);
+        get("https://api.ethplorer.io/getAddressInfo/" + address + "?apiKey=freekey", b);
     }
 
 
@@ -130,7 +130,7 @@ public class EtherscanAPI {
             tokenName = "0xtoken_28";
 
         final String tokenNamef = tokenName;
-        get("http://etherscan.io//token/images/" + tokenNamef + ".PNG", new Callback() {
+        get("https://etherscan.io//token/images/" + tokenNamef + ".PNG", new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
             }
@@ -151,27 +151,34 @@ public class EtherscanAPI {
 
 
     public void getGasLimitEstimate(String to, Callback b) throws IOException {
-        get("http://api.etherscan.io/api?module=proxy&action=eth_estimateGas&to=" + to + "&value=0xff22&gasPrice=0x051da038cc&gas=0xffffff&apikey=" + token, b);
+        get("https://api.etherscan.io/api?module=proxy&action=eth_estimateGas&to=" + to + "&value=0xff22&gasPrice=0x051da038cc&gas=0xffffff&apikey=" + token, b);
     }
 
 
     public void getBalance(String address, Callback b) throws IOException {
-        get("http://api.etherscan.io/api?module=account&action=balance&address=" + address + "&apikey=" + token, b);
+        get("https://api.etherscan.io/api?module=account&action=balance&address=" + address + "&apikey=" + token, b);
     }
 
 
     public void getNonceForAddress(String address, Callback b) throws IOException {
-        get("http://api.etherscan.io/api?module=proxy&action=eth_getTransactionCount&address=" + address + "&tag=latest&apikey=" + token, b);
+        get("https://api.etherscan.io/api?module=proxy&action=eth_getTransactionCount&address=" + address + "&tag=latest&apikey=" + token, b);
     }
 
 
-    public void getPriceConversionRates(String currencyConversion, Callback b) throws IOException {
-        get("https://api.fixer.io/latest?base=USD&symbols=" + currencyConversion, b);
+    /**
+     * Guys please don't abuse this key. I put this release together in the middle of the night, migrating some third party api
+     * changes and don't want to bother with obfuscating this key.
+     * It's a free plan, limited to 10k requests and is intended for Lunary users only.
+     * Please be fair and don't missuse this key. If not for my sake but the the sake of those users.
+     * @param b
+     * @throws IOException
+     */
+    public void getPriceConversionRates(Callback b) throws IOException {
+        get("http://data.fixer.io/api/latest?access_key=6731fb62377f28c429b246c2184a6a46", b);
     }
-
 
     public void getBalances(ArrayList<StorableWallet> addresses, Callback b) throws IOException {
-        String url = "http://api.etherscan.io/api?module=account&action=balancemulti&address=";
+        String url = "https://api.etherscan.io/api?module=account&action=balancemulti&address=";
         for (StorableWallet address : addresses)
             url += address.getPubKey() + ",";
         url = url.substring(0, url.length() - 1) + "&tag=latest&apikey=" + token; // remove last , AND add token
@@ -180,7 +187,7 @@ public class EtherscanAPI {
 
 
     public void forwardTransaction(String raw, Callback b) throws IOException {
-        get("http://api.etherscan.io/api?module=proxy&action=eth_sendRawTransaction&hex=" + raw + "&apikey=" + token, b);
+        get("https://api.etherscan.io/api?module=proxy&action=eth_sendRawTransaction&hex=" + raw + "&apikey=" + token, b);
     }
 
 

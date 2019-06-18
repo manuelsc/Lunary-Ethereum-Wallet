@@ -153,10 +153,9 @@ public class ResponseParser {
         }
     }*/
 
-    public static double parsePriceConversionRate(String response) {
+    public static double parsePriceConversionRate(String key, String response) {
         try {
             JSONObject jo = new JSONObject(response).getJSONObject("rates");
-            String key = jo.keys().next();
             return jo.getDouble(key);
         } catch (Exception e) {
             return 1;

@@ -62,6 +62,7 @@
         android:supportsRtl="true"
         android:name=".activities.AnalyticsApplication"
         android:largeHeap="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".activities.MainActivity"
