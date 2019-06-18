@@ -11,7 +11,7 @@ android {
         targetSdkVersion 28
         versionCode 31
         versionName "1.39"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
     }
@@ -40,7 +40,7 @@ android {
     lintOptions {
         disable 'MissingTranslation'
     }
-
+    flavorDimensions "standard"
     productFlavors {
         googleplay {
         }
@@ -87,27 +87,26 @@ android {
 }
 
 dependencies {
-    compile 'com.github.clans:fab:1.6.4'
-    compile 'me.dm7.barcodescanner:zxing:1.8.4'
-    compile 'com.android.support:appcompat-v7:28.0.0'
-    compile 'com.android.support:support-v13:28.0.0'
-    compile 'com.android.support:animated-vector-drawable:28.0.0'
-    compile 'com.android.support:design:28.0.0'
-    compile 'com.squareup.okhttp3:okhttp:3.8.1'
-    compile 'com.android.support:support-v4:28.0.0'
-    compile 'com.android.support:multidex:1.0.3'
-    compile 'com.android.support:recyclerview-v7:28.0.0'
-    compile 'org.web3j:core-android:2.2.1'
-    googleplayCompile 'com.google.android.gms:play-services-analytics:17.0.0'
-    googleplayCompile 'com.google.android.gms:play-services-ads:18.0.0'
-    compile 'me.zhanghai.android.patternlock:library:2.1.2'
-    compile 'com.afollestad.material-dialogs:core:0.9.4.5'
-    compile 'io.github.kobakei:ratethisapp:1.2.0'
-    compile 'com.github.apl-devs:appintro:v4.1.0'
-    compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
-    compile 'me.grantland:autofittextview:0.2.1'
-    compile 'com.github.deano2390:MaterialShowcaseView:1.2.0@aar'
-    compile("com.mikepenz:materialdrawer:5.9.1@aar") {
+    implementation 'com.github.clans:fab:1.6.4'
+    implementation 'me.dm7.barcodescanner:zxing:1.8.4'
+    implementation 'androidx.legacy:legacy-support-v13:1.0.0'
+    implementation 'androidx.vectordrawable:vectordrawable-animated:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.8.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.multidex:multidex:2.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'org.web3j:core-android:2.2.1'
+    googleplayImplementation 'com.google.android.gms:play-services-analytics:17.0.0'
+    googleplayImplementation 'com.google.android.gms:play-services-ads:18.0.0'
+    implementation 'me.zhanghai.android.patternlock:library:2.1.2'
+    implementation 'com.afollestad.material-dialogs:core:0.9.4.5'
+    implementation 'io.github.kobakei:ratethisapp:1.2.0'
+    implementation 'com.github.apl-devs:appintro:v4.1.0'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.2'
+    implementation 'me.grantland:autofittextview:0.2.1'
+    implementation 'com.github.deano2390:MaterialShowcaseView:1.2.0@aar'
+    implementation("com.mikepenz:materialdrawer:5.9.1@aar") {
         transitive = true
     }
 }

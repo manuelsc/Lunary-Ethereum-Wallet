@@ -1,6 +1,6 @@
 package rehanced.com.simpleetherwallet.data;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

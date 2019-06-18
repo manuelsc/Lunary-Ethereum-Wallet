@@ -2,7 +2,7 @@ package rehanced.com.simpleetherwallet.activities;
 
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Protects Activity with a password if user configured one
