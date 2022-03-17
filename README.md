@@ -1,3 +1,5 @@
+# THIS PROJECT IS DISCONTINUED. PLEASE USE A DIFFERENT WALLET FOR YOUR ETHER.
+
 # Lunary Ethereum Wallet
 
 Lunary is a beautifully designed, easy to use, secure and Open Source Ethereum Wallet for Android.
